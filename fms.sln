@@ -1,0 +1,42 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "prob", "prob\prob.vcxproj", "{3BE143BE-BCF3-40B8-9E2E-56137127AF6D}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "root", "root\root.vcxproj", "{68340E1D-0F4E-416E-9857-1131EBEB2524}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8D992994-5D0C-4886-9B0E-A910159FEBA8}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ftap", "ftap\ftap.vcxproj", "{F234931C-005B-4E31-858A-973C0E66B198}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3BE143BE-BCF3-40B8-9E2E-56137127AF6D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{3BE143BE-BCF3-40B8-9E2E-56137127AF6D}.Debug|Win32.Build.0 = Debug|Win32
+		{3BE143BE-BCF3-40B8-9E2E-56137127AF6D}.Release|Win32.ActiveCfg = Release|Win32
+		{3BE143BE-BCF3-40B8-9E2E-56137127AF6D}.Release|Win32.Build.0 = Release|Win32
+		{68340E1D-0F4E-416E-9857-1131EBEB2524}.Debug|Win32.ActiveCfg = Debug|Win32
+		{68340E1D-0F4E-416E-9857-1131EBEB2524}.Debug|Win32.Build.0 = Debug|Win32
+		{68340E1D-0F4E-416E-9857-1131EBEB2524}.Release|Win32.ActiveCfg = Release|Win32
+		{68340E1D-0F4E-416E-9857-1131EBEB2524}.Release|Win32.Build.0 = Release|Win32
+		{F234931C-005B-4E31-858A-973C0E66B198}.Debug|Win32.ActiveCfg = Debug|Win32
+		{F234931C-005B-4E31-858A-973C0E66B198}.Debug|Win32.Build.0 = Debug|Win32
+		{F234931C-005B-4E31-858A-973C0E66B198}.Release|Win32.ActiveCfg = Release|Win32
+		{F234931C-005B-4E31-858A-973C0E66B198}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F234931C-005B-4E31-858A-973C0E66B198} = {8D992994-5D0C-4886-9B0E-A910159FEBA8}
+	EndGlobalSection
+EndGlobal
