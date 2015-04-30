@@ -14,6 +14,8 @@ namespace timeseries {
 		typedef typename std::iterator_traits<I>::value_type T;
 		I i;
 	public:
+		forward_iterator()
+		{ }
 		forward_iterator(I i)
 			: i(i)
 		{ }
@@ -34,11 +36,23 @@ namespace timeseries {
 		{
 			return *i;
 		}
+		T& operator*(void)
+		{
+			return *i;
+		}
 		forward_iterator& operator++()
 		{
 			++i;
 
 			return *this;
+		}
+		forward_iterator operator++(int)
+		{
+			forward_iterator i_(i);
+
+			++i;
+
+			return i_;
 		}
 	};
 	template<class I>
@@ -53,135 +67,106 @@ namespace timeseries {
 
 		{
 			forward_iterator<int*> ia(a);
-			assert (*ia == 0);
-			assert (*++ia == 1);
+			assert (*ia++ == 0);
+			assert (*ia == 1);
+			assert (*++ia == 2);
+			*ia = 3;
+			assert (*ia == 3);
+			*ia = 2;
 		}
 		{
 //			auto ia = make_forward_iterator(a); // a -> int[3]
-			auto ia = make_forward_iterator(std::begin(a));
-			assert (*ia == 0);
-			assert (*++ia == 1);
+//			auto ia = make_forward_iterator(std::begin(a)); // ok
+			auto ia = make_forward_iterator(&a[0]);
+			assert (*ia++ == 0);
+			assert (*ia == 1);
+			assert (*++ia == 2);
+			*ia = 3;
+			assert (*ia == 3);
+			*ia = 2;
 		}
 		{
 			std::vector<int> va(std::begin(a), std::end(a));
 			auto ia = make_forward_iterator(va.begin());
-			assert (*ia == 0);
-			assert (*++ia == 1);
-			
+			assert (*ia++ == 0);
+			assert (*ia == 1);
+			assert (*++ia == 2);
+			*ia = 3;
+			assert (*ia == 3);
+			*ia = 2;
 		}
 	}
 
-	template<class I, class U>
-	class apply_forward_iterator : public forward_iterator<U*> {
-	};
-
 #endif // _DEBUG
-#if 0
-	// type erasure for forward iterators
-	template<class T>
-	struct forward_iterator : public std::iterator<std::forward_iterator_tag, T> {
-//		forward_iterator()
-//		{ }
-		virtual ~forward_iterator()
-		{ }
-		bool operator==(const forward_iterator& i) const
-		{
-			return _op_eq(i);
-		}
-		bool operator!=(const forward_iterator& i) const
-		{
-			return !_op_eq(i);
-		}
-		T operator*() const
-		{
-			return _op_star();
-		}
-		// const T& verson???
-		forward_iterator& operator++()
-		{
-			return _pre_incr();
-		}
-/*		forward_iterator operator++(int)
-		{
-			return _post_incr();
-		}
-*/	private:
-		virtual bool _op_eq(const forward_iterator&) const = 0;
-		virtual T _op_star() const = 0;
-		virtual forward_iterator& _pre_incr() = 0;
-//		virtual forward_iterator _post_incr(int) = 0;
-	};
 	// apply function to iterator values
-	template<class IT, class U>
-	class apply_iterator : public forward_iterator<U> {
+	template<class F, class IT>
+	class apply : public forward_iterator<IT> {
 		using T = typename std::iterator_traits<IT>::value_type;
+		F f;
 		IT it;
-		std::function<U(T)> f;
 	public:
-		apply_iterator()
+		apply()
 		{ }
-		apply_iterator(const std::function<U(T)>& f, IT it)
-			: it(it), f(f)
+		apply(F f, IT it)
+			: f(f), it(it)
 		{ }
-		apply_iterator(const apply_iterator&) = default;
-		apply_iterator& operator=(const apply_iterator&) = default;
-		~apply_iterator()
+		apply(const apply&) = default;
+		apply& operator=(const apply&) = default;
+		~apply()
 		{ }
 
-		bool _op_eq(const forward_iterator& i) const override
+		bool operator==(const forward_iterator& i) const
 		{
 			return false; // it == i.it && f == i.f; // always false !!!
 		}
-		U _op_star() const override
+		T operator*() const 
 		{
 			return f(*it);
 		}
-		apply_iterator& _pre_incr() override
+		apply& operator++()
 		{
 			++it;
 
 			return *this;
 		}
-/*		apply_iterator _post_incr(int) override
+		apply operator++(int)
 		{
-			apply_iterator i(*this);
+			apply i(*this);
 
 			++it;
 
 			return i;
 		}
-*/	};
-	template<class IT, class U>
-	inline apply_iterator<IT,U> make_apply_iterator(const std::function<U(typename std::iterator_traits<IT>::value_type)>& f, IT it)
+	};
+	template<class F, class IT>
+	inline apply<F,IT> make_apply(F f, IT it)
 	{
-		return apply_iterator<IT,U>(f, it);
+		return apply<F,IT>(f, it);
 	}
 /*	template<class IT, class F, class T = typename std::iterator_traits<IT>::value_type>
-	inline auto  make_apply_iterator(const F& f, IT it) -> apply_iterator<IT,typename std::result_of<f(T)>>
+	inline auto  make_apply(const F& f, IT it) -> apply<IT,typename std::result_of<f(T)>>
 	{
-		return apply_iterator<IT,typename std::result_of<f(T)>>(f, it);
+		return apply<IT,typename std::result_of<f(T)>>(f, it);
 	}
 */
 //	template<class T, class U>
 //	inline forward_iterator 
 #ifdef _DEBUG
 
-	inline void test_apply_iterator()
+	inline void test_apply()
 	{
 		int a[] = {0,1,2};
 		{
-			std::function<int(int)> sq = [](int i) { return i*i; };
-			apply_iterator<int*,int> a2(sq, a);
+			auto a2 = make_apply([](int i) { return i*i; }, a);
 			assert (*a2 == a[0]*a[0]);
 			++a2;
 			assert (*a2 == a[1]*a[1]);
 			assert (*++a2 == a[2]*a[2]);
 		}
 		{
-//			auto a2 = make_apply_iterator([](int i) { return i*i; }, a); // fails!!!
-//			auto sq = [](int i) { return i*i; }; // fails!!!
-			std::function<int(int)> sq = [](int i) { return i*i; };
-			auto a2 = make_apply_iterator(sq, a);
+			auto a1 = make_forward_iterator(&a[0]);
+			auto sq = [](int i) { return i*i; };
+			auto a2 = make_apply(sq, a1);
 			assert (*a2 == a[0]*a[0]);
 			++a2;
 			assert (*a2 == a[1]*a[1]);
@@ -190,49 +175,46 @@ namespace timeseries {
 	}
 
 #endif // _DEBUG
-#endif // 0
-#if 0
 	// times and values
-	template<class IT, class IU, 
-		class T = typename std::iterator_traits<IT>::value_type,
-		class U = typename std::iterator_traits<IU>::value_type>
-	class pair_iterator 
-		: std::iterator<std::input_iterator_tag, std::pair<T, U>> {
+	template<class IT, class IU>
+	class pair {
+		typedef typename std::iterator_traits<IT>::value_type T;
+		typedef typename std::iterator_traits<IU>::value_type U;
 		IT it;
 		IU iu;
 	public:
-		pair_iterator()
+		pair()
 		{ }
-		pair_iterator(IT it, IU iu)
+		pair(IT it, IU iu)
 			: it(it), iu(iu)
 		{ }
-		pair_iterator(const pair_iterator&) = default;
-		pair_iterator& operator=(const pair_iterator&) = default;
-		~pair_iterator()
+		pair(const pair&) = default;
+		pair& operator=(const pair&) = default;
+		~pair()
 		{ }
 
-		bool operator==(const pair_iterator& i) const
+		bool operator==(const pair& i) const
 		{
 			return it == i.it && iu == i.iu;
 		}
-		bool operator!=(const pair_iterator& i) const
+		std::pair<T,U> operator*() const
 		{
-			return !operator==(i);
+			return std::pair<T,U>(*it, *iu);
 		}
-		std::pair<T,U> operator*()
+/*		std::pair<T,U>& operator*()
 		{
-			return std::make_pair(*it, *iu);
+			return std::pair<T,U>(*it, *iu);
 		}
-		pair_iterator& operator++()
+*/		pair& operator++()
 		{
 			++it;
 			++iu;
 
 			return *this;
 		}
-		pair_iterator operator++(int)
+		pair operator++(int)
 		{
-			pair_iterator i(*this);
+			pair i(*this);
 
 			++it;
 			++iu;
@@ -241,24 +223,17 @@ namespace timeseries {
 		}
 	};
 	template<class IT, class IU>
-	inline pair_iterator<IT,IU> make_pair_iterator(IT it, IU iu)
+	inline pair<IT,IU> make_pair(IT it, IU iu)
 	{
-		return pair_iterator<IT,IU>(it, iu);
-	}
-	template<class IT, class U>
-	inline pair_iterator<IT,apply_iterator<IT, U>> make_pair_iterator(const std::function<U(typename std::iterator_traits<IT>::value_type)>& f, IT it)
-	{
-		auto iu = make_apply_iterator(f, it);
-
-		return pair_iterator<IT,apply_iterator<IT, U>>(it, iu);
+		return pair<IT,IU>(it, iu);
 	}
 #ifdef _DEBUG
 
-	inline void test_pair_iterator()
+	inline void test_pair()
 	{
 		int a[] = {0,1,2};
 		{
-			auto zi = make_pair_iterator(a, a);
+			auto zi = make_pair(a, a);
 			assert (zi == zi);
 			int i = 0;
 			assert (std::make_pair(a[i],a[i]) == *zi++);
@@ -267,11 +242,9 @@ namespace timeseries {
 			++i;
 			assert (std::make_pair(a[i],a[i]) == *++zi);
 		}
-/*		{
-			std::function<int(int)> sq = [](int i) { return i*i; };
-//			auto sqa = make_apply_iterator(sq, a);
-//			auto zi = make_pair_iterator(a, sqa);
-			auto zi = make_pair_iterator(sq, a);
+		{
+			auto a2 = make_apply([](int i) { return i*i;}, a);
+			auto zi = make_pair(&a[0], a2);
 			int i = 0;
 			assert (std::make_pair(a[i],a[i]*a[i]) == *zi++);
 			++i;
@@ -279,12 +252,11 @@ namespace timeseries {
 			++i;
 			assert (std::make_pair(a[i],a[i]*a[i]) == *++zi);
 		}
-*/	}
+	}
 
 #endif // _DEBUG
 /*
 	template<class T, class X>
 	class function_iterator : std::iterator<std::forward_iterator_tag, std::pair<T,X>>
 */
-#endif // 0
 } // timeseries

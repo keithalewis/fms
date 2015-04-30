@@ -9,8 +9,8 @@ int main(void)
 {
 	try {
 		test_forward_iterator();
-//		test_apply_iterator();
-//		test_pair_iterator();
+		test_apply();
+		test_pair();
 	}
 	catch (...) {
 		return -1;
