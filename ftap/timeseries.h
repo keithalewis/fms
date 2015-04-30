@@ -243,8 +243,7 @@ namespace timeseries {
 			assert (std::make_pair(a[i],a[i]) == *++zi);
 		}
 		{
-			auto a2 = make_apply([](int i) { return i*i;}, a);
-			auto zi = make_pair(&a[0], a2);
+			auto zi = timeseries::make_pair(a, make_apply([](int i) { return i*i;}, a));
 			int i = 0;
 			assert (std::make_pair(a[i],a[i]*a[i]) == *zi++);
 			++i;
