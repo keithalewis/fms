@@ -254,8 +254,4 @@ namespace timeseries {
 	}
 
 #endif // _DEBUG
-/*
-	template<class T, class X>
-	class function_iterator : std::iterator<std::forward_iterator_tag, std::pair<T,X>>
-*/
 } // timeseries
