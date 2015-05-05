@@ -1,5 +1,6 @@
 // range.cpp - test range functions
 #include <iostream>
+#include "primitives.h"
 #include "range.h"
 #include "range_apply.h"
 #include "range_pair.h"

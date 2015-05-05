@@ -131,7 +131,33 @@ namespace range {
 	{
 		return concatenate<I,J,T>(i, j);
 	}
+/*
+	template<class I, class T = typename std::iterator_traits<I>::value_type>
+	class cycle : public iterator<T*> {
+		std::vector<I> i;
+		size_t at;
+	public:
+		cycle(const std::initializer_list<I>& i)
+			: i(i.begin(), i.end()), at(0)
+		{ }
+		~cycle()
+		{ }
+		bool operator==(const cycle& i_) const
+		{
+			return i == i_.i && at == i_.at;
+		}
+		T operator*() const
+		{
+			return *i[at];
+		}
+		cycle& operator++()
+		{
+			for (size_t j = (at + 1)) {
 
+			}
+		}
+	};
+*/
 #ifdef _DEBUG
 	inline void test_iterator()
 	{

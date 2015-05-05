@@ -88,7 +88,12 @@ namespace range {
 			sequence<int> s(0,1,3), t(3,1);
 			auto st = make_concatenate(s,t);
 			assert (*st == 0);
-			assert (*st == 0);
+			assert (*++st == 1);
+			assert (*++st == 2);
+			assert (*++st == 3);
+			assert (*++st == 4);
+			assert (*st++ == 4);
+			assert (*st == 5);
 		}
 	}
 

@@ -78,6 +78,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="primitives.h" />
     <ClInclude Include="range.h" />
     <ClInclude Include="range_apply.h" />
     <ClInclude Include="range_binop.h" />

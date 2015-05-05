@@ -15,7 +15,15 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="iterator.h">
+    <ClCompile Include="iterator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="forward.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="enumerator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
