@@ -1,6 +1,7 @@
 // input.h - iterators, functions, and adapters
 #pragma once
 #include <iterator>
+//#include <initializer_list>
 
 namespace iterator {
 
@@ -21,6 +22,11 @@ namespace iterator {
 		input& operator=(const input&) = default;
 		~input()
 		{ }
+
+		operator const I&() const
+		{
+			return i;
+		}
 
 		// implement
 		T operator*(void) const
@@ -45,16 +51,18 @@ namespace iterator {
 		}
 	};
 
-	template<class I>
-	inline input<I> make_input(const I& i)
+	template<class I, class T = typename std::iterator_traits<I>::value_type>
+	inline input<I> make_input(I i)
 	{
-		return input<I>(i);
+		return input<I,T>(i);
 	}
-
 } // input
 
 #ifdef _DEBUG
 #include <cassert>
+#include <algorithm>
+#include <numeric>
+#include <vector>
 
 using namespace iterator;
 
@@ -68,6 +76,16 @@ inline void test_input()
 		assert (*c == *b);
 		c++, b++;
 		assert (*c == *b);
+
+		c = make_input(a);
+		c = make_input(&a[0]);
+		c = make_input(std::begin(a));
+
+		assert (c != b);
+		c = b;
+		assert (c == b);
+		c = make_input(a);
+		assert (c == a);
 	}
 	{
 		input<int*> f(a);
@@ -77,7 +95,7 @@ inline void test_input()
 		assert (*f == 2);
 	}
 	{
-		auto f = make_input(std::begin(a));
+		auto f = make_input(a);
 		assert (*f == 0);
 		assert (*++f == 1);
 		f++;
@@ -89,6 +107,45 @@ inline void test_input()
 		assert (*++f == 1);
 		f++;
 		assert (*f == 2);
+	}
+	{
+		const int a0[] = {0,1,2}, a1[] = {3,4};
+		std::vector<input<const int*>> a(2);
+		a[0] = make_input(&a0[0]);
+		a[1] = make_input(&a1[0]);
+
+		auto b = make_input(a.begin());
+		auto c = *b;
+		assert (*c == 0);
+		assert (*++c == 1);
+		++c;
+		assert (*c == 2);
+
+		c = *++b;
+		assert (*c == 3);
+		assert (*++c == 4);
+	}
+	{
+		const int a0[] = {0,1,2}, a1[] = {3,4};
+		input<const int*> a[2];
+		a[0] = make_input(a0);
+		a[1] = make_input(a1);
+
+		auto b = make_input(a);
+		auto c = *b;
+		assert (*c == 0);
+		assert (*++c == 1);
+		++c;
+		assert (*c == 2);
+
+		c = *++b;
+		assert (*c == 3);
+		assert (*++c == 4);
+	}
+	{
+		auto b = make_input(std::begin(a));
+		auto e = make_input(std::end(a));
+		assert (3 == std::accumulate(b, e, 0));
 	}
 }
 

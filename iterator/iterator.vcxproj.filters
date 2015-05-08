@@ -44,5 +44,14 @@
     <ClInclude Include="input.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="binop.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="constant.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="pair.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
