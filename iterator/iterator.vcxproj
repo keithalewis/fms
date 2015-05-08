@@ -78,8 +78,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="apply.h" />
+    <ClInclude Include="concatenate.h" />
     <ClInclude Include="enumerator.h" />
-    <ClInclude Include="forward.h" />
+    <ClInclude Include="factorial.h" />
+    <ClInclude Include="input.h" />
+    <ClInclude Include="iterator.h" />
+    <ClInclude Include="sequence.h" />
+    <ClInclude Include="skip.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="iterator.cpp" />

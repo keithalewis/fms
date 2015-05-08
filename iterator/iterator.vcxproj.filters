@@ -20,10 +20,28 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="forward.h">
+    <ClInclude Include="enumerator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="enumerator.h">
+    <ClInclude Include="skip.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="iterator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="concatenate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sequence.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="factorial.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="apply.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="input.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

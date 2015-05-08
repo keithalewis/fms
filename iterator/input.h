@@ -1,24 +1,25 @@
-// forward.h - iterators, functions, and adapters
+// input.h - iterators, functions, and adapters
 #pragma once
 #include <iterator>
 
 namespace iterator {
 
-	// read-only forward iterator
+	// read-only input iterator
 	template<class I, class T = typename std::iterator_traits<I>::value_type>
-	class forward : public std::iterator<std::forward_iterator_tag, T> {
+	class input : public std::iterator<std::input_iterator_tag, T> {
+	protected:
 		I i;
 	public:
-		forward()
+		input()
 		{ }
-		forward(I i)
+		input(I i)
 			: i(i)
 		{ }
-		forward(const forward&) = default;
-		forward(forward&&) = default;
-		forward& operator=(forward&&) = default;
-		forward& operator=(const forward&) = default;
-		~forward()
+		input(const input&) = default;
+		input(input&&) = default;
+		input& operator=(input&&) = default;
+		input& operator=(const input&) = default;
+		~input()
 		{ }
 
 		// implement
@@ -27,16 +28,16 @@ namespace iterator {
 			return *i;
 		}
 		// implement
-		forward& operator++()
+		input& operator++()
 		{
 			++i;
 
 			return *this;
 		}
 		// implement
-		forward operator++(int)
+		input operator++(int)
 		{
-			forward i_(i);
+			input i_(i);
 
 			++i;
 
@@ -45,45 +46,45 @@ namespace iterator {
 	};
 
 	template<class I>
-	inline forward<I> make_forward(const I& i)
+	inline input<I> make_input(const I& i)
 	{
-		return forward<I>(i);
+		return input<I>(i);
 	}
 
-} // forward
+} // input
 
 #ifdef _DEBUG
 #include <cassert>
 
 using namespace iterator;
 
-inline void test_forward()
+inline void test_input()
 {
 	int a[] = {0,1,2};
 
 	{
-		forward<int*> b(a), c;
+		input<int*> b(a), c;
 		c = b;
 		assert (*c == *b);
 		c++, b++;
 		assert (*c == *b);
 	}
 	{
-		forward<int*> f(a);
+		input<int*> f(a);
 		assert (*f == 0);
 		assert (*++f == 1);
 		f++;
 		assert (*f == 2);
 	}
 	{
-		auto f = make_forward(std::begin(a));
+		auto f = make_input(std::begin(a));
 		assert (*f == 0);
 		assert (*++f == 1);
 		f++;
 		assert (*f == 2);
 	}
 	{
-		forward<int*, double> f(a);
+		input<int*, double> f(a);
 		assert (*f == 0);
 		assert (*++f == 1);
 		f++;
