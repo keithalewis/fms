@@ -9,13 +9,11 @@ namespace iterator {
 		class T = typename std::iterator_traits<I>::value_type,
 		class U = typename std::iterator_traits<J>::value_type>
 	class pair : public input<std::pair<I,J>, std::pair<T,U>> {
-//		std::pair<I,J> ij;
 	public:
 		using IJ = input<std::pair<I,J>, std::pair<T,U>>;
 		pair()
 		{ }
 		pair(I i, J j)
-//			: ij(std::pair<I,J>(i,j))
 			: IJ(std::pair<I,J>(i,j))
 		{ }
 		pair(const pair&) = default;
@@ -25,13 +23,8 @@ namespace iterator {
 		~pair()
 		{ }
 
-		operator const std::pair<I,J>&() const
-		{
-			return IJ::i; //ij;
-		}
 		bool operator==(const pair& p) const
 		{
-//			return ij == p.ij;
 			return IJ::i == p.i;
 		}
 		bool operator!=(const pair& p) const
@@ -41,13 +34,10 @@ namespace iterator {
 
 		std::pair<T,U> operator*() const
 		{
-//			return std::pair<T,U>(*ij.first, *ij.second);
 			return std::pair<T,U>(*IJ::i.first,*IJ::i.second);
 		}
 		pair& operator++()
 		{
-//			++ij.first;
-//			++ij.second;
 			++IJ::i.first;
 			++IJ::i.second;
 

@@ -82,16 +82,20 @@
     <ClInclude Include="concatenate.h" />
     <ClInclude Include="constant.h" />
     <ClInclude Include="enumerator.h" />
+    <ClInclude Include="expr.h" />
     <ClInclude Include="factorial.h" />
     <ClInclude Include="input.h" />
+    <ClInclude Include="iota.h" />
     <ClInclude Include="iterator.h" />
-    <ClInclude Include="binop.h" />
     <ClInclude Include="pair.h" />
     <ClInclude Include="sequence.h" />
     <ClInclude Include="skip.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="iterator.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="README.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

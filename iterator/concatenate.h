@@ -5,10 +5,9 @@
 namespace iterator {
 
 	template<class I, class J,
-		class T = typename std::common_type<
+		class T = typename std::common_type_t<
 			typename std::iterator_traits<I>::value_type,
-			typename std::iterator_traits<J>::value_type
-		>::type>
+			typename std::iterator_traits<J>::value_type>>
 	class concatenate : public enumerator<J, T> {
 		I i;
 		J j;
@@ -45,10 +44,9 @@ namespace iterator {
 		}
 	};
 	template<class I, class J,
-		class T = typename std::common_type<
+		class T = typename std::common_type_t<
 			typename std::iterator_traits<I>::value_type,
-			typename std::iterator_traits<J>::value_type
-		>::type>
+			typename std::iterator_traits<J>::value_type>>
 	inline concatenate<I,J,T> make_concatenate(I i, J j)
 	{
 		return concatenate<I,J,T>(i, j);
@@ -66,7 +64,7 @@ inline void test_concatenate()
 	int j[] = {3,4};
 
 	{
-		concatenate<enumerator<const int*>,enumerator<const int*>> c(make_enumerator(i), make_enumerator(j)), d;
+		concatenate<enumerator<int*>,enumerator<int*>> c(make_enumerator(i,0), make_enumerator(j)), d;
 		d = c;
 		assert (*d == *c);
 		assert (*c == 1);
@@ -76,7 +74,7 @@ inline void test_concatenate()
 		assert (*c == 4);
 	}
 	{
-		auto c = make_concatenate(make_enumerator(i), make_enumerator(j));
+		auto c = make_concatenate(make_enumerator(i,0), make_enumerator(j));
 		assert (*c == 1);
 		assert (*++c == 2);
 		assert (*++c == 3);
@@ -84,7 +82,7 @@ inline void test_concatenate()
 		assert (*c == 4);
 	}
 	{
-		auto c = make_concatenate(make_enumerator(i), make_enumerator(j));
+		auto c = make_concatenate(make_enumerator(i,0), make_enumerator(j));
 		assert (*c == 1);
 		assert (*++c == 2);
 		assert (*++c == 3);
