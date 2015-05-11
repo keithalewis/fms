@@ -35,8 +35,8 @@ namespace iterator {
 
 	template<class I, class T = typename std::iterator_traits<I>::value_type>
 	class input : public input_base<I,T> {
-		I i;
 	public:
+		I i;
 		input()
 		{ }
 		input(I i)
@@ -170,6 +170,5 @@ inline void test_input()
 		assert (3 == std::accumulate(b, e, 0));
 	}
 }
-
 
 #endif // _DEBUG
