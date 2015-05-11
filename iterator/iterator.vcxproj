@@ -88,6 +88,7 @@
     <ClInclude Include="iota.h" />
     <ClInclude Include="iterator.h" />
     <ClInclude Include="pair.h" />
+    <ClInclude Include="pow.h" />
     <ClInclude Include="sequence.h" />
     <ClInclude Include="skip.h" />
   </ItemGroup>

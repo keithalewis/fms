@@ -5,17 +5,16 @@
 namespace iterator {
 
 	template<class I, class J,
-		class T = typename std::common_type_t<
+		class U = typename std::common_type_t<
 			typename std::iterator_traits<I>::value_type,
 			typename std::iterator_traits<J>::value_type>>
-	class concatenate : public enumerator<J, T> {
-		I i;
-		J j;
+	class concatenate : public enumerator_base<std::pair<I,J>, U> {
+		std::pair<I,J> ij;
 	public:
 		concatenate()
 		{ }
 		concatenate(I i, J j)
-			: i(i), j(j)
+			: ij(std::make_pair(i,j))
 		{ }
 		concatenate(const concatenate&) = default;
 		concatenate& operator=(const concatenate&) = default;
@@ -24,13 +23,20 @@ namespace iterator {
 		~concatenate()
 		{ }
 
-		T operator*() const
+		operator bool() const
 		{
-			return i ? *i : *j;
+			return ij.first || ij.second;
+		}
+		U operator*() const
+		{
+			return ij.first ? *ij.first : *ij.second;
 		}
 		concatenate& operator++()
 		{
-			i ? ++i : ++j;
+			if (ij.first)
+				++ij.first;
+			else
+				++ij.second;
 
 			return *this;
 		}
@@ -44,12 +50,12 @@ namespace iterator {
 		}
 	};
 	template<class I, class J,
-		class T = typename std::common_type_t<
+		class U = typename std::common_type_t<
 			typename std::iterator_traits<I>::value_type,
 			typename std::iterator_traits<J>::value_type>>
-	inline concatenate<I,J,T> make_concatenate(I i, J j)
+	inline concatenate<I,J,U> make_concatenate(I i, J j)
 	{
-		return concatenate<I,J,T>(i, j);
+		return concatenate<I,J,U>(i, j);
 	}
 
 } // iterator
@@ -64,7 +70,7 @@ inline void test_concatenate()
 	int j[] = {3,4};
 
 	{
-		concatenate<enumerator<int*>,enumerator<int*>> c(make_enumerator(i,0), make_enumerator(j)), d;
+		concatenate<null_enumerator<int*>,counted_enumerator<int*>> c(make_null_enumerator(i), make_counted_enumerator(j, 2)), d;
 		d = c;
 		assert (*d == *c);
 		assert (*c == 1);
@@ -74,21 +80,14 @@ inline void test_concatenate()
 		assert (*c == 4);
 	}
 	{
-		auto c = make_concatenate(make_enumerator(i,0), make_enumerator(j));
+		auto c = make_concatenate(make_null_enumerator(i), make_counted_enumerator(j, 2));
 		assert (*c == 1);
 		assert (*++c == 2);
 		assert (*++c == 3);
 		c++;
 		assert (*c == 4);
 	}
-	{
-		auto c = make_concatenate(make_enumerator(i,0), make_enumerator(j));
-		assert (*c == 1);
-		assert (*++c == 2);
-		assert (*++c == 3);
-		c++;
-		assert (*c == 4);
-	}
+
 }
 
 #endif // _DEBUG

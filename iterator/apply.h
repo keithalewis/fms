@@ -1,18 +1,20 @@
 // apply.h - apply a function to an iterator
 #pragma once
+#include <functional>
 #include "input.h"
 
 namespace iterator {
 
 	template<class F, class I, class T = typename std::iterator_traits<I>::value_type,
 		class U = typename std::result_of_t<F(T)>>
-	class apply : public input<I,T> {
+	class apply : public input_base<I,U> {
 		std::function<U(T)> f;
+		I i;
 	public:
 		apply()
 		{ }
 		apply(F f, I i)
-			: f(f), input<I,T>(i)
+			: f(f), i(i)
 		{ }
 		apply(const apply&) = default;
 		apply(apply&&) = default;
@@ -20,14 +22,18 @@ namespace iterator {
 		apply& operator=(apply&&) = default;
 		~apply()
 		{ }
-
-		U operator*() const
+/*
+		operator I()
 		{
-			return f(*input<I,T>::i);
+			return i;
+		}
+*/		U operator*() const
+		{
+			return f(*i);
 		}
 		apply& operator++()
 		{
-			input<I,T>::operator++();
+			++i;
 
 			return *this;
 		}

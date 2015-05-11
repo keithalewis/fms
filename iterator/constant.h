@@ -4,14 +4,20 @@
 
 namespace iterator {
 
-	template<class T>
-	class constant : public input<const T*,T> {
+	template<class T = double>
+	class constant : public input_base<const T*,T> {
 		T t;
 	public:
-		using input<const T*,T>::input;
+//		using input_base<const T*,T>::input_base;
 
 		constant(const T& t = 0)
 			: t(t)
+		{ }
+		constant(const constant& c) = default;
+		constant& operator=(const constant& c) = default;
+		constant(constant&& c) = default;
+		constant& operator=(constant&& c) = default;
+		~constant()
 		{ }
 
 		T operator*() const
@@ -27,6 +33,12 @@ namespace iterator {
 			return *this;
 		}
 	};
+	// instead of make_constant
+	template<class T>
+	inline constant<T> c(const T& t)
+	{
+		return constant<T>(t);
+	}
 } // iterator
 
 #ifdef _DEBUG
@@ -45,6 +57,9 @@ inline void test_constant()
 	assert (*two == 2);
 	assert (*++two == 2);
 	assert (*two++ == 2);
+
+	auto four = c(4);
+	assert (*four++ == 4 && *++four == 4);
 }
 
 #endif // _DEBUG

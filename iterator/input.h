@@ -11,13 +11,14 @@ namespace iterator {
 	public:
 		input_base()
 		{ }
-
 		~input_base()
 		{ }
+/*
 		operator I()
 		{
 			return I::operator I();
 		}
+*/
 		// not necessarily I::value_type
 		T operator*(void) const
 		{
@@ -49,10 +50,11 @@ namespace iterator {
 		~input()
 		{ }
 		
-		operator I()
+		operator I() const
 		{
 			return i;
 		}
+
 		T operator*() const
 		{
 			return *i;
@@ -107,7 +109,7 @@ inline void test_input()
 		c = b;
 		assert (c == b);
 		c = make_input(a);
-//		assert (c == a);
+		assert (c == a);
 	}
 	{
 		input<int*> f(a);

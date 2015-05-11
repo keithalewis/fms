@@ -1,13 +1,13 @@
 // skip.h
 #pragma once
+#include <utility>
 
 namespace iterator {
 
-	template<class I>
-	inline I skip(I i, size_t n)
+	template<class I, class N>
+	inline I skip(I i, N n)
 	{
-		while (n--)
-			++i;
+		std::advance(i, n);
 
 		return i;
 	}

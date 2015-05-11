@@ -1,15 +1,6 @@
-# Iterator - input iterator classes
+# Iterator - input iterator classes for numerics
 
-constexpr auto n_ = factorial{};
-double e = sum(1/n_);
-double x = 1;
-double ex = sum(pow(x)/n_); // exp(x)
+The basic idea is that input<I,T> uses I for iteration and returns value_type T perhaps different from I::value_type.
+The canonical example is applying a function from T -> U. The resulting iterator should be of type input<T,U>.
+All iterators are value types and lazily evaluate.
 
-template<class I, T = input<I>::value_type>
-double sum(input<I> i, std::function<bool(input<I> i, T)> p = [](input<I> i, T t) { return *i != 0 || *i + 1 != 1; })
-{
-	double s = 0;
-
-	while (p(i,s))
-		s += *i++;
-}

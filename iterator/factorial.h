@@ -1,27 +1,26 @@
 // factorial.h - factorial enumerator
 #pragma once
-#include <limits>
 #include "input.h"
 
 namespace iterator {
 
-	template<class T>
-	class factorial : public input<const T*,T> {
+	template<class T = double>
+	class factorial : public input_base<const T*,T> {
 		T i, n_;
 	public:
 		factorial(const T& i = T(0))
 			: i(i), n_(1)
 		{ }
-		factorial(const factorial&) = default;
+/*		factorial(const factorial&) = default;
 		factorial(factorial&&) = default;
 		factorial& operator=(const factorial&) = default;
 		factorial& operator=(factorial&&) = default;
 		~factorial()
 		{ }
-
-		bool operator!=(const factorial& f) const
+*/
+		operator T*()
 		{
-			return i != f.i || n_ != f.n_;
+			return &n_;
 		}
 		T operator*() const
 		{

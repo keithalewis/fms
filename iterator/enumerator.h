@@ -9,10 +9,45 @@ namespace iterator {
 
 	// read-only input iterator with sentinel
 	template<class I, class T = typename std::iterator_traits<I>::value_type>
-	class enumerator : public input<I,T> {
-		std::function<bool(const I&)> e; // false when done
+	struct enumerator_base : public std::iterator<std::input_iterator_tag, T> {
+	public:
+		enumerator_base()
+		{ }
+		~enumerator_base()
+		{ }
+/*
+		operator I()
+		{
+			return I::operator I();
+		}
+*/		// return false when done
+		operator bool() const
+		{
+			return I::operator bool();
+		}
+		// not necessarily I::value_type
+		T operator*(void) const
+		{
+			return I::operator*();
+		}
+		enumerator_base& operator++()
+		{
+			return I::operator++();
+		}
+		enumerator_base operator++(int)
+		{
+			return I::operator++(0);
+		}
+	};
+
+	template<class I, class T = typename std::iterator_traits<I>::value_type>
+	class enumerator : public enumerator_base<I,T> {
+		I i;
 	public:
 		enumerator()
+		{ }
+		enumerator(I i)
+			: i(i)
 		{ }
 		enumerator(const enumerator&) = default;
 		enumerator(enumerator&&) = default;
@@ -21,76 +56,148 @@ namespace iterator {
 		~enumerator()
 		{ }
 
-		// default infinite
-		enumerator(I i)
-			: input<I,T>(i), e([](const I&) { return true; })
-		{ }
-		// counted or null terminated if n = 0
-		enumerator(I i, size_t n)
-			: input<I,T>(i)
+		operator I() const
 		{
-			if (n)
-				e = [n](const I&) mutable { return n-- != 0; };
-			else
-				e = [](const I& i) { return *i != 0; };
+			return i;
 		}
-		enumerator(I i, const std::function<bool(const I&)>& e)
-			: input<I,T>(i), e(e)
-		{ }
-
-		operator const I&() const
-		{
-			return input<I,T>::i;
-		}
-		bool operator==(const I& i) const
-		{
-			return input<I,T>::i == i;
-		}
-		bool operator!=(const I& i) const
-		{
-			return !operator==(i);
-		}
-
 		operator bool() const
 		{
-			return e(input<I,T>::i);
+			return true; // infinite
 		}
 		T operator*() const
 		{
-#ifdef _DEBUG
-			if (!e(input<I,T>::i))
-				throw std::out_of_range("iterator::enumerator::operator*(): out of range");
-#endif
-			return *input<I,T>::i;
+			return *i;
 		}
 		enumerator& operator++()
 		{
-			++input<I,T>::i;
+			++i;
 
 			return *this;
 		}
 		enumerator operator++(int)
 		{
-			enumerator i_(input<I,T>::i);
+			enumerator e(*this);
 
 			operator++();
 
-			return i_;
+			return e;
 		}
 	};
-
 	template<class I, class T = typename std::iterator_traits<I>::value_type>
 	inline enumerator<I,T> make_enumerator(I i)
 	{
 		return enumerator<I,T>(i);
 	}
 
+	// null terminated enumerator
+	template<class I, class T = typename std::iterator_traits<I>::value_type>
+	class null_enumerator : public enumerator_base<enumerator<I>,T> {
+	I i;
+	public:
+		null_enumerator()
+		{ }
+		null_enumerator(I i)
+			: i(i)
+		{ }
+		null_enumerator(const null_enumerator&) = default;
+		null_enumerator(null_enumerator&&) = default;
+		null_enumerator& operator=(null_enumerator&&) = default;
+		null_enumerator& operator=(const null_enumerator&) = default;
+		~null_enumerator()
+		{ }
+
+		operator I() const
+		{
+			return i;
+		}
+		operator bool() const
+		{
+			return *i != 0;
+		}
+		T operator*() const
+		{
+			return *i;
+		}
+		null_enumerator& operator++()
+		{
+			++i;
+
+			return *this;
+		}
+		null_enumerator operator++(int)
+		{
+			null_enumerator e(*this);
+
+			operator++();
+
+			return e;
+		}
+	};
+	template<class I, class T = typename std::iterator_traits<I>::value_type>
+	inline null_enumerator<I,T> make_null_enumerator(I i)
+	{
+		return null_enumerator<I,T>(i);
+	}
+
+	// null terminated enumerator
+	template<class I, class T = typename std::iterator_traits<I>::value_type>
+	class counted_enumerator : public enumerator_base<enumerator<I>,T> {
+	I i;
+	mutable size_t n;
+	public:
+		counted_enumerator()
+		{ }
+		counted_enumerator(I i, size_t n)
+			: i(i), n(n)
+		{ }
+		counted_enumerator(const counted_enumerator&) = default;
+		counted_enumerator(counted_enumerator&&) = default;
+		counted_enumerator& operator=(counted_enumerator&&) = default;
+		counted_enumerator& operator=(const counted_enumerator&) = default;
+		~counted_enumerator()
+		{ }
+
+		operator I() const
+		{
+			return i;
+		}
+		operator bool() const
+		{
+			return n != 0;
+		}
+		T operator*() const
+		{
+			return *i;
+		}
+		counted_enumerator& operator++()
+		{
+			++i;
+			--n;
+
+			return *this;
+		}
+		counted_enumerator operator++(int)
+		{
+			counted_enumerator e(*this);
+
+			operator++();
+
+			return e;
+		}
+	};
+	template<class I, class T = typename std::iterator_traits<I>::value_type>
+	inline counted_enumerator<I,T> make_counted_enumerator(I i, size_t n)
+	{
+		return counted_enumerator<I,T>(i, n);
+	}
+
+	/*
+
 	template<class I, class T = typename std::iterator_traits<I>::value_type>
 	inline enumerator<I,T> make_enumerator(I i, size_t n)
 	{
 		return enumerator<I,T>(i, n);
 	}
-	/*
 	template<class C>
 	struct has_begin {
 		template<typename C, size_t (C::*)() const> struct SFINAE {};
@@ -98,13 +205,13 @@ namespace iterator {
 		template<typename C> static int test(...);
 		static const bool yes = sizeof(test<C>(0)) == sizeof(char);
 	};
-	*/
 	template<class C>
 	inline	enumerator<typename C::iterator,typename C::value_type>
 	make_enumerator(C c)
 	{
 		return enumerator<typename C::iterator,typename C::value_type>(std::begin(c), std::end(c));
 	}
+	*/
 	
 } // iterator
 
@@ -114,6 +221,16 @@ namespace iterator {
 
 using namespace iterator;
 
+template<class E>
+size_t count(E e) { 
+	size_t c = 0; 
+	while (e) { 
+		++e; 
+		++c; 
+	} 
+	return c; 
+};
+
 inline void test_enumerator()
 {
 	int a[] = {1,2,0};
@@ -121,13 +238,13 @@ inline void test_enumerator()
 	{
 		enumerator<int*> b(a), c;
 		c = b;
-		assert (b == c);
-		assert (*c == *b);
+//		assert (b == c);
+//		assert (*c == *b);
 		assert (b);
 		assert (*++b == 2);
 		b++;
 		assert (b && c);
-		assert (b != c);
+//		assert (b != c);
 	}
 	{
 		auto e = make_enumerator(a);
@@ -136,23 +253,14 @@ inline void test_enumerator()
 		e++;
 	}
 	{
-		auto count = [](enumerator<const char*> e) { 
-			int c = 0; 
-			while (e) { 
-				++e; 
-				++c; 
-			} return c; 
-		};
-		auto e = make_enumerator("foo", 0);
+		auto e = make_null_enumerator("foo");
 		assert (3 == count(e));
-		assert (2 == count(make_enumerator("bar", 2)));
 	}
 	{
-		auto e = make_enumerator(a, 0);
+		auto e = make_counted_enumerator(a, 2);
 		assert (e);
 		assert (*++e == 2);
 		e++;
-		//assert (*e == 0); // throws
 		assert (!e);
 	}
 /*	{
