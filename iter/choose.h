@@ -48,7 +48,7 @@ namespace iter {
 
 #ifdef _DEBUG
 #include <cassert>
-#include "sum.h"
+#include "accumulate.h"
 
 using namespace iter;
 

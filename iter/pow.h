@@ -11,11 +11,11 @@ namespace iter {
 		pow(T t = 0)
 			: t(t), t_(1)
 		{ }
-		pow(const pow&) = default;
+/*		pow(const pow&) = default;
 		pow& operator=(const pow&) = default;
 		pow(pow&&) = default;
 		pow& operator=(pow&&) = default;
-		~pow()
+*/		~pow()
 		{ }
 
 		T operator*() const

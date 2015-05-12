@@ -5,21 +5,23 @@
 namespace iter {
 
 	template<class T = double>
-	class constant : public input_base<const T*,T> {
+	class constant : public enumerator_base<const T*,T> {
 		T t;
+		mutable size_t n;
 	public:
-//		using input_base<const T*,T>::input_base;
-
-		constant(const T& t = 0)
-			: t(t)
-		{ }
-		constant(const constant& c) = default;
-		constant& operator=(const constant& c) = default;
-		constant(constant&& c) = default;
-		constant& operator=(constant&& c) = default;
-		~constant()
+		// defaults so infinite
+		constant(const T& t = 0, size_t n = 0)
+			: t(t), n(n)
 		{ }
 
+		operator T*() const
+		{
+			return &t;
+		}
+		operator bool() const
+		{
+			return --n;
+		}
 		T operator*() const
 		{
 			return t;

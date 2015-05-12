@@ -16,11 +16,11 @@ namespace iter {
 		concatenate(I i, J j)
 			: ij(std::make_pair(i,j))
 		{ }
-		concatenate(const concatenate&) = default;
+/*		concatenate(const concatenate&) = default;
 		concatenate& operator=(const concatenate&) = default;
 		concatenate(concatenate&&) = default;
 		concatenate& operator=(concatenate&&) = default;
-		~concatenate()
+*/		~concatenate()
 		{ }
 
 		operator bool() const
@@ -59,6 +59,18 @@ namespace iter {
 	}
 
 } // iter
+
+/*
+template<class I, class J,
+	class T = typename std::iterator_traits<I>::value_type,
+	class U = typename std::iterator_traits<J>::value_type,
+	class TU = typename std::common_type_t<T,U>>
+inline iter::concatenate<I,J,TU> operator,(I i, J j)
+{
+	return iter::concatenate<I,J,TU>(i, j);
+}
+*/
+
 #ifdef _DEBUG
 #include <cassert>
 
@@ -87,7 +99,11 @@ inline void test_concatenate()
 		c++;
 		assert (*c == 4);
 	}
+	{
+		auto b = make_null_enumerator(i);
+//		auto bb = operator,(b,b);
 
+	}
 }
 
 #endif // _DEBUG

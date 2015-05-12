@@ -21,7 +21,7 @@ namespace poly {
 	template<class X = double>
 	static std::function<X(X)> H(size_t n) 
 	{
-		static std::vector<std::function<X(X)>> H_;
+		static std::vector<std::function<X(const X&)>> H_;
 
 		if (n >= H_.size()) {
 			size_t _n = H_.size();

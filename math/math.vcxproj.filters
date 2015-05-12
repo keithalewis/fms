@@ -15,15 +15,18 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="prob.h">
+    <ClInclude Include="math.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="normal.h">
+    <ClInclude Include="atan.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="exp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="prob.cpp">
+    <ClCompile Include="math.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

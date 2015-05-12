@@ -11,10 +11,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{71EF94A6-19ED-4829-ADC0-AF12661DACED}</ProjectGuid>
+    <ProjectGuid>{D3C28CD1-DE53-47AC-AA72-821FF1E9FE72}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>iterator</RootNamespace>
-    <ProjectName>iter</ProjectName>
+    <RootNamespace>math</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -79,27 +78,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="apply.h" />
-    <ClInclude Include="choose.h" />
-    <ClInclude Include="concatenate.h" />
-    <ClInclude Include="constant.h" />
-    <ClInclude Include="enumerator.h" />
-    <ClInclude Include="expr.h" />
-    <ClInclude Include="factorial.h" />
-    <ClInclude Include="input.h" />
-    <ClInclude Include="iota.h" />
-    <ClInclude Include="iter.h" />
-    <ClInclude Include="pair.h" />
-    <ClInclude Include="pow.h" />
-    <ClInclude Include="sequence.h" />
-    <ClInclude Include="skip.h" />
-    <ClInclude Include="sum.h" />
+    <ClInclude Include="atan.h" />
+    <ClInclude Include="exp.h" />
+    <ClInclude Include="math.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="iter.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="README.md" />
+    <ClCompile Include="math.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -7,6 +7,7 @@ using namespace iter;
 int main() 
 {
 	try {
+		test_accumulate();
 		test_apply();
 		test_choose();
 		test_concatenate();
@@ -14,9 +15,10 @@ int main()
 		test_enumerator();
 		test_expr();
 		test_factorial();
-		test_input();
+//		test_input();
 		test_iterator();
 		test_iota();
+		test_last();
 		test_pair();
 		test_pow();
 		test_skip();

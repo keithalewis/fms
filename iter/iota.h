@@ -11,12 +11,6 @@ namespace iter {
 		iota(T t = 0)
 			: t(t)
 		{ }
-		iota(const iota&) = default;
-		iota& operator=(const iota&) = default;
-		iota(iota&&) = default;
-		iota& operator=(iota&&) = default;
-		~iota()
-		{ }
 
 		T operator*() const
 		{

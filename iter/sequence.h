@@ -12,11 +12,11 @@ namespace iter {
 		sequence(const T& start = 0, const T& step = 1, const T& stop = std::numeric_limits<T>::max())
 			: i(start), start(start), step(step), stop(stop)
 		{ }
-		sequence(const sequence&) = default;
+/*		sequence(const sequence&) = default;
 		sequence(sequence&&) = default;
 		sequence& operator=(const sequence&) = default;
 		sequence& operator=(sequence&&) = default;
-		~sequence()
+*/		~sequence()
 		{ }
 
 		operator bool() const

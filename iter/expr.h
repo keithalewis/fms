@@ -14,13 +14,13 @@ namespace iter {
 		binop(O o, I i, J j)
 			: o(o), ij(std::make_pair(i, j))
 		{ }
-		binop(const binop&) = default;
+/*		binop(const binop&) = default;
 		binop(binop&&) = default;
 		binop& operator=(const binop&) = default;
 		binop& operator=(binop&&) = default;
 		~binop()
 		{ }
-
+*/
 		operator std::pair<I,J>() const
 		{
 			return ij;
@@ -53,14 +53,14 @@ namespace iter {
 		class T = typename std::iterator_traits<I>::value_type, 
 		class U = typename std::iterator_traits<J>::value_type,
 		class V = std::common_type_t<T,U>>
-	inline auto make_binop(O o, I i, J j)
+	inline binop<O,I,J,T,U,V> make_binop(O o, I i, J j)
 	{
 		return binop<O,I,J,T,U,V>(o, i, j);
 	}
 
 	template<class I, class J, class T, class U, class V>
 	struct add : public binop<std::plus<V>,I,J,T,U,V> {
-		using binop<std::plus<V>,I,J,T,U,V>::binop;
+//		using binop<std::plus<V>,I,J,T,U,V>::binop;
 		add()
 		{ }
 		add(I i, J j)
@@ -79,7 +79,7 @@ namespace iter {
 
 	template<class I, class J, class T, class U, class V>
 	struct sub : public binop<std::minus<V>,I,J,T,U,V> {
-		using binop<std::minus<V>,I,J,T,U,V>::binop;
+//		using binop<std::minus<V>,I,J,T,U,V>::binop;
 		sub()
 		{ }
 		sub(I i, J j)
@@ -98,7 +98,7 @@ namespace iter {
 
 	template<class I, class J, class T, class U, class V>
 	struct mul : public binop<std::multiplies<V>,I,J,T,U,V> {
-		using binop<std::multiplies<V>,I,J,T,U,V>::binop;
+//		using binop<std::multiplies<V>,I,J,T,U,V>::binop;
 		mul()
 		{ }
 		mul(I i, J j)
@@ -116,7 +116,7 @@ namespace iter {
 
 		template<class I, class J, class T, class U, class V>
 	struct div : public binop<std::divides<V>,I,J,T,U,V> {
-		using binop<std::divides<V>,I,J,T,U,V>::binop;
+//		using binop<std::divides<V>,I,J,T,U,V>::binop;
 		div()
 		{ }
 		div(I i, J j)
@@ -141,22 +141,6 @@ inline iter::add<I,J,T,U,V> operator+(I i, J j)
 {
 	return iter::add<I,J,T,U,V>(i, j);
 }
-/*
-template<class I, class U,
-	class T = typename std::iterator_traits<I>::value_type, 
-	class V = std::common_type_t<T,U>>
-inline iter::add<I,iter::constant<U>,T,U,V> operator+(I i, U u)
-{
-	return iter::add<I,iter::constant<U>,T,U,V>(i, iter::constant<U>(u));
-}
-template<class T, class J,
-	class U = typename std::iterator_traits<J>::value_type,
-	class V = std::common_type_t<T,U>>
-inline iter::add<iter::constant<T>,J,T,U,V> operator+(T t, J j)
-{
-	return iter::add<iter::constant<U>,J,T,U,V>(iter::constant<T>(t), j);
-}
-*/
 template<class I, class J,
 	class T = typename std::iterator_traits<I>::value_type, 
 	class U = typename std::iterator_traits<J>::value_type,
@@ -228,7 +212,7 @@ inline void test_expr()
 	int a[] = {1,2,3};
 
 	{
-//		auto aa = make_add(make_input(a),make_input(a));
+		auto aa_ = make_add(make_input(a),make_input(a));
 		auto aa = make_add(a,a);
 		assert (*aa == 1 + 1);
 		assert (*++aa == 2 + 2);

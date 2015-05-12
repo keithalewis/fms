@@ -19,11 +19,11 @@ namespace iter {
 		pair(const std::pair<I,J>& ij)
 			: ij(ij)
 		{ }
-		pair(const pair&) = default;
+/*		pair(const pair&) = default;
 		pair(pair&&) = default;
 		pair& operator=(const pair&) = default;
 		pair& operator=(pair&&) = default;
-		~pair()
+*/		~pair()
 		{ }
 /*
 		bool operator==(const pair& p) const

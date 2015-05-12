@@ -16,11 +16,11 @@ namespace iter {
 		apply(F f, I i)
 			: f(f), i(i)
 		{ }
-		apply(const apply&) = default;
+/*		apply(const apply&) = default;
 		apply(apply&&) = default;
 		apply& operator=(const apply&) = default;
 		apply& operator=(apply&&) = default;
-		~apply()
+*/		~apply()
 		{ }
 /*
 		operator I()
