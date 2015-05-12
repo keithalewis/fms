@@ -1,4 +1,4 @@
-# Iter - input iterator and enumerator classes for numerical computation
+# iter - input iterator for numerics
 
 This project solves a much simpler problem than current C++ proposals for ranges.
 It provides a limited set of algorithms designed to be easily optimized by modern compilers
@@ -14,7 +14,7 @@ The canonical example is applying a function from T -> U on an input iterator.
 The resulting iterator should be of type `enumerator<T,U>`, but we still need the original iterator
 in order to do lazy evaluation.
 This requires bundling up everything needed for just in time delivery.
-The code is drastically simplified by passing everything by value.
+The implementation is drastically simplified by passing everything by value.
 
 All classes deriving from `enumerator_base` are quite simple: save the iterator and implement
 `operator bool() const`, `operator*`, and `operator++` pre and post increment. That's all!
