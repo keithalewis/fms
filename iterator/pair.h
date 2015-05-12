@@ -3,7 +3,7 @@
 #include <utility>
 #include "input.h"
 
-namespace iterator {
+namespace iter {
 
 	template<class I, class J,
 		class T = typename std::iterator_traits<I>::value_type,
@@ -67,12 +67,12 @@ namespace iterator {
 		return pair<I,J,T,U>(i, j);
 	}
 
-} // iterator
+} // iter
 
 #ifdef _DEBUG
 #include <cassert>
 
-using namespace iterator;
+using namespace iter;
 
 inline void test_pair()
 {

@@ -1,9 +1,9 @@
-// apply.h - apply a function to an iterator
+// apply.h - apply a function to an iter
 #pragma once
 #include <functional>
 #include "input.h"
 
-namespace iterator {
+namespace iter {
 
 	template<class F, class I, class T = typename std::iterator_traits<I>::value_type,
 		class U = typename std::result_of_t<F(T)>>
@@ -27,7 +27,12 @@ namespace iterator {
 		{
 			return i;
 		}
-*/		U operator*() const
+*/
+		operator bool() const
+		{
+			return i;
+		}
+		U operator*() const
 		{
 			return f(*i);
 		}
@@ -52,12 +57,12 @@ namespace iterator {
 		return apply<F,I,T>(f, i);
 	}
 
-} // iterator
+} // iter
 
 #ifdef _DEBUG
 #include <cassert>
 
-using namespace iterator;
+using namespace iter;
 
 inline void test_apply()
 {

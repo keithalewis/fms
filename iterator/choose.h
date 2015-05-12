@@ -2,7 +2,7 @@
 #pragma once
 #include "enumerator.h"
 
-namespace iterator {
+namespace iter {
 
 	template<class T = double>
 	class choose : public enumerator_base<T*,T> {
@@ -29,7 +29,8 @@ namespace iterator {
 		choose& operator++()
 		{
 			++k;
-			nk *= (n - k + 1)/k;
+			nk *= (n - k + 1);
+			nk /= k;
 
 			return *this;
 		}
@@ -43,12 +44,13 @@ namespace iterator {
 		}
 	};
 
-} // iterator
+} // iter
 
 #ifdef _DEBUG
 #include <cassert>
+#include "sum.h"
 
-using namespace iterator;
+using namespace iter;
 
 inline void test_choose()
 {
@@ -61,6 +63,8 @@ inline void test_choose()
 	assert (*++c == 4);
 	assert (*++c == 1);
 	assert (!++c);
+
+	assert (sum(choose<int>(4)) == 2*2*2*2);
 }
 
 #endif // _DEBUG

@@ -1,11 +1,11 @@
-// enumerator.h - iterator::enumerator with operator bool
+// enumerator.h - iter::enumerator with operator bool
 #pragma once
 #include <functional>
 #include <iterator>
 #include <type_traits>
 #include "input.h"
 
-namespace iterator {
+namespace iter {
 
 	// read-only input iterator with sentinel
 	template<class I, class T = typename std::iterator_traits<I>::value_type>
@@ -139,7 +139,7 @@ namespace iterator {
 		return null_enumerator<I,T>(i);
 	}
 
-	// null terminated enumerator
+	// counted enumerator
 	template<class I, class T = typename std::iterator_traits<I>::value_type>
 	class counted_enumerator : public enumerator_base<enumerator<I>,T> {
 	I i;
@@ -191,6 +191,12 @@ namespace iterator {
 		return counted_enumerator<I,T>(i, n);
 	}
 
+	// shorthand
+	template<class I, class T = typename std::iterator_traits<I>::value_type>
+	inline auto e(I i, size_t n)
+	{
+		return counted_enumerator<I,T>(i, n);
+	}
 	/*
 
 	template<class I, class T = typename std::iterator_traits<I>::value_type>
@@ -206,20 +212,20 @@ namespace iterator {
 		static const bool yes = sizeof(test<C>(0)) == sizeof(char);
 	};
 	template<class C>
-	inline	enumerator<typename C::iterator,typename C::value_type>
+	inline	enumerator<typename C::iter,typename C::value_type>
 	make_enumerator(C c)
 	{
-		return enumerator<typename C::iterator,typename C::value_type>(std::begin(c), std::end(c));
+		return enumerator<typename C::iter,typename C::value_type>(std::begin(c), std::end(c));
 	}
 	*/
 	
-} // iterator
+} // iter
 
 #ifdef _DEBUG
 #include <cassert>
 #include <vector>
 
-using namespace iterator;
+using namespace iter;
 
 template<class E>
 size_t count(E e) { 
@@ -262,6 +268,11 @@ inline void test_enumerator()
 		assert (*++e == 2);
 		e++;
 		assert (!e);
+	}
+	{
+		char foo[] = "foo";
+		auto n = e(foo, 3);
+		assert (*n++ == 'f' && *n++ == 'o' && *n++ == 'o' && !n);
 	}
 /*	{
 		std::vector<int> b(std::begin(a), std::end(a));

@@ -2,7 +2,7 @@
 #pragma once
 #include "input.h"
 
-namespace iterator {
+namespace iter {
 
 	template<class T>
 	class iota : public input_base<T*, T> {
@@ -38,10 +38,12 @@ namespace iterator {
 		}
 	};
 
-} // iterator
+} // iter
 
 #ifdef _DEBUG
 #include <cassert>
+
+using iter::iota;
 
 inline void test_iota()
 {

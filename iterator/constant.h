@@ -2,7 +2,7 @@
 #pragma once
 #include "input.h"
 
-namespace iterator {
+namespace iter {
 
 	template<class T = double>
 	class constant : public input_base<const T*,T> {
@@ -33,18 +33,23 @@ namespace iterator {
 			return *this;
 		}
 	};
-	// instead of make_constant
+	template<class T>
+	inline constant<T> make_constant(const T& t)
+	{
+		return constant<T>(t);
+	}
+	// shorthand
 	template<class T>
 	inline constant<T> c(const T& t)
 	{
 		return constant<T>(t);
 	}
-} // iterator
+} // iter
 
 #ifdef _DEBUG
 #include <cassert>
 
-using namespace iterator;
+using namespace iter;
 
 inline void test_constant()
 {

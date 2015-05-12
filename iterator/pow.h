@@ -2,7 +2,7 @@
 #pragma once
 #include "input.h"
 
-namespace iterator {
+namespace iter {
 
 	template<class T>
 	class pow : public input_base<T*, T> {
@@ -38,14 +38,14 @@ namespace iterator {
 		}
 	};
 
-} // iterator
+} // iter
 
 #ifdef _DEBUG
 #include <cassert>
 
 inline void test_pow()
 {
-	iterator::pow<int> p(2);
+	iter::pow<int> p(2);
 
 	assert (*p == 1);
 	assert (*++p == 2);

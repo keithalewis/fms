@@ -4,6 +4,7 @@
 int main()
 {
 	try {
+		test_bell();
 		test_hermite();
 	}
 	catch (...) {

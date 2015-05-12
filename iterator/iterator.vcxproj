@@ -14,6 +14,7 @@
     <ProjectGuid>{71EF94A6-19ED-4829-ADC0-AF12661DACED}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>iterator</RootNamespace>
+    <ProjectName>iter</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -87,14 +88,15 @@
     <ClInclude Include="factorial.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="iota.h" />
-    <ClInclude Include="iterator.h" />
+    <ClInclude Include="iter.h" />
     <ClInclude Include="pair.h" />
     <ClInclude Include="pow.h" />
     <ClInclude Include="sequence.h" />
     <ClInclude Include="skip.h" />
+    <ClInclude Include="sum.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="iterator.cpp" />
+    <ClCompile Include="iter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />

@@ -1,9 +1,9 @@
-// expr.h - iterator expressions
+// expr.h - iter expressions
 #pragma once
 #include <functional>
 #include "constant.h"
 
-namespace iterator {
+namespace iter {
 
 	template<class O, class I, class J, class T, class U, class V>
 	class binop : public input_base<std::pair<I,J>,V> {
@@ -21,9 +21,13 @@ namespace iterator {
 		~binop()
 		{ }
 
-		operator std::pair<I,J>()
+		operator std::pair<I,J>() const
 		{
 			return ij;
+		}
+		operator bool() const
+		{
+			return ij.first && ij.second;
 		}
 		V operator*() const
 		{
@@ -127,37 +131,37 @@ namespace iterator {
 	{
 		return div<I,J,T,U,V>(i, j);
 	}
-} // iterator
+} // iter
 
 template<class I, class J,
 	class T = typename std::iterator_traits<I>::value_type, 
 	class U = typename std::iterator_traits<J>::value_type,
 	class V = std::common_type_t<T,U>>
-inline iterator::add<I,J,T,U,V> operator+(I i, J j)
+inline iter::add<I,J,T,U,V> operator+(I i, J j)
 {
-	return iterator::add<I,J,T,U,V>(i, j);
+	return iter::add<I,J,T,U,V>(i, j);
 }
 /*
 template<class I, class U,
 	class T = typename std::iterator_traits<I>::value_type, 
 	class V = std::common_type_t<T,U>>
-inline iterator::add<I,iterator::constant<U>,T,U,V> operator+(I i, U u)
+inline iter::add<I,iter::constant<U>,T,U,V> operator+(I i, U u)
 {
-	return iterator::add<I,iterator::constant<U>,T,U,V>(i, iterator::constant<U>(u));
+	return iter::add<I,iter::constant<U>,T,U,V>(i, iter::constant<U>(u));
 }
 template<class T, class J,
 	class U = typename std::iterator_traits<J>::value_type,
 	class V = std::common_type_t<T,U>>
-inline iterator::add<iterator::constant<T>,J,T,U,V> operator+(T t, J j)
+inline iter::add<iter::constant<T>,J,T,U,V> operator+(T t, J j)
 {
-	return iterator::add<iterator::constant<U>,J,T,U,V>(iterator::constant<T>(t), j);
+	return iter::add<iter::constant<U>,J,T,U,V>(iter::constant<T>(t), j);
 }
 */
 template<class I, class J,
 	class T = typename std::iterator_traits<I>::value_type, 
 	class U = typename std::iterator_traits<J>::value_type,
 	class V = std::common_type_t<T,U>>
-inline iterator::sub<I,J,T,U,V> operator-(I i, J j)
+inline iter::sub<I,J,T,U,V> operator-(I i, J j)
 {
 	return make_sub(i, j);
 }
@@ -165,7 +169,7 @@ template<class I, class J,
 	class T = typename std::iterator_traits<I>::value_type, 
 	class U = typename std::iterator_traits<J>::value_type,
 	class V = std::common_type_t<T,U>>
-inline iterator::mul<I,J,T,U,V> operator*(I i, J j)
+inline iter::mul<I,J,T,U,V> operator*(I i, J j)
 {
 	return make_mul(i, j);
 }
@@ -173,7 +177,7 @@ template<class I, class J,
 	class T = typename std::iterator_traits<I>::value_type, 
 	class U = typename std::iterator_traits<J>::value_type,
 	class V = std::common_type_t<T,U>>
-inline iterator::div<I,J,T,U,V> operator/(I i, J j)
+inline iter::div<I,J,T,U,V> operator/(I i, J j)
 {
 	return make_div(i, j);
 }
@@ -181,7 +185,7 @@ inline iterator::div<I,J,T,U,V> operator/(I i, J j)
 #ifdef _DEBUG
 #include <cassert>
 
-using namespace iterator;
+using namespace iter;
 
 template<class T, class U, template<typename TU> class O>
 inline void test_expr_binop()

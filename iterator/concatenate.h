@@ -2,7 +2,7 @@
 #pragma once
 #include "enumerator.h"
 
-namespace iterator {
+namespace iter {
 
 	template<class I, class J,
 		class U = typename std::common_type_t<
@@ -58,11 +58,11 @@ namespace iterator {
 		return concatenate<I,J,U>(i, j);
 	}
 
-} // iterator
+} // iter
 #ifdef _DEBUG
 #include <cassert>
 
-using namespace iterator;
+using namespace iter;
 
 inline void test_concatenate()
 {

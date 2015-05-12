@@ -3,7 +3,7 @@
 #include <limits>
 #include "enumerator.h"
 
-namespace iterator {
+namespace iter {
 
 	template<class T>
 	class sequence : public enumerator<const T*,T> {
@@ -30,7 +30,7 @@ namespace iterator {
 		T operator*() const
 		{
 			if (!operator bool())
-				throw std::out_of_range("iterator::sequence::operator*(): out of range");
+				throw std::out_of_range("iter::sequence::operator*(): out of range");
 
 			return i;
 		}
@@ -55,12 +55,12 @@ namespace iterator {
 		return sequence<T>(b, s, e);
 	}
 
-} // iterator
+} // iter
 
 #ifdef _DEBUG
 #include <cassert>
 
-using namespace iterator;
+using namespace iter;
 
 inline void test_sequence()
 {

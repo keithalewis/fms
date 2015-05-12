@@ -2,7 +2,7 @@
 #pragma once
 #include <utility>
 
-namespace iterator {
+namespace iter {
 
 	template<class I, class N>
 	inline I skip(I i, N n)
@@ -12,7 +12,7 @@ namespace iterator {
 		return i;
 	}
 
-} // iterator
+} // iter
 
 #ifdef _DEBUG
 #include <cassert>

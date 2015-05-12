@@ -2,7 +2,7 @@
 #pragma once
 #include "input.h"
 
-namespace iterator {
+namespace iter {
 
 	template<class T = double>
 	class factorial : public input_base<const T*,T> {
@@ -42,12 +42,12 @@ namespace iterator {
 		}
 	};
 
-} // iterator
+} // iter
 
 #ifdef _DEBUG
 #include <cassert>
 
-using namespace iterator;
+using namespace iter;
 
 inline void test_factorial()
 {
