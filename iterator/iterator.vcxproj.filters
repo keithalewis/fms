@@ -59,6 +59,9 @@
     <ClInclude Include="pow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="choose.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />

@@ -11,15 +11,15 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{71EF94A6-19ED-4829-ADC0-AF12661DACED}</ProjectGuid>
+    <ProjectGuid>{6A11ED9E-FAFD-4DEB-9BF1-B06FAECBE0FD}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>iterator</RootNamespace>
+    <RootNamespace>poly</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>CTP_Nov2013</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -78,26 +78,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="apply.h" />
-    <ClInclude Include="choose.h" />
-    <ClInclude Include="concatenate.h" />
-    <ClInclude Include="constant.h" />
-    <ClInclude Include="enumerator.h" />
-    <ClInclude Include="expr.h" />
-    <ClInclude Include="factorial.h" />
-    <ClInclude Include="input.h" />
-    <ClInclude Include="iota.h" />
-    <ClInclude Include="iterator.h" />
-    <ClInclude Include="pair.h" />
-    <ClInclude Include="pow.h" />
-    <ClInclude Include="sequence.h" />
-    <ClInclude Include="skip.h" />
+    <ClCompile Include="poly.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="iterator.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="README.md" />
+    <ClInclude Include="bell.h" />
+    <ClInclude Include="hermite.h" />
+    <ClInclude Include="poly.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

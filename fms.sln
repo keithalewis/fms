@@ -18,6 +18,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "iterator", "iterator\iterat
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "range", "range\range.vcxproj", "{F8C1B612-F806-4F79-8BB2-DA91E892E215}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "poly", "poly\poly.vcxproj", "{6A11ED9E-FAFD-4DEB-9BF1-B06FAECBE0FD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -44,11 +46,16 @@ Global
 		{F8C1B612-F806-4F79-8BB2-DA91E892E215}.Debug|Win32.Build.0 = Debug|Win32
 		{F8C1B612-F806-4F79-8BB2-DA91E892E215}.Release|Win32.ActiveCfg = Release|Win32
 		{F8C1B612-F806-4F79-8BB2-DA91E892E215}.Release|Win32.Build.0 = Release|Win32
+		{6A11ED9E-FAFD-4DEB-9BF1-B06FAECBE0FD}.Debug|Win32.ActiveCfg = Debug|Win32
+		{6A11ED9E-FAFD-4DEB-9BF1-B06FAECBE0FD}.Debug|Win32.Build.0 = Debug|Win32
+		{6A11ED9E-FAFD-4DEB-9BF1-B06FAECBE0FD}.Release|Win32.ActiveCfg = Release|Win32
+		{6A11ED9E-FAFD-4DEB-9BF1-B06FAECBE0FD}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{F234931C-005B-4E31-858A-973C0E66B198} = {8D992994-5D0C-4886-9B0E-A910159FEBA8}
+		{6A11ED9E-FAFD-4DEB-9BF1-B06FAECBE0FD} = {8D992994-5D0C-4886-9B0E-A910159FEBA8}
 	EndGlobalSection
 EndGlobal

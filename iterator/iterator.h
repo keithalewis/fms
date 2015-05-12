@@ -4,6 +4,7 @@
 #include "apply.h"
 #include "concatenate.h"
 #include "constant.h"
+#include "choose.h"
 #include "enumerator.h"
 #include "expr.h"
 #include "factorial.h"

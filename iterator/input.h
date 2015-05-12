@@ -1,7 +1,6 @@
 // input.h - iterators, functions, and adapters
 #pragma once
 #include <iterator>
-//#include <initializer_list>
 
 namespace iterator {
 
@@ -13,12 +12,7 @@ namespace iterator {
 		{ }
 		~input_base()
 		{ }
-/*
-		operator I()
-		{
-			return I::operator I();
-		}
-*/
+
 		// not necessarily I::value_type
 		T operator*(void) const
 		{
@@ -34,10 +28,11 @@ namespace iterator {
 		}
 	};
 
+	// provide the actual iterator
 	template<class I, class T = typename std::iterator_traits<I>::value_type>
 	class input : public input_base<I,T> {
-	public:
 		I i;
+	public:
 		input()
 		{ }
 		input(I i)
@@ -49,7 +44,8 @@ namespace iterator {
 		input& operator=(const input&) = default;
 		~input()
 		{ }
-		
+	
+		// for operator== and operator!=
 		operator I() const
 		{
 			return i;
@@ -74,12 +70,12 @@ namespace iterator {
 			return i_;
 		}
 	};
-
 	template<class I, class T = typename std::iterator_traits<I>::value_type>
 	inline input<I> make_input(I i)
 	{
 		return input<I,T>(i);
 	}
+
 } // input
 
 #ifdef _DEBUG

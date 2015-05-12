@@ -37,6 +37,7 @@ int main()
 		f = exp(2.) - expx;
 
 		test_apply();
+		test_choose();
 		test_concatenate();
 		test_constant();
 		test_enumerator();
