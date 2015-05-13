@@ -1,17 +1,25 @@
 // iota.h - input iterator 0, 1, 2, ...
 #pragma once
-#include "input.h"
+#include "enumerator.h"
 
 namespace iter {
 
-	template<class T>
-	class iota : public input_base<T*, T> {
+	template<class T = double>
+	class iota : public enumerator_base<T*, T> {
 		T t;
 	public:
 		iota(T t = 0)
 			: t(t)
 		{ }
 
+		operator T*() const
+		{
+			return &t;
+		}
+		operator bool() const
+		{
+			return true;
+		}
 		T operator*() const
 		{
 			return t;

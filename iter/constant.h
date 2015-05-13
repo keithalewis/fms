@@ -20,7 +20,7 @@ namespace iter {
 		}
 		operator bool() const
 		{
-			return --n;
+			return --n != 0;
 		}
 		T operator*() const
 		{

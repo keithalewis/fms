@@ -95,6 +95,7 @@
     <ClInclude Include="sequence.h" />
     <ClInclude Include="skip.h" />
     <ClInclude Include="accumulate.h" />
+    <ClInclude Include="take.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="iter.cpp" />

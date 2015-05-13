@@ -64,7 +64,7 @@ inline void test_choose()
 	assert (*++c == 1);
 	assert (!++c);
 
-	assert (sum(choose<int>(4)) == 2*2*2*2);
+	assert (back(sum(choose<int>(4))) == 2*2*2*2);
 }
 
 #endif // _DEBUG

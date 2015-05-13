@@ -1,7 +1,7 @@
 // hermite.h - Hermite polynomials
 #pragma once
 #include <functional>
-#include <vector>
+#include <map>
 
 namespace poly {
 
@@ -21,15 +21,10 @@ namespace poly {
 	template<class X = double>
 	static std::function<X(X)> H(size_t n) 
 	{
-		static std::vector<std::function<X(const X&)>> H_;
+		static std::map<size_t,std::function<X(const X&)>> H_;
 
-		if (n >= H_.size()) {
-			size_t _n = H_.size();
-			H_.resize(n+1);
-			do {
-				H_[_n] = Hermite(_n);
-			} while (++_n < n + 1);
-		}
+		if (H_.find(n) == H_.end())
+			H_[n] = Hermite(n);
 
 		return H_[n];
 	};

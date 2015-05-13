@@ -22,6 +22,7 @@ int main()
 		test_pair();
 		test_pow();
 		test_skip();
+		test_take();
 		/*
 //		test_sequence();
 		*/

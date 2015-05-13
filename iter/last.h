@@ -14,6 +14,11 @@ namespace iter {
 
 		return l;
 	}
+	template<class E>
+	inline typename std::iterator_traits<E>::value_type back(E e)
+	{
+		return *last(e);
+	}
 
 } // iter
 
