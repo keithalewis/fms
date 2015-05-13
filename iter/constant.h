@@ -1,16 +1,16 @@
 // constant.h - constant input iterator
 #pragma once
-#include "input.h"
+#include "enumerator.h"
 
 namespace iter {
 
 	template<class T = double>
-	class constant : public enumerator_base<const T*,T> {
+	class constant_ : public enumerator_base<const T*,T> {
 		T t;
 		mutable size_t n;
 	public:
 		// defaults so infinite
-		constant(const T& t = 0, size_t n = 0)
+		constant_(const T& t = 0, size_t n = 0)
 			: t(t), n(n)
 		{ }
 
@@ -26,25 +26,25 @@ namespace iter {
 		{
 			return t;
 		}
-		constant& operator++()
+		constant_& operator++()
 		{
 			return *this;
 		}
-		constant operator++(int)
+		constant_ operator++(int)
 		{
 			return *this;
 		}
 	};
 	template<class T>
-	inline constant<T> make_constant(const T& t)
+	inline constant_<T> constant(const T& t)
 	{
-		return constant<T>(t);
+		return constant_<T>(t);
 	}
 	// shorthand
 	template<class T>
-	inline constant<T> c(const T& t)
+	inline constant_<T> c(const T& t)
 	{
-		return constant<T>(t);
+		return constant_<T>(t);
 	}
 } // iter
 
@@ -55,12 +55,12 @@ using namespace iter;
 
 inline void test_constant()
 {
-	constant<int> zero;
+	constant_<int> zero;
 	assert (*zero == 0);
 	assert (*++zero == 0);
 	assert (*zero++ == 0);
 
-	constant<int> two(2);
+	constant_<int> two(2);
 	assert (*two == 2);
 	assert (*++two == 2);
 	assert (*two++ == 2);

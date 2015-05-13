@@ -5,13 +5,13 @@
 namespace iter {
 
 	template<class T = double>
-	class choose : public enumerator_base<T*,T> {
+	class choose_ : public enumerator_base<T*,T> {
 		T n, k, nk;
 	public:
-		choose(T n = 0)
+		choose_(T n = 0)
 			: n(n), k(0), nk(1)
 		{ }
-		~choose()
+		~choose_()
 		{ }
 
 		operator T*() const
@@ -26,7 +26,7 @@ namespace iter {
 		{
 			return nk;
 		}
-		choose& operator++()
+		choose_& operator++()
 		{
 			++k;
 			nk *= (n - k + 1);
@@ -34,15 +34,20 @@ namespace iter {
 
 			return *this;
 		}
-		choose operator++(int)
+		choose_ operator++(int)
 		{
-			choose c(*this);
+			choose_ c(*this);
 
 			operator++();
 
 			return c;
 		}
 	};
+	template<class T = double>
+	inline auto choose(const T& t)
+	{
+		return choose_<T>(t);
+	}
 
 } // iter
 
@@ -54,7 +59,7 @@ using namespace iter;
 
 inline void test_choose()
 {
-	choose<> c(4);
+	choose_<> c(4);
 
 	assert (*c == 1);
 	assert (*++c == 4);
@@ -64,7 +69,7 @@ inline void test_choose()
 	assert (*++c == 1);
 	assert (!++c);
 
-	assert (back(sum(choose<int>(4))) == 2*2*2*2);
+	assert (back(sum(choose(4))) == 2*2*2*2);
 }
 
 #endif // _DEBUG

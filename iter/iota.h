@@ -5,10 +5,10 @@
 namespace iter {
 
 	template<class T = double>
-	class iota : public enumerator_base<T*, T> {
+	class iota_ : public enumerator_base<T*, T> {
 		T t;
 	public:
-		iota(T t = 0)
+		iota_(T t = 0)
 			: t(t)
 		{ }
 
@@ -24,32 +24,37 @@ namespace iter {
 		{
 			return t;
 		}
-		iota& operator++()
+		iota_& operator++()
 		{
 			++t;
 
 			return *this;
 		}
-		iota operator++(int)
+		iota_ operator++(int)
 		{
-			iota i_(*this);
+			iota_ i_(*this);
 
 			operator++();
 
 			return i_;
 		}
 	};
+	template<class T = double>
+	inline auto iota(const T& t = T(0))
+	{
+		return iota_<T>(t);
+	}
 
 } // iter
 
 #ifdef _DEBUG
 #include <cassert>
 
-using iter::iota;
+using iter::iota_;
 
 inline void test_iota()
 {
-	iota<int> i;
+	iota_<int> i;
 
 	assert (*i == 0);
 	assert (*++i == 1);

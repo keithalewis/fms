@@ -7,20 +7,14 @@
 namespace iter {
 
 	template<class T = double>
-	class factorial : public enumerator_base<const T*,T> {
+	class factorial_ : public enumerator_base<const T*,T> {
 		T i, n_; // input index, n!
 	public:
-		factorial()
+		factorial_()
 			: i(0), n_(1)
 		{
 		}
-/*		factorial(const factorial&) = default;
-		factorial(factorial&&) = default;
-		factorial& operator=(const factorial&) = default;
-		factorial& operator=(factorial&&) = default;
-		~factorial()
-		{ }
-*/
+
 		operator T*() const
 		{
 			return &n_;
@@ -33,21 +27,26 @@ namespace iter {
 		{
 			return n_;
 		}
-		factorial& operator++()
+		factorial_& operator++()
 		{
 			n_ *= ++i;
 
 			return *this;
 		}
-		factorial operator++(int)
+		factorial_ operator++(int)
 		{
-			factorial f(*this);
+			factorial_ f(*this);
 
 			operator++();
 
 			return f;
 		}
 	};
+	template<class T = double>
+	inline auto factorial()
+	{
+		return factorial_<T>();
+	}
 
 } // iter
 
@@ -58,7 +57,7 @@ using namespace iter;
 
 inline void test_factorial()
 {
-	factorial<int> f;
+	factorial_<int> f;
 	assert (*f++ == 1);
 	assert (*f == 1);
 	assert (*++f == 2);
@@ -67,7 +66,7 @@ inline void test_factorial()
 	assert (*++f == 120);
 	assert (*++f == 720);
 
-	factorial<int> g(f);
+	factorial_<int> g(f);
 	f = g;
 }
 

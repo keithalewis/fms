@@ -4,7 +4,6 @@
 #include <functional>
 #include <iterator>
 #include <type_traits>
-#include "input.h"
 
 namespace iter {
 
@@ -324,24 +323,64 @@ namespace iter {
 	{
 		return end_enumerator<I,J,T>(i, e);
 	}
-	/*
-	template<class I, class J = I, class T = typename std::iterator_traits<I>::value_type>
-	inline end_enumerator<I,J,T> e(I i, J e)
+
+	// reverse enumerator
+	template<class I, class T = typename std::iterator_traits<I>::value_type>
+	class renumerator : public enumerator_base<I,T> {
+		I i;
+	public:
+		renumerator()
+		{ }
+		renumerator(I i)
+			: i(--i) // just like reverse iterators
+		{ }
+		renumerator(const renumerator&) = default;
+		renumerator(renumerator&&) = default;
+		renumerator& operator=(renumerator&&) = default;
+		renumerator& operator=(const renumerator&) = default;
+		~renumerator()
+		{ }
+	
+		// for operator== and operator!=
+		operator I() const
+		{
+			return i;
+		}
+		operator bool() const
+		{
+			return true;
+		}
+
+		T operator*() const
+		{
+			return *i;
+		}
+		renumerator& operator++()
+		{
+			--i;
+
+			return *this;
+		}
+		renumerator operator++(int)
+		{
+			renumerator i_(*this);
+
+			--i;
+
+			return i_;
+		}
+	};
+	template<class I, class T = typename std::iterator_traits<I>::value_type>
+	inline renumerator<I> make_renumerator(I i)
 	{
-		return end_enumerator<I,J,T>(i, e);
+		return renumerator<I,T>(i);
 	}
-	*/
-	/*
-	template<class C,
-		class I = typename C::iterator,
-		class J = typename C::iterator,
-		class T = typename C::value_type
-	>
-	inline end_enumerator<I,J,T> e(C c)
+	template<class I, class T = typename std::iterator_traits<I>::value_type>
+	inline renumerator<I> re(I i)
 	{
-		return end_enumerator<I,J,T>(std::begin(c), std::end(c));
+		return renumerator<I,T>(i);
 	}
-	*/
+
 } // iter
 
 #ifdef _DEBUG

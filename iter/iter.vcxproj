@@ -86,13 +86,11 @@
     <ClInclude Include="enumerator.h" />
     <ClInclude Include="expr.h" />
     <ClInclude Include="factorial.h" />
-    <ClInclude Include="input.h" />
     <ClInclude Include="iota.h" />
     <ClInclude Include="iter.h" />
     <ClInclude Include="last.h" />
     <ClInclude Include="pair.h" />
     <ClInclude Include="pow.h" />
-    <ClInclude Include="sequence.h" />
     <ClInclude Include="skip.h" />
     <ClInclude Include="accumulate.h" />
     <ClInclude Include="take.h" />

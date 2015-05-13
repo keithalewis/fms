@@ -15,7 +15,6 @@ int main()
 		test_enumerator();
 		test_expr();
 		test_factorial();
-//		test_input();
 		test_iterator();
 		test_iota();
 		test_last();
@@ -23,12 +22,8 @@ int main()
 		test_pow();
 		test_skip();
 		test_take();
-		/*
-//		test_sequence();
-		*/
 
-/*		
-*/	}
+	}
 	catch (...) {
 		return -1;
 	}

@@ -1,36 +1,36 @@
 // pair.h - pair of iterators
 #pragma once
 #include <utility>
-#include "input.h"
+#include "enumerator.h"
 
 namespace iter {
 
 	template<class I, class J,
 		class T = typename std::iterator_traits<I>::value_type,
 		class U = typename std::iterator_traits<J>::value_type>
-	class pair : public input_base<std::pair<I,J>, std::pair<T,U>> {
+	class pair_ : public enumerator_base<std::pair<I,J>, std::pair<T,U>> {
 		std::pair<I,J> ij;
 	public:
-		pair()
+		pair_()
 		{ }
-		pair(I i, J j)
+		pair_(I i, J j)
 			: ij(std::make_pair(i,j))
 		{ }
-		pair(const std::pair<I,J>& ij)
+		pair_(const std::pair<I,J>& ij)
 			: ij(ij)
 		{ }
-/*		pair(const pair&) = default;
-		pair(pair&&) = default;
-		pair& operator=(const pair&) = default;
-		pair& operator=(pair&&) = default;
-*/		~pair()
+/*		pair_(const pair_&) = default;
+		pair_(pair_&&) = default;
+		pair_& operator=(const pair_&) = default;
+		pair_& operator=(pair_&&) = default;
+*/		~pair_()
 		{ }
 /*
-		bool operator==(const pair& p) const
+		bool operator==(const pair_& p) const
 		{
 			return ij == p.ij;
 		}
-		bool operator!=(const pair& p) const
+		bool operator!=(const pair_& p) const
 		{
 			return !operator==(p);
 		}
@@ -43,16 +43,16 @@ namespace iter {
 		{
 			return std::make_pair(*ij.first, *ij.second);
 		}
-		pair& operator++()
+		pair_& operator++()
 		{
 			++ij.first;
 			++ij.second;
 
 			return *this;
 		}
-		pair operator++(int)
+		pair_ operator++(int)
 		{
-			pair i_(*this);
+			pair_ i_(*this);
 
 			operator++();
 
@@ -62,9 +62,9 @@ namespace iter {
 	template<class I, class J,
 		class T = typename std::iterator_traits<I>::value_type,
 		class U = typename std::iterator_traits<J>::value_type>
-	inline pair<I,J,T,U> make_pair(I i, J j)
+	inline pair_<I,J,T,U> pair(I i, J j)
 	{
-		return pair<I,J,T,U>(i, j);
+		return pair_<I,J,T,U>(i, j);
 	}
 
 } // iter
@@ -79,19 +79,19 @@ inline void test_pair()
 	int a[] = {0,1,2};
 	int b[] = {2,4,5};
 
-	auto c = make_pair(std::begin(a),std::begin(b));
+	auto c = pair(std::begin(a),std::begin(b));
 	assert (*c == std::make_pair(0,2));
-	c = make_pair(a,b);
+	c = pair(a,b);
 	assert (*c == std::make_pair(0,2));
-	c = make_pair(a,&b[0]);
+	c = pair(a,&b[0]);
 	assert (*c == std::make_pair(0,2));
 
 	assert (*++c == std::make_pair(1,4));
 	c++;
 	assert (*c == std::make_pair(2,5));
 
-	c = make_pair(a,b);
-	pair<int*,int*> d(a,b);
+	c = pair(a,b);
+	pair_<int*,int*> d(a,b);
 //	assert (c == d);
 	++c;
 //	assert (c != d);
