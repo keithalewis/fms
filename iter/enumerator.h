@@ -15,12 +15,8 @@ namespace iter {
 		{ }
 		~enumerator_base()
 		{ }
-/*
-		operator I()
-		{
-			return I::operator I();
-		}
-*/		// return false when done
+
+		// return false when done
 		operator bool() const
 		{
 			return I::operator bool();
@@ -49,17 +45,7 @@ namespace iter {
 		enumerator(I i)
 			: i(i)
 		{ }
-/*		enumerator(const enumerator&) = default;
-		enumerator(enumerator&&) = default;
-		enumerator& operator=(enumerator&&) = default;
-		enumerator& operator=(const enumerator&) = default;
-*/		~enumerator()
-		{ }
 
-		operator I() const
-		{
-			return i;
-		}
 		operator bool() const
 		{
 			return true; // infinite
@@ -100,10 +86,6 @@ namespace iter {
 			: i(i)
 		{ }
 
-		operator I() const
-		{
-			return i;
-		}
 		operator bool() const
 		{
 			return *i != 0;
@@ -149,10 +131,6 @@ namespace iter {
 			: i(i)
 		{ }
 
-		operator I() const
-		{
-			return i;
-		}
 		operator bool() const
 		{
 			return std::isnormal(*i) && *i != 0;
@@ -187,10 +165,6 @@ namespace iter {
 			: i(i)
 		{ }
 
-		operator I() const
-		{
-			return i;
-		}
 		operator bool() const
 		{
 			return std::isnormal(*i) && *i != 0;
@@ -226,17 +200,7 @@ namespace iter {
 		counted_enumerator(I i, size_t n)
 			: i(i), n(n)
 		{ }
-/*		counted_enumerator(const counted_enumerator&) = default;
-		counted_enumerator(counted_enumerator&&) = default;
-		counted_enumerator& operator=(counted_enumerator&&) = default;
-		counted_enumerator& operator=(const counted_enumerator&) = default;
-*/		~counted_enumerator()
-		{ }
 
-		operator I() const
-		{
-			return i;
-		}
 		operator bool() const
 		{
 			return n != 0;
@@ -284,17 +248,7 @@ namespace iter {
 		end_enumerator(I i, J e)
 			: i(i), e(e)
 		{ }
-/*		end_enumerator(const end_enumerator&) = default;
-		end_enumerator(end_enumerator&&) = default;
-		end_enumerator& operator=(end_enumerator&&) = default;
-		end_enumerator& operator=(const end_enumerator&) = default;
-*/		~end_enumerator()
-		{ }
 
-		operator I() const
-		{
-			return i;
-		}
 		operator bool() const
 		{
 			return i != e;
@@ -340,12 +294,7 @@ namespace iter {
 		renumerator& operator=(const renumerator&) = default;
 		~renumerator()
 		{ }
-	
-		// for operator== and operator!=
-		operator I() const
-		{
-			return i;
-		}
+
 		operator bool() const
 		{
 			return true;
@@ -381,6 +330,7 @@ namespace iter {
 		return renumerator<I,T>(i);
 	}
 
+	// epsilon_iterator ???
 } // iter
 
 #ifdef _DEBUG
@@ -406,8 +356,8 @@ inline void test_enumerator()
 	{
 		enumerator<int*> b(a), c;
 		c = b;
-//		assert (b == c);
-//		assert (*c == *b);
+		assert (b == c);
+		assert (*c == *b);
 		assert (b);
 		assert (*++b == 2);
 		b++;

@@ -4,6 +4,7 @@
 
 namespace iter {
 
+	// combinatorial choose
 	template<class T = double>
 	class choose_ : public enumerator_base<T*,T> {
 		T n, k, nk;
@@ -14,10 +15,6 @@ namespace iter {
 		~choose_()
 		{ }
 
-		operator T*() const
-		{
-			 return nullptr;
-		}
 		operator bool() const
 		{
 			return k <= n;

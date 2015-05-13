@@ -86,6 +86,8 @@
     <ClInclude Include="enumerator.h" />
     <ClInclude Include="expr.h" />
     <ClInclude Include="factorial.h" />
+    <ClInclude Include="until.h" />
+    <ClInclude Include="where.h" />
     <ClInclude Include="iota.h" />
     <ClInclude Include="iter.h" />
     <ClInclude Include="last.h" />

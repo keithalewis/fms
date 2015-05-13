@@ -11,12 +11,12 @@ namespace iter {
 		pow_(T t = 0)
 			: t(t), t_(1)
 		{ }
-
+/*
 		operator T*() const
 		{
 			return &t_;
 		}
-		operator bool() const
+*/		operator bool() const
 		{
 			return true;
 		}

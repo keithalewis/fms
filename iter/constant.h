@@ -7,20 +7,15 @@ namespace iter {
 	template<class T = double>
 	class constant_ : public enumerator_base<const T*,T> {
 		T t;
-		mutable size_t n;
 	public:
 		// defaults so infinite
-		constant_(const T& t = 0, size_t n = 0)
-			: t(t), n(n)
+		constant_(const T& t = 0)
+			: t(t)
 		{ }
 
-		operator T*() const
-		{
-			return &t;
-		}
 		operator bool() const
 		{
-			return --n != 0;
+			return true;
 		}
 		T operator*() const
 		{

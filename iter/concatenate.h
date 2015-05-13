@@ -17,7 +17,6 @@ namespace iter {
 			: ij(std::make_pair(i,j))
 		{ }
 
-		// operator I() ???
 		operator bool() const
 		{
 			return ij.first || ij.second;

@@ -12,10 +12,6 @@ namespace iter {
 			: t(t)
 		{ }
 
-		operator T*() const
-		{
-			return &t;
-		}
 		operator bool() const
 		{
 			return true;

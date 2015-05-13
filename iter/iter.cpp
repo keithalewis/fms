@@ -15,6 +15,7 @@ int main()
 		test_enumerator();
 		test_expr();
 		test_factorial();
+		test_where();
 		test_iterator();
 		test_iota();
 		test_last();

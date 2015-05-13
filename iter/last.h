@@ -4,6 +4,7 @@
 
 namespace iter {
 
+	/// iterate to end
 	template<class E>
 	inline E last(E e)
 	{

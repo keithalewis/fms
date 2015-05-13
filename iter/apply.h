@@ -2,6 +2,7 @@
 #pragma once
 #include <functional>
 #include "enumerator.h"
+#include "iota.h"
 
 namespace iter {
 
@@ -17,10 +18,6 @@ namespace iter {
 			: f(f), i(i)
 		{ }
 
-		operator I() const
-		{
-			return i;
-		}
 		operator bool() const
 		{
 			return i;
@@ -45,10 +42,16 @@ namespace iter {
 		}
 	};
 	template<class F, class I, class T = typename std::iterator_traits<I>::value_type>
-	inline apply_<F,I,T> apply(F f, I i)
+	inline auto apply(F f, I i)
 	{
 		return apply_<F,I,T>(f, i);
 	}
+	template<class F>
+	inline auto apply(F f, size_t n = 0)
+	{
+		return apply(f, iota<size_t>(n));
+	}
+
 
 } // iter
 
@@ -72,6 +75,12 @@ inline void test_apply()
 	assert (*++c == 1);
 	c++;
 	assert (*c == 4);
+
+	auto d = apply([](int n) { return 1 + n + n*n; });
+	assert (*d == 1);
+	assert (*++d == 3);
+	++d;
+	assert (*d == 7);
 }
 
 #endif // _DEBUG

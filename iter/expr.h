@@ -15,10 +15,6 @@ namespace iter {
 			: o(o), ij(std::make_pair(i, j))
 		{ }
 
-		operator std::pair<I,J>() const
-		{
-			return ij;
-		}
 		operator bool() const
 		{
 			return ij.first && ij.second;
@@ -54,7 +50,6 @@ namespace iter {
 
 	template<class I, class J, class T, class U, class V>
 	struct add : public binop<std::plus<V>,I,J,T,U,V> {
-//		using binop<std::plus<V>,I,J,T,U,V>::binop;
 		add()
 		{ }
 		add(I i, J j)
@@ -73,7 +68,6 @@ namespace iter {
 
 	template<class I, class J, class T, class U, class V>
 	struct sub : public binop<std::minus<V>,I,J,T,U,V> {
-//		using binop<std::minus<V>,I,J,T,U,V>::binop;
 		sub()
 		{ }
 		sub(I i, J j)
@@ -92,7 +86,6 @@ namespace iter {
 
 	template<class I, class J, class T, class U, class V>
 	struct mul : public binop<std::multiplies<V>,I,J,T,U,V> {
-//		using binop<std::multiplies<V>,I,J,T,U,V>::binop;
 		mul()
 		{ }
 		mul(I i, J j)
@@ -110,7 +103,6 @@ namespace iter {
 
 		template<class I, class J, class T, class U, class V>
 	struct div : public binop<std::divides<V>,I,J,T,U,V> {
-//		using binop<std::divides<V>,I,J,T,U,V>::binop;
 		div()
 		{ }
 		div(I i, J j)
@@ -129,10 +121,10 @@ namespace iter {
 		class T = typename std::iterator_traits<I>::value_type, 
 		class U = typename std::iterator_traits<J>::value_type,
 		class V = std::common_type_t<T,U>>
-	struct equal : public binop<std::equal_to<V>,I,J,T,U,bool> {
-		equal()
+	struct equal_ : public binop<std::equal_to<V>,I,J,T,U,bool> {
+		equal_()
 		{ }
-		equal(I i, J j)
+		equal_(I i, J j)
 			: binop<std::equal_to<V>,I,J,T,U,bool>(std::equal_to<V>{}, i, j)
 		{ }
 	};
@@ -140,9 +132,9 @@ namespace iter {
 		class T = typename std::iterator_traits<I>::value_type, 
 		class U = typename std::iterator_traits<J>::value_type,
 		class V = std::common_type_t<T,U>>
-	inline auto make_equal(I i, J j)
+	inline auto equal(I i, J j)
 	{
-		return binop<std::equal_to<V>,I,J,T,U,bool>(std::equal_to<V>{}, i, j);
+		return equal_<I,J,T,U,V>(i, j);
 	}
 
 } // iter
@@ -291,11 +283,11 @@ inline void test_expr()
 	}
 	{
 		int a[] = {1,2,3};
-		auto b = make_equal(a,a);
+		auto b = equal(a,a);
 		assert (*b);
 		assert (*b++ && *b++ && *b++);
 
-		auto c = make_equal(a, re(a + 3));
+		auto c = equal(a, re(a + 3));
 		assert (!*c);
 		assert (*++c);
 		c++;
