@@ -5,6 +5,7 @@
 int main(void)
 {
 	try {
+		test_normal();
 	}
 	catch (...) {
 		return -1;

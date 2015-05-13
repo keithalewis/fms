@@ -30,7 +30,7 @@ namespace iter {
 		skip_()
 		{ }
 		skip_(I i, S s)
-			: i(i), s(s)
+			: i(skipn(i,*s)), s(s)
 		{ }
 
 		operator bool() const
@@ -78,11 +78,11 @@ inline void test_skip() {
 	assert (*skipn(a,2) == 2);
 	assert (at(a, 1) == 1);
 
-	auto b = skip(take(iota(0), 5), c(2));
-	assert (*b == 0);
-	assert (*++b == 2);
+	auto b = skip(take(iota(0), 7), c(2));
+	assert (*b == 2);
+	assert (*++b == 4);
 	b++;
-	assert (*b == 4);
+	assert (*b == 6);
 	assert (!++b);
 	assert (!++b);
 	assert (!b++);

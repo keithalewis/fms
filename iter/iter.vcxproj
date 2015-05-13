@@ -79,6 +79,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="adjacent.h" />
     <ClInclude Include="apply.h" />
     <ClInclude Include="choose.h" />
     <ClInclude Include="concatenate.h" />
@@ -86,7 +87,9 @@
     <ClInclude Include="enumerator.h" />
     <ClInclude Include="expr.h" />
     <ClInclude Include="factorial.h" />
+    <ClInclude Include="pick.h" />
     <ClInclude Include="until.h" />
+    <ClInclude Include="util.h" />
     <ClInclude Include="where.h" />
     <ClInclude Include="iota.h" />
     <ClInclude Include="iter.h" />

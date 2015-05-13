@@ -6,6 +6,7 @@
 
 #include <stdexcept>
 #include "accumulate.h"
+#include "adjacent.h"
 #include "apply.h"
 #include "concatenate.h"
 #include "constant.h"
@@ -16,10 +17,12 @@
 #include "where.h"
 #include "iota.h"
 #include "last.h"
+#include "pick.h"
 #include "pair.h"
 #include "pow.h"
 #include "skip.h"
 #include "take.h"
+#include "util.h"
 
 #ifdef _DEBUG
 #include <cassert>
@@ -55,7 +58,8 @@ inline void test_iterator()
 	auto eq = equal(iota(0), apply(id));
 	assert (back(prod(e(eq,10))));
 
-	
+	assert (all(take(iota(1), 10)));
+	assert (any(take(iota(0), 10)));
 }
 
 #endif // _DEBUG
