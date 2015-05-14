@@ -6,17 +6,13 @@ namespace iter {
 
 	template<class T>
 	class pow_ : public enumerator_base<T*, T> {
-		T t, t_;
+		T t, t_; // t, t^n
 	public:
-		pow_(T t = 0)
+		pow_(T t = T(0))
 			: t(t), t_(1)
 		{ }
-/*
-		operator T*() const
-		{
-			return &t_;
-		}
-*/		operator bool() const
+
+		operator bool() const
 		{
 			return true;
 		}

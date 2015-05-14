@@ -5,6 +5,7 @@
 namespace iter {
 
 	// combinatorial choose
+	// c(n,0), c(n,1), ...
 	template<class T = double>
 	class choose_ : public enumerator_base<T*,T> {
 		T n, k, nk;
@@ -26,7 +27,7 @@ namespace iter {
 		choose_& operator++()
 		{
 			++k;
-			nk *= (n - k + 1);
+			nk *= (n - k + 1); // works for ints
 			nk /= k;
 
 			return *this;
@@ -40,7 +41,7 @@ namespace iter {
 			return c;
 		}
 	};
-	template<class T = double>
+	template<class T>
 	inline auto choose(const T& t)
 	{
 		return choose_<T>(t);
@@ -50,13 +51,12 @@ namespace iter {
 
 #ifdef _DEBUG
 #include <cassert>
-#include "accumulate.h"
-
-using namespace iter;
 
 inline void test_choose()
 {
-	choose_<> c(4);
+	auto c = iter::choose(4);
+	auto d(c);
+	c = d;
 
 	assert (*c == 1);
 	assert (*++c == 4);
@@ -65,8 +65,6 @@ inline void test_choose()
 	assert (*++c == 4);
 	assert (*++c == 1);
 	assert (!++c);
-
-	assert (back(sum(choose(4))) == 2*2*2*2);
 }
 
 #endif // _DEBUG

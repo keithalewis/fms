@@ -1,10 +1,11 @@
 // last.h - last item in an enumeration
+// last, back = *last
 #pragma once
 #include <utility>
 
 namespace iter {
 
-	/// iterate to end
+	/// iterate to just before end
 	template<class E>
 	inline E last(E e)
 	{
@@ -25,7 +26,6 @@ namespace iter {
 
 #ifdef _DEBUG
 #include <cassert>
-#include "enumerator.h"
 
 inline void test_last() {
 	int a[] = {0,1,2};

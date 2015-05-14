@@ -1,4 +1,11 @@
 // enumerator.h - iter::enumerator with operator bool
+// enumerator_base - base class for CRTP idiom
+// enumerator - iterator with operator boo() always true
+// null_enumerator - operator bool() returns operator*() != 0
+// counted_enumerator - iterator with a count
+// end_enumerator - operator bool() returns i == end
+// renumerator - reverse enumerator
+
 #pragma once
 #include <cmath>
 #include <functional>
@@ -360,9 +367,9 @@ inline void test_enumerator()
 		assert (*c == *b);
 		assert (b);
 		assert (*++b == 2);
-		b++;
+		b++; // not really the end
 		assert (b && c);
-//		assert (b != c);
+		assert (b == c); // operator bool() => true == true
 	}
 	{
 		auto e = make_enumerator(a);
@@ -371,13 +378,17 @@ inline void test_enumerator()
 		e++;
 	}
 	{
-		auto e = make_null_enumerator("foo");
-		assert (3 == count(e));
+		auto b = make_null_enumerator("foo");
+		auto e(b);
+		while (e)
+			++e;
+			assert (3 == std::distance(b, e));
 	}
 	{
 		auto e = make_counted_enumerator(a, 2);
 		assert (e);
 		assert (*++e == 2);
+		assert (e);
 		e++;
 		assert (!e);
 	}

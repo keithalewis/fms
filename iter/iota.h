@@ -4,6 +4,7 @@
 
 namespace iter {
 
+	// t, t + 1, ...
 	template<class T = double>
 	class iota_ : public enumerator_base<T*, T> {
 		T t;

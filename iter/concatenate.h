@@ -5,10 +5,10 @@
 namespace iter {
 
 	template<class I, class J,
-		class U = typename std::common_type_t<
+		class V = typename std::common_type_t<
 			typename std::iterator_traits<I>::value_type,
 			typename std::iterator_traits<J>::value_type>>
-	class concatenate_ : public enumerator_base<std::pair<I,J>, U> {
+	class concatenate_ : public enumerator_base<std::pair<I,J>, V> {
 		std::pair<I,J> ij;
 	public:
 		concatenate_()
@@ -21,7 +21,7 @@ namespace iter {
 		{
 			return ij.first || ij.second;
 		}
-		U operator*() const
+		V operator*() const
 		{
 			return ij.first ? *ij.first : *ij.second;
 		}
@@ -44,12 +44,12 @@ namespace iter {
 		}
 	};
 	template<class I, class J,
-		class U = typename std::common_type_t<
+		class V = typename std::common_type_t<
 			typename std::iterator_traits<I>::value_type,
 			typename std::iterator_traits<J>::value_type>>
-	inline concatenate_<I,J,U> concatenate(I i, J j)
+	inline concatenate_<I,J,V> concatenate(I i, J j)
 	{
-		return concatenate_<I,J,U>(i, j);
+		return concatenate_<I,J,V>(i, j);
 	}
 
 } // iter
@@ -57,8 +57,8 @@ namespace iter {
 /*
 template<class I, class J,
 	class T = typename std::iterator_traits<I>::value_type,
-	class U = typename std::iterator_traits<J>::value_type,
-	class TU = typename std::common_type_t<T,U>>
+	class V = typename std::iterator_traits<J>::value_type,
+	class TU = typename std::common_type_t<T,V>>
 inline iter::concatenate_<I,J,TU> operator,(I i, J j)
 {
 	return iter::concatenate_<I,J,TU>(i, j);

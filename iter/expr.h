@@ -43,7 +43,7 @@ namespace iter {
 		class T = typename std::iterator_traits<I>::value_type, 
 		class U = typename std::iterator_traits<J>::value_type,
 		class V = std::common_type_t<T,U>>
-	inline binop<O,I,J,T,U,V> make_binop(O o, I i, J j)
+	inline auto make_binop(O o, I i, J j)
 	{
 		return binop<O,I,J,T,U,V>(o, i, j);
 	}
@@ -144,7 +144,7 @@ template<class I, class J,
 	class T = typename std::iterator_traits<I>::value_type, 
 	class U = typename std::iterator_traits<J>::value_type,
 	class V = std::common_type_t<T,U>>
-inline iter::add<I,J,T,U,V> operator+(I i, J j)
+inline auto operator+(I i, J j)
 {
 	return iter::add<I,J,T,U,V>(i, j);
 }
@@ -152,7 +152,7 @@ template<class I, class J,
 	class T = typename std::iterator_traits<I>::value_type, 
 	class U = typename std::iterator_traits<J>::value_type,
 	class V = std::common_type_t<T,U>>
-inline iter::sub<I,J,T,U,V> operator-(I i, J j)
+inline auto operator-(I i, J j)
 {
 	return make_sub(i, j);
 }
@@ -160,7 +160,7 @@ template<class I, class J,
 	class T = typename std::iterator_traits<I>::value_type, 
 	class U = typename std::iterator_traits<J>::value_type,
 	class V = std::common_type_t<T,U>>
-inline iter::mul<I,J,T,U,V> operator*(I i, J j)
+inline auto operator*(I i, J j)
 {
 	return make_mul(i, j);
 }
@@ -168,7 +168,7 @@ template<class I, class J,
 	class T = typename std::iterator_traits<I>::value_type, 
 	class U = typename std::iterator_traits<J>::value_type,
 	class V = std::common_type_t<T,U>>
-inline iter::div<I,J,T,U,V> operator/(I i, J j)
+inline auto operator/(I i, J j)
 {
 	return make_div(i, j);
 }

@@ -46,7 +46,7 @@ inline void test_iterator()
 	// sum  1/n!
 	double e1 = exp(1);
 	// 1 + 1/1 + 1/2! ...
-	double e2 = back(sum(e(c(1)/factorial())));
+	double e2 = back(sum(e(c(1)/factorial<double>())));
 	double de = e1 - e2;
 	assert (fabs(de) <= 2*std::numeric_limits<double>::epsilon());
 
@@ -58,8 +58,8 @@ inline void test_iterator()
 	auto eq = equal(iota(0), apply(id));
 	assert (back(prod(e(eq,10))));
 
-	assert (all(take(iota(1), 10)));
-	assert (any(take(iota(0), 10)));
+	assert (all(take(10, iota(1))));
+	assert (any(take(10, iota(0))));
 }
 
 #endif // _DEBUG

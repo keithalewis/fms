@@ -1,4 +1,4 @@
-// skip.h
+// skip.h - skip elements
 #pragma once
 #include <utility>
 #include "enumerator.h"
@@ -6,7 +6,7 @@
 namespace iter {
 
 	template<class I>
-	inline I skipn(I i, size_t n)
+	inline I skipn(size_t n, I i)
 	{
 		while (i && n--)
 			++i;
@@ -15,22 +15,22 @@ namespace iter {
 	}
 
 	template<class I>
-	inline typename std::iterator_traits<I>::value_type at(I i, size_t n)
+	inline typename std::iterator_traits<I>::value_type at(size_t n, I i)
 	{
-		return *skipn(i, n);
+		return *skipn(n, i);
 	}
 
-	// i skips by each n
-	template<class I, class S, 
+	// skip n elements for each i
+	template<class N, class I, 
 		class T = typename std::iterator_traits<I>::value_type>
 	class skip_ : public enumerator_base<I,T> {
+		N n;
 		I i;
-		S s;
 	public:
 		skip_()
 		{ }
-		skip_(I i, S s)
-			: i(skipn(i,*s)), s(s)
+		skip_(N n, I i)
+			: n(n), i(skipn(*n,i))
 		{ }
 
 		operator bool() const
@@ -43,8 +43,8 @@ namespace iter {
 		}
 		skip_& operator++()
 		{
-			if (++s)
-				i = skipn(i, *s);
+			if (++n)
+				i = skipn(*n, i);
 
 			return *this;
 		}
@@ -57,35 +57,30 @@ namespace iter {
 			return s_;
 		}
 	};
-	template<class I, class S, 
+	template<class N, class I, 
 		class T = typename std::iterator_traits<I>::value_type>
-	inline auto skip(I i, S s)
+	inline auto skip(N n, I i)
 	{
-		return skip_<I,S,T>(i, s);
+		return skip_<N,I,T>(n, i);
 	}
 
 } // iter
 
 #ifdef _DEBUG
 #include <cassert>
-#include "constant.h"
-#include "iota.h"
-#include "take.h"
 
 inline void test_skip() {
 	int a[] = {0,1,2};
 
-	assert (*skipn(a,2) == 2);
-	assert (at(a, 1) == 1);
+	assert (*skipn(2, a) == 2);
+	assert (at(1, a) == 1);
 
-	auto b = skip(take(iota(0), 7), c(2));
-	assert (*b == 2);
-	assert (*++b == 4);
-	b++;
-	assert (*b == 6);
-	assert (!++b);
-	assert (!++b);
-	assert (!b++);
+	int b[] = {0,1,2,3,4,5};
+	auto c = skip(a, b);
+	assert (*c++ == 0);
+	assert (*c == 1);
+	assert (*++c == 3);
+
 }
 
 #endif // _DEBUG

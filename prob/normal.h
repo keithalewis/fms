@@ -34,9 +34,9 @@ namespace prob {
 			using math::exp;
 
 			// 2n + 1
-			auto n = c(1) + c(2)*iota(0); 
+			auto n = c(2)*iota(0) + c(1); 
 
-			return X(0.5) + exp(-x*x/2)*sum(e(pick(pow(x)/prod(n),n)));
+			return X(0.5) + exp(-x*x/2)*sum(e(pick(prod(c(x)/n),n)))/sqrt2pi;
 		}
 		static X pdf(const X& x)
 		{

@@ -6,29 +6,29 @@
 
 namespace iter {
 
-	template<class F, class I, class T = typename std::iterator_traits<I>::value_type,
+	template<class F, class E, class T = typename std::iterator_traits<E>::value_type,
 		class U = typename std::result_of_t<F(T)>>
-	class apply_ : public enumerator_base<I,U> {
+	class apply_ : public enumerator_base<E,U> {
 		std::function<U(T)> f;
-		I i;
+		E e;
 	public:
 		apply_()
 		{ }
-		apply_(F f, I i)
-			: f(f), i(i)
+		apply_(F f, E e)
+			: f(f), e(e)
 		{ }
 
 		operator bool() const
 		{
-			return i;
+			return e;
 		}
 		U operator*() const
 		{
-			return f(*i);
+			return f(*e);
 		}
 		apply_& operator++()
 		{
-			++i;
+			++e;
 
 			return *this;
 		}
@@ -41,15 +41,16 @@ namespace iter {
 			return a;
 		}
 	};
-	template<class F, class I, class T = typename std::iterator_traits<I>::value_type>
-	inline auto apply(F f, I i)
+	template<class F, class E, class T = typename std::iterator_traits<E>::value_type>
+	inline auto apply(F f, E e)
 	{
-		return apply_<F,I,T>(f, i);
+		return apply_<F,E,T>(f, e);
 	}
+	// f[0], f[1], ...
 	template<class F>
-	inline auto apply(F f, size_t n = 0)
+	inline auto apply(F f)
 	{
-		return apply(f, iota<size_t>(n));
+		return apply(f, iota<size_t>());
 	}
 
 
@@ -63,7 +64,7 @@ using namespace iter;
 inline void test_apply()
 {
 	int a[] = {0,1,2};
-	auto b = apply([](int i) { return i*i; }, a);
+	auto b = apply([](int e) { return e*e; }, a);
 	decltype(b) c;
 	c = b;
 	assert (*b == 0);
@@ -81,6 +82,15 @@ inline void test_apply()
 	assert (*++d == 3);
 	++d;
 	assert (*d == 7);
+	
+/*	{ // not working with VC 2013
+		double a[] = {0,1,2};
+		auto e = apply(exp, a);
+		assert (*e++ == exp(0));
+		assert (*e++ == exp(1));
+		assert (*e++ == exp(2));
+	}
+*/
 }
 
 #endif // _DEBUG

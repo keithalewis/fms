@@ -6,12 +6,13 @@
 
 namespace iter {
 
-	template<class T = double>
-	class factorial_ : public enumerator_base<const T*,T> {
-		T i, n_; // input index, n!
+	// 0!, 1!, ...
+	template<class N = unsigned long long>
+	class factorial_ : public enumerator_base<const N*,N> {
+		N n, n_; // n, n!
 	public:
 		factorial_()
-			: i(0), n_(1)
+			: n(0), n_(1)
 		{
 		}
 
@@ -19,13 +20,13 @@ namespace iter {
 		{
 			return true;
 		}
-		T operator*() const
+		N operator*() const
 		{
 			return n_;
 		}
 		factorial_& operator++()
 		{
-			n_ *= ++i;
+			n_ *= ++n;
 
 			return *this;
 		}
@@ -38,10 +39,10 @@ namespace iter {
 			return f;
 		}
 	};
-	template<class T = double>
+	template<class N = unsigned long long>
 	inline auto factorial()
 	{
-		return factorial_<T>();
+		return factorial_<N>();
 	}
 
 } // iter
