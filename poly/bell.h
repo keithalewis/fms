@@ -55,7 +55,7 @@ inline void test_bell()
 	assert (Bell<>(7, &x[0]) == 877);
 	assert (Bell<>(8, &x[0]) == 4140);
 
-	generate(begin(x), end(x), [&dre,u](void) { return u(dre); });
+//	generate(begin(x), end(x), [&dre,u](void) { return u(dre); });
 }
 
 #endif // _DEBUG
