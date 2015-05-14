@@ -5,14 +5,14 @@
 
 namespace poly {
 
-	// B(n + 1, x[0], ... x[n]) = sum { choose(n,k)*B(n-k,x[0],...,x[n-k])*x[k+1] : 0 <= k <= n }
+	// B(n + 1, x[0], ... x[n]) = sum { choose(n,k) B(n-k,x[0],...,x[n-k]) x[k+1] : 0 <= k <= n }
 	template<class X = double>
 	X Bell(size_t n, const X* x)
 	{
 		using iter::choose;
 		using iter::sum;
-		using iter::ri; // reverse input
-		using iter::i;
+		using iter::re; // reverse input
+		using iter::e;
 
 		if (n == 0)
 			return 1;
@@ -21,7 +21,7 @@ namespace poly {
 		b[0] = X(1);
 
 		for (size_t k = 1; k <= n; ++k)
-			b[k] = sum(choose<>(k-1) * ri(&b[k]) * i(x));
+			b[k] = back(sum(choose(k-1) * re(&b[k]) * x));
 
 		return b[n];
 	}

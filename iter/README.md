@@ -28,4 +28,5 @@ The convention is to use `class_` for class names and `class` instead of `make_c
 need to use the class directly, just the corresponding template function.
 
 operator, => concatenate
-operator^ => cycle
+
+operator^ => monotonic cycle

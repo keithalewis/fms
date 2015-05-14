@@ -57,6 +57,11 @@ inline void test_iota()
 	assert (*++i == 1);
 	i++;
 	assert (*i == 2);
+
+	i = iota(2);
+	assert (*i++ == 2);
+	assert (*i == 3);
+	assert (*++i == 4);
 }
 
 #endif // _DEBUG

@@ -1,9 +1,10 @@
 // root.h - root finding
 #pragma once
+#include <functional>
 #include <iterator>
 
 namespace root1d {
-
+/*
 	template<class I, class X>
 	struct next_ : std::iterator<std::input_iterator_tag, X> {
 		X operator*() const
@@ -56,5 +57,5 @@ namespace root1d {
 
 		return x0;
 	}
-	
+*/	
 } // root
