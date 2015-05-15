@@ -14,6 +14,10 @@ int main()
 		test_concatenate();
 		test_constant();
 		test_enumerator();
+		test_enumerator_counted();
+		test_enumerator_end();
+		test_enumerator_null();
+		test_enumerator_reverse();
 		test_expr();
 		test_factorial();
 		test_fmap();
@@ -33,4 +37,14 @@ int main()
 	}
 
 	return 0;
+}
+
+template<class I, class T = typename std::iterator_traits<I>::value_type>
+inline T poly(I i, T x)
+{
+	return back(sum(i*pow(x)));
+}
+inline int as_number(const char* s)
+{
+	return poly(re(end(s)), 10);
 }

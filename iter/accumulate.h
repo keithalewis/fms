@@ -3,7 +3,7 @@
 #pragma once
 #include <algorithm>
 #include <iterator>
-#include "enumerator.h"
+#include "enumerator/counted.h"
 
 namespace iter {
 

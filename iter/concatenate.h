@@ -67,6 +67,7 @@ inline iter::concatenate_<I,J,TU> operator,(I i, J j)
 
 #ifdef _DEBUG
 #include <cassert>
+#include "enumerator/null.h"
 
 using namespace iter;
 
