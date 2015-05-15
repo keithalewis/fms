@@ -5,6 +5,7 @@
 
 namespace iter {
 
+	// i[n], i[n+1], ...
 	template<class I>
 	inline I skipn(size_t n, I i)
 	{
@@ -20,7 +21,7 @@ namespace iter {
 		return *skipn(n, i);
 	}
 
-	// skip n elements for each i
+	// i[n[0]], i[n[0] + n[1]], ...
 	template<class N, class I, 
 		class T = typename std::iterator_traits<I>::value_type>
 	class skip_ : public enumerator_base<I,T> {

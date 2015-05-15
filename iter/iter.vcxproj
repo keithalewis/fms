@@ -87,6 +87,7 @@
     <ClInclude Include="enumerator.h" />
     <ClInclude Include="expr.h" />
     <ClInclude Include="factorial.h" />
+    <ClInclude Include="fmap.h" />
     <ClInclude Include="pick.h" />
     <ClInclude Include="until.h" />
     <ClInclude Include="util.h" />

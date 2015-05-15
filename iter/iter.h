@@ -14,6 +14,7 @@
 #include "enumerator.h"
 #include "expr.h"
 #include "factorial.h"
+#include "fmap.h"
 #include "where.h"
 #include "iota.h"
 #include "last.h"
@@ -32,6 +33,10 @@ using namespace iter;
 
 inline void test_iterator()
 {
+	int i = 1;
+	auto ci = c(i);
+	assert (sizeof(i) == sizeof(ci));
+
 	int a[] = {1,2,3};
 	assert (1*3 + 2*2 + 3*1 == 
 		back( // last element
@@ -47,6 +52,7 @@ inline void test_iterator()
 	double e1 = exp(1);
 	// 1 + 1/1 + 1/2! ...
 	double e2 = back(sum(e(c(1)/factorial<double>())));
+	//                   ^ - terminate when 1/n! becomes 0.
 	double de = e1 - e2;
 	assert (fabs(de) <= 2*std::numeric_limits<double>::epsilon());
 
@@ -60,6 +66,7 @@ inline void test_iterator()
 
 	assert (all(take(10, iota(1))));
 	assert (any(take(10, iota(0))));
+
 }
 
 #endif // _DEBUG
