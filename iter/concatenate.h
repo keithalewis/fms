@@ -8,7 +8,7 @@ namespace iter {
 		class V = typename std::common_type_t<
 			typename std::iterator_traits<I>::value_type,
 			typename std::iterator_traits<J>::value_type>>
-	class concatenate_ : public enumerator_base<std::pair<I,J>, V> {
+	class concatenate_ : public enumerator_base<std::pair<I,J>, V, std::input_iterator_tag> { // <-- lcd category!!!
 		std::pair<I,J> ij;
 	public:
 		concatenate_()

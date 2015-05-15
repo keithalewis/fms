@@ -9,8 +9,10 @@
 namespace iter {
 
 	// read-only input iterator with sentinel
-	template<class I, class T = typename std::iterator_traits<I>::value_type>
-	struct enumerator_base : public std::iterator<std::input_iterator_tag, T> {
+	template<class I, 
+		class T = typename std::iterator_traits<I>::value_type,
+		class C = typename std::iterator_traits<I>::iterator_category>
+	struct enumerator_base : public std::iterator<C, T> {
 	public:
 		enumerator_base()
 		{ }

@@ -6,7 +6,7 @@
 namespace iter {
 
 	template<class O, class I, class J, class T, class U, class V>
-	class binop : public enumerator_base<std::pair<I,J>,V> {
+	class binop : public enumerator_base<std::pair<I,J>,V,std::input_iterator_tag> {
 		O o;
 		std::pair<I,J> ij;
 	public:

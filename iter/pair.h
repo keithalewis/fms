@@ -8,7 +8,7 @@ namespace iter {
 	template<class I, class J,
 		class T = typename std::iterator_traits<I>::value_type,
 		class U = typename std::iterator_traits<J>::value_type>
-	class pair_ : public enumerator_base<std::pair<I,J>, std::pair<T,U>> {
+	class pair_ : public enumerator_base<std::pair<I,J>, std::pair<T,U>,std::input_iterator_tag> {
 		std::pair<I,J> ij;
 	public:
 		pair_()
