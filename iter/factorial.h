@@ -48,20 +48,20 @@ namespace iter {
 } // iter
 
 #ifdef _DEBUG
-#include <cassert>
+#include "include/ensure.h"
 
 using namespace iter;
 
 inline void test_factorial()
 {
 	factorial_<int> f;
-	assert (*f++ == 1);
-	assert (*f == 1);
-	assert (*++f == 2);
-	assert (*++f == 6);
-	assert (*++f == 24);
-	assert (*++f == 120);
-	assert (*++f == 720);
+	ensure (*f++ == 1);
+	ensure (*f == 1);
+	ensure (*++f == 2);
+	ensure (*++f == 6);
+	ensure (*++f == 24);
+	ensure (*++f == 120);
+	ensure (*++f == 720);
 
 	factorial_<int> g(f);
 	f = g;

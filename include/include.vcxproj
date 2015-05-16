@@ -11,15 +11,15 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{6A11ED9E-FAFD-4DEB-9BF1-B06FAECBE0FD}</ProjectGuid>
+    <ProjectGuid>{F82BC98A-8B6B-4F1D-ADB2-1C0D152B1C70}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>poly</RootNamespace>
+    <RootNamespace>include</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>CTP_Nov2013</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -41,7 +41,6 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>..;$(VC_CTP_Nov2013_IncludePath);$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -80,14 +79,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="poly.cpp" />
+    <ClCompile Include="include.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="bell.h" />
-    <ClInclude Include="hermite.h" />
-    <ClInclude Include="horner.h" />
-    <ClInclude Include="nomial.h" />
-    <ClInclude Include="poly.h" />
+    <ClInclude Include="ensure.h" />
+    <ClInclude Include="timer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

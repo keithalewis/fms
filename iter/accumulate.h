@@ -10,14 +10,13 @@ namespace iter {
 	// o(t,e[0]), o(o(t,e[0]), e[1]), ...
 	template<class O, class E, class T = typename std::iterator_traits<E>::value_type>
 	class accumulate_ : public enumerator_base<E,T> {
-		O o; E e; T t;
+		std::function<T(const T&,const T&)> o; E e; T t;
 	public:
 		accumulate_()
 		{ }
 		accumulate_(O o, E e, T t)
 			: o(o), e(e), t(e ? o(t,*e) : t)
 		{ }
-
 
 		operator bool() const
 		{
@@ -66,7 +65,7 @@ namespace iter {
 } // iter
 
 #ifdef _DEBUG
-#include <cassert>
+#include "include/ensure.h"
 
 inline void test_accumulate()
 {
@@ -74,10 +73,10 @@ inline void test_accumulate()
 	auto b = accumulate(std::plus<int>{}, e(a,3), 0);
 	auto c(b);
 	b = c;
-	assert (*b++ == 1);
-	assert (*b == 3);
-	assert (*++b == 6);
-	assert (!++b);
+	ensure (*b++ == 1);
+	ensure (*b == 3);
+	ensure (*++b == 6);
+	ensure (!++b);
 }
 
 #endif // _DEBUG

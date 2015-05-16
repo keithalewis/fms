@@ -69,19 +69,19 @@ namespace iter {
 } // iter
 
 #ifdef _DEBUG
-#include <cassert>
+#include "include/ensure.h"
 
 inline void test_skip() {
 	int a[] = {0,1,2};
 
-	assert (*skipn(2, a) == 2);
-	assert (at(1, a) == 1);
+	ensure (*skipn(2, a) == 2);
+	ensure (at(1, a) == 1);
 
 	int b[] = {0,1,2,3,4,5};
 	auto c = skip(a, b);
-	assert (*c++ == 0);
-	assert (*c == 1);
-	assert (*++c == 3);
+	ensure (*c++ == 0);
+	ensure (*c == 1);
+	ensure (*++c == 3);
 
 }
 

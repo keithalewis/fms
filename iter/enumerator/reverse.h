@@ -6,14 +6,13 @@ namespace iter {
 
 	// reverse enumerator
 	template<class T>
-	class reverse_enumerator : public enumerator<T*,T> {
+	class reverse_enumerator : public enumerator_base<T*,T> {
+		T* i;
 	public:
-		using enumerator<T*,T>::i;
-
 		reverse_enumerator()
 		{ }
 		reverse_enumerator(T* i)
-			: enumerator<T*,T>(--i) // just like reverse iterators
+			: i(--i) // just like reverse iterators
 		{ }
 
 		operator bool() const
@@ -55,12 +54,18 @@ namespace iter {
 
 
 #ifdef _DEBUG
-#include <cassert>
+#include "include/ensure.h"
 
 using namespace iter;
 
 inline void test_enumerator_reverse()
 {
+	int a[] = {1,2,3};
+	auto ra = re(a + 3);
+	ensure (*ra == 3);
+	ensure (*++ra == 2);
+	ra++;
+	ensure (*ra == 1);
 }
 
 #endif // _DEBUG

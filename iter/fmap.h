@@ -108,7 +108,7 @@ namespace iter {
 } // iter
 
 #ifdef _DEBUG
-#include <cassert>
+#include "include/ensure.h"
 
 inline void test_fmap()
 {
@@ -118,50 +118,50 @@ inline void test_fmap()
 		// {{0,1,2},{1,2},{2}}
 		auto aa = fmap([&](int i) { return e(a+i, 3-i); }, a);
 		auto b = *aa;
-		assert (*b == 0);
-		assert (*++b == 1);
+		ensure (*b == 0);
+		ensure (*++b == 1);
 		b++;
-		assert (*b == 2);
+		ensure (*b == 2);
 
 		b = *++aa;
-		assert (*b == 1);
+		ensure (*b == 1);
 		++b;
-		assert (*b == 2);
+		ensure (*b == 2);
 
 		aa++;
 		b = *aa;
-		assert (*b == 2);
-		assert (!++b);
+		ensure (*b == 2);
+		ensure (!++b);
 
 		auto dd = fmap([&](int i) { return e(a+i, 3-i); }, a);
 		auto c = flatten(dd);
-		assert (*c == 0);
+		ensure (*c == 0);
 		++c;
-		assert (*c == 1);
+		ensure (*c == 1);
 		++c;
-		assert (*c == 2);
+		ensure (*c == 2);
 		++c;
-		assert (*c == 1);
+		ensure (*c == 1);
 		++c;
-		assert (*c == 2);
+		ensure (*c == 2);
 		++c;
-		assert (*c == 2);
+		ensure (*c == 2);
 	}
 	{
 		int a[] = {1,0,2,0,0,3};
 		auto aa = fmap([&](int i) { return e(c(i),i); }, a);
 		auto _a = flatten(aa);
-		assert (*_a == 1);
+		ensure (*_a == 1);
 		++_a;
-		assert (*_a == 2);
+		ensure (*_a == 2);
 		++_a;
-		assert (*_a == 2);
+		ensure (*_a == 2);
 		++_a;
-		assert (*_a == 3);
+		ensure (*_a == 3);
 		++_a;
-		assert (*_a == 3);
+		ensure (*_a == 3);
 		++_a;
-		assert (*_a == 3);
+		ensure (*_a == 3);
 	}
 }
 

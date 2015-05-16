@@ -32,23 +32,23 @@ namespace poly {
 } // poly
 
 #ifdef _DEBUG
-#include <cassert>
+#include "include/ensure.h"
 
 using namespace poly;
 
 inline void test_hermite()
 {
 	for (double x = -10; x <= 10; x += .1) {
-		assert (Hermite(0)(x) == 1);
-		assert (Hermite(1)(x) == x);
-		assert (Hermite(2)(x) == x*x - 1);
-		assert (Hermite(3)(x) == x*(x*x - 1) - 2*x);
-		assert (Hermite(4)(x) == x*(x*(x*x - 1) - 2*x) - 3*(x*x - 1));
+		ensure (Hermite(0)(x) == 1);
+		ensure (Hermite(1)(x) == x);
+		ensure (Hermite(2)(x) == x*x - 1);
+		ensure (Hermite(3)(x) == x*(x*x - 1) - 2*x);
+		ensure (Hermite(4)(x) == x*(x*(x*x - 1) - 2*x) - 3*(x*x - 1));
 	}
 
 	for (int i = 9; i >= 0; --i) {
 		for (double x = -10; x <= 10; x += .1) {
-			assert (H(i)(x) == Hermite(i)(x));
+			ensure (H(i)(x) == Hermite(i)(x));
 		}
 	}
 }

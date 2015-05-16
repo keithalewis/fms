@@ -57,7 +57,7 @@ namespace iter {
 } // iter
 
 #ifdef _DEBUG
-#include <cassert>
+#include "include/ensure.h"
 
 using namespace iter;
 
@@ -67,23 +67,23 @@ inline void test_pair()
 	int b[] = {2,4,5};
 
 	auto c = pair(std::begin(a),std::begin(b));
-	assert (*c == std::make_pair(0,2));
+	ensure (*c == std::make_pair(0,2));
 	c = pair(a,b);
-	assert (*c == std::make_pair(0,2));
+	ensure (*c == std::make_pair(0,2));
 	c = pair(a,&b[0]);
-	assert (*c == std::make_pair(0,2));
+	ensure (*c == std::make_pair(0,2));
 
-	assert (*++c == std::make_pair(1,4));
+	ensure (*++c == std::make_pair(1,4));
 	c++;
-	assert (*c == std::make_pair(2,5));
+	ensure (*c == std::make_pair(2,5));
 
 	c = pair(a,b);
 	pair_<int*,int*> d(a,b);
-//	assert (c == d);
+//	ensure (c == d);
 	++c;
-//	assert (c != d);
+//	ensure (c != d);
 	d = c;
-//	assert (c == d);
+//	ensure (c == d);
 }
 
 #endif // _DEBUG

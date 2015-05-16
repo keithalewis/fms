@@ -20,24 +20,24 @@ namespace iter {
 } // iter
 
 #ifdef _DEBUG
-#include <cassert>
+#include "include/ensure.h"
 
 inline void test_take() {
 	int a[] = {0,1,2};
 	auto b = take(2, a);
-	assert (*b == 0);
-	assert (*b == 0);
+	ensure (*b == 0);
+	ensure (*b == 0);
 	++b;
-	assert (*b == 1);
+	ensure (*b == 1);
 	++b;
-	assert (!b);
+	ensure (!b);
 
 	auto c = take(-2, e(a,3));
-	assert (*c == 1);
+	ensure (*c == 1);
 	++c;
-	assert (*c == 2);
+	ensure (*c == 2);
 	++c;
-	assert (!c);
+	ensure (!c);
 }
 
 #endif // _DEBUG

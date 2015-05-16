@@ -78,7 +78,7 @@ inline iter::concatenate_<I,J,TU> operator,(I i, J j)
 */
 
 #ifdef _DEBUG
-#include <cassert>
+#include "include/ensure.h"
 #include "enumerator/null.h"
 
 using namespace iter;
@@ -91,20 +91,20 @@ inline void test_concatenate()
 	{
 		concatenate_<null_enumerator<int*>,counted_enumerator<int*>> c(make_null_enumerator(i), make_counted_enumerator(j, 2)), d;
 		d = c;
-		assert (*d == *c);
-		assert (*c == 1);
-		assert (*++c == 2);
-		assert (*++c == 3);
+		ensure (*d == *c);
+		ensure (*c == 1);
+		ensure (*++c == 2);
+		ensure (*++c == 3);
 		c++;
-		assert (*c == 4);
+		ensure (*c == 4);
 	}
 	{
 		auto c = concatenate(make_null_enumerator(i), make_counted_enumerator(j, 2));
-		assert (*c == 1);
-		assert (*++c == 2);
-		assert (*++c == 3);
+		ensure (*c == 1);
+		ensure (*++c == 2);
+		ensure (*++c == 3);
 		c++;
-		assert (*c == 4);
+		ensure (*c == 4);
 	}
 	{
 		auto b = make_null_enumerator(i);

@@ -1,7 +1,7 @@
 // bell.h - Complete Bell polynomials
 #pragma once
 #include <vector>
-#include "../iter/iter.h"
+#include "iter/iter.h"
 
 namespace poly {
 
@@ -9,7 +9,7 @@ namespace poly {
 	template<class X = double>
 	X Bell(size_t n, const X* x)
 	{
-		using iter::choose;
+//		using iter::choose;
 		using iter::sum;
 		using iter::re; // reverse input
 		using iter::e;
@@ -29,10 +29,10 @@ namespace poly {
 } // bell
 
 #ifdef _DEBUG
-#include <cassert>
 #include <algorithm>
 #include <random>
 #include <vector>
+#include "include/ensure.h"
 
 using namespace std;
 
@@ -45,15 +45,15 @@ inline void test_bell()
 	vector<double> x(9,1);
 
 	// http://en.wikipedia.org/wiki/Bell_number
-	assert (Bell<>(0, &x[0]) == 1);
-	assert (Bell<>(1, &x[0]) == 1);
-	assert (Bell<>(2, &x[0]) == 2);
-	assert (Bell<>(3, &x[0]) == 5);
-	assert (Bell<>(4, &x[0]) == 15);
-	assert (Bell<>(5, &x[0]) == 52);
-	assert (Bell<>(6, &x[0]) == 203);
-	assert (Bell<>(7, &x[0]) == 877);
-	assert (Bell<>(8, &x[0]) == 4140);
+	ensure (Bell<>(0, &x[0]) == 1);
+	ensure (Bell<>(1, &x[0]) == 1);
+	ensure (Bell<>(2, &x[0]) == 2);
+	ensure (Bell<>(3, &x[0]) == 5);
+	ensure (Bell<>(4, &x[0]) == 15);
+	ensure (Bell<>(5, &x[0]) == 52);
+	ensure (Bell<>(6, &x[0]) == 203);
+	ensure (Bell<>(7, &x[0]) == 877);
+	ensure (Bell<>(8, &x[0]) == 4140);
 
 //	generate(begin(x), end(x), [&dre,u](void) { return u(dre); });
 }

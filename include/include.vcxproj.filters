@@ -15,24 +15,15 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="poly.cpp">
+    <ClCompile Include="include.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="hermite.h">
+    <ClInclude Include="timer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="poly.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="bell.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="nomial.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="horner.h">
+    <ClInclude Include="ensure.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

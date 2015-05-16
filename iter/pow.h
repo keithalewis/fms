@@ -44,17 +44,17 @@ namespace iter {
 } // iter
 
 #ifdef _DEBUG
-#include <cassert>
+#include "include/ensure.h"
 
 inline void test_pow()
 {
 	iter::pow_<int> p(2);
 
-	assert (*p == 1);
-	assert (*++p == 2);
+	ensure (*p == 1);
+	ensure (*++p == 2);
 	p++;
-	assert (*p == 4);
-	assert (*++p == 8);
+	ensure (*p == 4);
+	ensure (*++p == 8);
 }
 
 #endif // _DEBUG

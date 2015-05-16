@@ -13,8 +13,9 @@ namespace iter {
 	{
 		E l(e);
 
-		while (e)
+		while (e) {
 			l = e++;
+		}
 
 		return l;
 	}
@@ -46,23 +47,23 @@ namespace iter {
 } // iter
 
 #ifdef _DEBUG
-#include <cassert>
+#include "include/ensure.h"
 
 inline void test_last() {
 	int a[] = {0,1,2};
 
-	assert (*iter::last(e(a,3)) == 2);
+	ensure (*iter::last(e(a,3)) == 2);
 	auto ea = iter::end(e(a,3));
-	assert (ea[-1] == 2);
+	ensure (ea[-1] == 2);
 
 	auto ra = iter::rend(e(a,3));
-	assert (ra && *ra == 2);
+	ensure (ra && *ra == 2);
 	++ra;
-	assert (ra && *ra == 1);
+	ensure (ra && *ra == 1);
 	ra++;
-	assert (ra && *ra == 0);
+	ensure (ra && *ra == 0);
 	ra++;
-	assert (!ra);
+	ensure (!ra);
 
 }
 

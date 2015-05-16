@@ -57,7 +57,7 @@ namespace iter {
 } // iter
 
 #ifdef _DEBUG
-#include <cassert>
+#include "include/ensure.h"
 
 using namespace iter;
 
@@ -67,28 +67,28 @@ inline void test_apply()
 	auto b = apply([](int e) { return e*e; }, a);
 	decltype(b) c;
 	c = b;
-	assert (*b == 0);
-	assert (*++b == 1);
+	ensure (*b == 0);
+	ensure (*++b == 1);
 	b++;
-	assert (*b == 4);
+	ensure (*b == 4);
 
-	assert (*c == 0);
-	assert (*++c == 1);
+	ensure (*c == 0);
+	ensure (*++c == 1);
 	c++;
-	assert (*c == 4);
+	ensure (*c == 4);
 
 	auto d = apply([](int n) { return 1 + n + n*n; });
-	assert (*d == 1);
-	assert (*++d == 3);
+	ensure (*d == 1);
+	ensure (*++d == 3);
 	++d;
-	assert (*d == 7);
+	ensure (*d == 7);
 	
 /*	{ // not working with VC 2013
 		double a[] = {0,1,2};
 		auto e = apply(exp, a);
-		assert (*e++ == exp(0));
-		assert (*e++ == exp(1));
-		assert (*e++ == exp(2));
+		ensure (*e++ == exp(0));
+		ensure (*e++ == exp(1));
+		ensure (*e++ == exp(2));
 	}
 */
 }

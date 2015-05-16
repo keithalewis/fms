@@ -136,58 +136,10 @@ namespace iter {
 		}
 	};
 
-	// specialize
-/*	template<class T, size_t N>
-	class enumerator<T(&)[N],T> {
-	protected:
-		T* i;
-		size_t n;
-	public:
-		enumerator()
-		{ }
-		enumerator(T (&i)[N])
-			: i(i), n(N)
-		{ }
-		operator T*()
-		{
-			return i;
-		}
-		operator bool() const
-		{
-			return n != 0; // infinite
-		}
-		T operator*() const
-		{
-			return *i;
-		}
-		enumerator& operator++()
-		{
-			++i;
-			--n;
-
-			return *this;
-		}
-		enumerator operator++(int)
-		{
-			enumerator e(*this);
-
-			operator++();
-
-			return e;
-		}
-	};
-	template<class T, size_t N>
-	inline auto make_enumerator(T(&i)[N])
-	{
-		return enumerator<T(&)[N]>(i);
-	}
-*/
-	// epsilon_iterator ???
 } // iter
 
 #ifdef _DEBUG
-#include <cassert>
-#include <vector>
+#include "include/ensure.h"
 
 using namespace iter;
 
@@ -198,23 +150,23 @@ inline void test_enumerator()
 	{
 		enumerator<int*> b(a), c;
 		c = b;
-//		assert (b == c);
-		assert (*c == *b);
-		assert (b);
-		assert (*++b == 2);
+//		ensure (b == c);
+		ensure (*c == *b);
+		ensure (b);
+		ensure (*++b == 2);
 		b++; // not really the end
-		assert (b && c);
-//		assert (b == c); // operator bool() => true == true
+		ensure (b && c);
+//		ensure (b == c); // operator bool() => true == true
 	}
 	{
 		auto e = make_enumerator(a);
-		assert (e);
-		assert (*++e == 2);
+		ensure (e);
+		ensure (*++e == 2);
 		e++;
 
 		const int* pe = e;
 		--pe;
-		assert (*pe == 2);
+		ensure (*pe == 2);
 	}
 }
 

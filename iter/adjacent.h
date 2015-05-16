@@ -56,7 +56,7 @@ namespace iter {
 } // iter
 
 #ifdef _DEBUG
-#include <cassert>
+#include "include/ensure.h"
 //#include "apply.h"
 //#include "expr.h"
 //#include "iota.h"
@@ -70,18 +70,18 @@ inline void test_adjacent()
 		auto b = delta(a);
 		auto c(b);
 		b = c;
-		assert (*b++ == 1);
-		assert (*b == 3);
-		assert (*++b == 5);
+		ensure (*b++ == 1);
+		ensure (*b == 3);
+		ensure (*++b == 5);
 	}
 	{
 		int a[] = {1,4,9};
 		auto b = delta(a, 1);
 		auto c(b);
 		b = c;
-		assert (*b++ == 0);
-		assert (*b == 3);
-		assert (*++b == 5);
+		ensure (*b++ == 0);
+		ensure (*b == 3);
+		ensure (*++b == 5);
 	}
 }
 

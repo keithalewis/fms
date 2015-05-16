@@ -6,10 +6,14 @@ namespace iter {
 
 	// null terminated enumerator
 	template<class I, class T = typename std::iterator_traits<I>::value_type>
-	class null_enumerator : public enumerator<I,T> {
+	class null_enumerator : public enumerator_base<I,T> {
+		I i;
 	public:
-		using enumerator<I,T>::enumerator;
-		using enumerator<I,T>::i;
+		null_enumerator()
+		{ }
+		null_enumerator(I i)
+			: i(i)
+		{ }
 
 		operator bool() const
 		{
@@ -121,7 +125,7 @@ namespace iter {
 
 
 #ifdef _DEBUG
-#include <cassert>
+#include "include/ensure.h"
 #include <vector>
 
 using namespace iter;
@@ -133,7 +137,7 @@ inline void test_enumerator_null()
 		auto e(b);
 		while (e)
 			++e;
-//		assert (3 == std::distance(b, e));
+//		ensure (3 == std::distance(b, e));
 	}
 }
 

@@ -45,7 +45,7 @@ namespace iter {
 } // iter
 
 #ifdef _DEBUG
-#include <cassert>
+#include "include/ensure.h"
 
 using iter::iota_;
 
@@ -53,15 +53,15 @@ inline void test_iota()
 {
 	iota_<int> i;
 
-	assert (*i == 0);
-	assert (*++i == 1);
+	ensure (*i == 0);
+	ensure (*++i == 1);
 	i++;
-	assert (*i == 2);
+	ensure (*i == 2);
 
 	i = iota(2);
-	assert (*i++ == 2);
-	assert (*i == 3);
-	assert (*++i == 4);
+	ensure (*i++ == 2);
+	ensure (*i == 3);
+	ensure (*++i == 4);
 }
 
 #endif // _DEBUG

@@ -126,7 +126,7 @@ namespace iter {
 
 
 #ifdef _DEBUG
-#include <cassert>
+#include "include/ensure.h"
 
 using namespace iter;
 
@@ -138,21 +138,21 @@ inline void test_enumerator_counted()
 		auto e = make_counted_enumerator(a, 2);
 		auto f(e);
 		e = f;
-		assert (e);
-		assert (*++e == 2);
-		assert (e);
+		ensure (e);
+		ensure (*++e == 2);
+		ensure (e);
 		e++;
-		assert (!e);
+		ensure (!e);
 	}
 	{
 		char foo[] = "foo";
 		auto n = e(foo, 3);
-		assert (*n++ == 'f' && *n++ == 'o' && *n++ == 'o' && !n);
+		ensure (*n++ == 'f' && *n++ == 'o' && *n++ == 'o' && !n);
 	}
 	{
 		auto b = ce(a);
-		assert (b.size() == 3);
-		assert (b.end()[-1] == 3);
+		ensure (b.size() == 3);
+		ensure (b.end()[-1] == 3);
 	}
 }
 

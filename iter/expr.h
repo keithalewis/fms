@@ -176,7 +176,7 @@ inline auto operator/(I i, J j)
 }
 
 #ifdef _DEBUG
-#include <cassert>
+#include "include/ensure.h"
 
 using namespace iter;
 
@@ -189,11 +189,11 @@ inline void test_expr_binop()
 
 	auto ab = make_binop(o, a, b);
 	int i = 0;
-	assert (*ab == o(a[i],b[i]));
+	ensure (*ab == o(a[i],b[i]));
 	ab++; i++;
-	assert (*ab == o(a[i],b[i]));
+	ensure (*ab == o(a[i],b[i]));
 	++i;
-	assert (*++ab == o(a[i],b[i]));
+	ensure (*++ab == o(a[i],b[i]));
 }
 
 inline void test_expr()
@@ -223,78 +223,78 @@ inline void test_expr()
 	{
 		auto aa_ = make_add(e(a),e(a));
 		auto aa = make_add(a,a);
-		assert (*aa == 1 + 1);
-		assert (*++aa == 2 + 2);
+		ensure (*aa == 1 + 1);
+		ensure (*++aa == 2 + 2);
 		aa++;
-		assert (*aa == 3 + 3);
+		ensure (*aa == 3 + 3);
 
 		auto a1 = make_add(e(a), e(a));
 		auto aaa = make_add(make_add(e(a),e(a)), e(a));
-		assert (*aaa == 3);
-		assert (*++aaa == 6);
+		ensure (*aaa == 3);
+		ensure (*++aaa == 6);
 		aaa++;
-		assert (*aaa == 9);
+		ensure (*aaa == 9);
 
 		auto a4 = make_add(a,a) + e(a);
-		assert (*a4 == 3);
-		assert (*++a4 == 6);
+		ensure (*a4 == 3);
+		ensure (*++a4 == 6);
 		a4++;
-		assert (*a4 == 9);
+		ensure (*a4 == 9);
 
 		auto ai = e(a);
 		auto a5 = (ai + ai) + (ai + ai) + ai;
 		int i = 0;
-		assert (*a5 == 5*a[i]);
-		assert (*++a5 == 5*a[++i]);
+		ensure (*a5 == 5*a[i]);
+		ensure (*++a5 == 5*a[++i]);
 		a5++;
-		assert (*a5 == 5*a[++i]);
+		ensure (*a5 == 5*a[++i]);
 		{
 			auto a6 = e(a) + c(1);// constant<int>(1);
-			assert (*a6 == a[i=0] + 1);
-			assert (*++a6 == a[++i] + 1);
+			ensure (*a6 == a[i=0] + 1);
+			ensure (*++a6 == a[++i] + 1);
 			a6++; i++;
-			assert (*a6 == a[i] + 1);
+			ensure (*a6 == a[i] + 1);
 		}
 		{
 			auto a6 = constant<int>(1) + e(a);
-			assert (*a6 == a[i=0] + 1);
-			assert (*++a6 == a[++i] + 1);
+			ensure (*a6 == a[i=0] + 1);
+			ensure (*++a6 == a[++i] + 1);
 			a6++; i++;
-			assert (*a6 == a[i] + 1);
+			ensure (*a6 == a[i] + 1);
 		}
 	}
 	{
 		auto aa = make_mul(e(a),e(a));
-		assert (*aa == 1 * 1);
-		assert (*++aa == 2 * 2);
+		ensure (*aa == 1 * 1);
+		ensure (*++aa == 2 * 2);
 		aa++;
-		assert (*aa == 3 * 3);
+		ensure (*aa == 3 * 3);
 
 		auto a1 = make_mul(e(a), e(a));
 		auto aaa = make_mul(make_mul(e(a),e(a)), e(a));
-		assert (*aaa == 1);
-		assert (*++aaa == 8);
+		ensure (*aaa == 1);
+		ensure (*++aaa == 8);
 		aaa++;
-		assert (*aaa == 27);
+		ensure (*aaa == 27);
 
 		auto a4 = make_mul(a,a) * e(a);
-		assert (*a4 == 1);
-		assert (*++a4 == 8);
+		ensure (*a4 == 1);
+		ensure (*++a4 == 8);
 		a4++;
-		assert (*a4 == 27);
+		ensure (*a4 == 27);
 	}
 	{
 		int a[] = {1,2,3};
 		auto b = equal(a,a);
-		assert (*b);
-		assert (*b++ && *b++ && *b++);
+		ensure (*b);
+		ensure (*b++ && *b++ && *b++);
 
 		auto c = equal(a, re(a + 3));
-		assert (!*c);
-		assert (*++c);
+		ensure (!*c);
+		ensure (*++c);
 		c++;
-		assert (!*c);
-		assert (c && ++c);
+		ensure (!*c);
+		ensure (c && ++c);
 	}
 }
 #endif // _DEBUG

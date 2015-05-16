@@ -1,7 +1,13 @@
 // normal.h - normal distribution
 #pragma once
 #include <cmath>
-#include "../math/exp.h"
+#include "iter/iter.h"
+#include "math/exp.h"
+
+constexpr double arctan(double z)
+{
+	return z;
+}
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
@@ -23,21 +29,10 @@ namespace prob {
 	template<class X = double>
 	struct normal {
 
-		// 0.5 + exp(-x*x/2) sum x^{2n + 1}/(2n + 1)!!
+		// 0.5 + exp(-x*x/2) sum x^{2n + 1}/(2n + 1)!!/sqrt2pi
 		static X cdf(const X& x)
 		{
-			using iter::c;
-			using iter::iota;
-			using iter::pick;
-			using iter::pow;
-			using iter::sum;
-			using math::exp;
-
-			// 2n + 1
-			auto n = c(2)*iota(X(0)) + c(1); 
-
-			// not correct !!!
-			return X(0.5); // + exp(-x*x/2)*sum(e(pick(prod(c(x)/n),n)))/sqrt2pi;
+			return X(0.5) + exp(-x*x/2)*x*back(sum(e(prod(c(x*x)/(c(2)*iota(X(0)) + c(1))))))/sqrt2pi;
 		}
 		static X pdf(const X& x)
 		{
@@ -56,6 +51,8 @@ using namespace prob;
 
 inline void test_normal()
 {
+	double a = arctan(1);
+
 	auto x = normal<>::cdf(0);
 	assert (x == 0.5);
 	x = normal<>::cdf(1);

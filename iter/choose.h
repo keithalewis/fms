@@ -50,7 +50,7 @@ namespace iter {
 } // iter
 
 #ifdef _DEBUG
-#include <cassert>
+#include "include/ensure.h"
 
 inline void test_choose()
 {
@@ -58,13 +58,13 @@ inline void test_choose()
 	auto d(c);
 	c = d;
 
-	assert (*c == 1);
-	assert (*++c == 4);
+	ensure (*c == 1);
+	ensure (*++c == 4);
 	c++;
-	assert (*c == 6);
-	assert (*++c == 4);
-	assert (*++c == 1);
-	assert (!++c);
+	ensure (*c == 6);
+	ensure (*++c == 4);
+	ensure (*++c == 1);
+	ensure (!++c);
 }
 
 #endif // _DEBUG

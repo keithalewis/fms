@@ -6,15 +6,14 @@ namespace iter {
 
 	// end sentinel enumerator
 	template<class I, class J = I, class T = typename std::iterator_traits<I>::value_type>
-	class end_enumerator : public enumerator<I,T> {
+	class end_enumerator : public enumerator_base<I,T> {
+		I i;
 		J e;
 	public:
-		using enumerator<I,T>::i;
-
 		end_enumerator()
 		{ }
 		end_enumerator(I i, J e)
-			: enumerator<I,T>(i), e(e)
+			: i(i), e(e)
 		{ }
 
 		operator bool() const
@@ -45,12 +44,17 @@ namespace iter {
 	{
 		return end_enumerator<I,J,T>(i, e);
 	}
+	template<class I, class J = I, class T = typename std::iterator_traits<I>::value_type>
+	inline end_enumerator<I,J,T> ee(I i, J e)
+	{
+		return end_enumerator<I,J,T>(i, e);
+	}
 
 } // iter
 
 
 #ifdef _DEBUG
-#include <cassert>
+#include "include/ensure.h"
 
 using namespace iter;
 
@@ -60,11 +64,11 @@ inline void test_enumerator_end()
 
 	{
 		auto f = make_end_enumerator(std::begin(a), std::end(a));
-		assert (f);
-		assert (*++f == 2);
+		ensure (f);
+		ensure (*++f == 2);
 		f++;
-		assert (*f++ == 0);
-		assert (!f);
+		ensure (*f++ == 0);
+		ensure (!f);
 	}
 }
 

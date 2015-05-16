@@ -1,12 +1,25 @@
 // iter.cpp
-#include <cassert>
+#include "include/ensure.h"
 #include "iter.h"
 
 using namespace iter;
 
+inline void test_poly()
+{
+	int a[] = {1,2,3};
+	auto xn = pow(4);
+	auto p = ce(a)*xn;
+	auto s = sum(p);
+	auto f = back(s);
+	ensure (f == 1 + 2*4 + 3*4*4);
+	ensure (back(sum(ce(a)*pow(4))) == 1 + 2*4 + 3*4*4);
+}
+
 int main() 
 {
 	try {
+		test_poly();
+
 		test_accumulate();
 		test_adjacent();
 		test_apply();

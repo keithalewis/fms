@@ -44,24 +44,24 @@ namespace iter {
 } // iter
 
 #ifdef _DEBUG
-#include <cassert>
+#include "include/ensure.h"
 
 using namespace iter;
 
 inline void test_constant()
 {
 	constant_<int> zero;
-	assert (*zero == 0);
-	assert (*++zero == 0);
-	assert (*zero++ == 0);
+	ensure (*zero == 0);
+	ensure (*++zero == 0);
+	ensure (*zero++ == 0);
 
 	constant_<int> two(2);
-	assert (*two == 2);
-	assert (*++two == 2);
-	assert (*two++ == 2);
+	ensure (*two == 2);
+	ensure (*++two == 2);
+	ensure (*two++ == 2);
 
 	auto four = c(4);
-	assert (*four++ == 4 && *++four == 4);
+	ensure (*four++ == 4 && *++four == 4);
 }
 
 #endif // _DEBUG

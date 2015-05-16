@@ -48,16 +48,16 @@ namespace iter {
 } // iter
 
 #ifdef _DEBUG
-#include <cassert>
+#include "include/ensure.h"
 
 inline void test_where()
 {
 	int a[] = {0,1,2,3,4,5};
 	auto b = where([](const int* pi) { return (*pi % 2) != 0; }, a);
-	assert (*b == 1);
-	assert (*++b == 3);
+	ensure (*b == 1);
+	ensure (*++b == 3);
 	b++;
-	assert (*b == 5);
+	ensure (*b == 5);
 
 	auto c(b);
 	b = c;
