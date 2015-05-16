@@ -12,7 +12,8 @@ namespace iter {
 	inline bool all(I i)
 	{
 		while (i)
-			if (0 == *i++) return false;
+			if (0 == *i++) 
+				return false;
 
 		return true;
 	}
@@ -21,7 +22,8 @@ namespace iter {
 	inline bool any(I i)
 	{
 		while (i)
-			if (0 != *i++) return true;
+			if (0 != *i++) 
+				return true;
 
 		return false;
 	}

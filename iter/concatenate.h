@@ -7,8 +7,20 @@ namespace iter {
 	template<class I, class J,
 		class V = typename std::common_type_t<
 			typename std::iterator_traits<I>::value_type,
-			typename std::iterator_traits<J>::value_type>>
-	class concatenate_ : public enumerator_base<std::pair<I,J>, V, std::input_iterator_tag> { // <-- lcd category!!!
+			typename std::iterator_traits<J>::value_type
+		>
+//		class C = typename std::input_iterator_tag
+/*		class C = typename std::common_type_t<
+			typename std::iterator_traits<I>::iterator_category,
+			typename std::iterator_traits<J>::iterator_category
+		>
+*/	>
+	class concatenate_ : public enumerator_base<std::pair<I,J>, V, /*std::input_iterator_tag*/
+		typename std::common_type_t<
+			typename std::iterator_traits<I>::iterator_category,
+			typename std::iterator_traits<J>::iterator_category
+		>
+	> {
 		std::pair<I,J> ij;
 	public:
 		concatenate_()

@@ -24,14 +24,15 @@ namespace iter {
 	// i[n[0]], i[n[0] + n[1]], ...
 	template<class N, class I, 
 		class T = typename std::iterator_traits<I>::value_type>
-	class skip_ : public enumerator_base<I,T> {
+	class skip_ : public enumerator<I,T> {
 		N n;
-		I i;
+//		I i;
 	public:
+		using enumerator<I,T>::i;
 		skip_()
 		{ }
 		skip_(N n, I i)
-			: n(n), i(skipn(*n,i))
+			: enumerator<I,T>(skipn(*n,i)), n(n)
 		{ }
 
 		operator bool() const

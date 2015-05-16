@@ -65,16 +65,16 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="enumerator\null.h">
-      <Filter>enumerator</Filter>
+      <Filter>Header Files\enumerator</Filter>
     </ClInclude>
     <ClInclude Include="enumerator\counted.h">
-      <Filter>enumerator</Filter>
+      <Filter>Header Files\enumerator</Filter>
     </ClInclude>
     <ClInclude Include="enumerator\reverse.h">
-      <Filter>enumerator</Filter>
+      <Filter>Header Files\enumerator</Filter>
     </ClInclude>
     <ClInclude Include="enumerator\end.h">
-      <Filter>enumerator</Filter>
+      <Filter>Header Files\enumerator</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -87,7 +87,7 @@
     <Filter Include="Header Files">
       <UniqueIdentifier>{2fd215ca-c1a7-41e0-af9b-781bc7f19425}</UniqueIdentifier>
     </Filter>
-    <Filter Include="enumerator">
+    <Filter Include="Header Files\enumerator">
       <UniqueIdentifier>{075084ea-f906-4c10-b753-6780ed4aca62}</UniqueIdentifier>
     </Filter>
   </ItemGroup>

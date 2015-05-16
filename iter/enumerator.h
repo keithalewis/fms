@@ -11,7 +11,8 @@ namespace iter {
 	// read-only input iterator with sentinel
 	template<class I, 
 		class T = typename std::iterator_traits<I>::value_type,
-		class C = typename std::iterator_traits<I>::iterator_category>
+		class C = typename std::iterator_traits<I>::iterator_category
+	>
 	struct enumerator_base : public std::iterator<C, T> {
 	public:
 		enumerator_base()
@@ -39,8 +40,11 @@ namespace iter {
 		}
 	};
 
-	template<class I, class T = typename std::iterator_traits<I>::value_type>
-	class enumerator : public enumerator_base<I,T> {
+	template<class I, 
+		class T = typename std::iterator_traits<I>::value_type,
+		class C = typename std::iterator_traits<I>::iterator_category
+	>
+	class enumerator : public enumerator_base<I,T,C> {
 	protected:
 		I i;
 	public:
@@ -54,7 +58,19 @@ namespace iter {
 			: i(j.i)
 		{ }
 
-		operator bool() const
+/*		bool operator!=(const I& j)
+		{
+			return i.i != j.i;
+		}
+		operator I()
+		{
+			return i;
+		}
+		operator const I&() const
+		{
+			return i;
+		}
+*/		operator bool() const
 		{
 			return true; // infinite
 		}
@@ -85,7 +101,6 @@ namespace iter {
 
 	// specializations for pointers
 	template<class T>
-//	class enumerator<T*,T> {
 	class enumerator<T*,T> : public enumerator_base<T*,T> {
 	protected:
 		T* i;
@@ -100,6 +115,7 @@ namespace iter {
 		{
 			return i;
 		}
+
 		operator bool() const
 		{
 			return true; // infinite
@@ -191,6 +207,10 @@ inline void test_enumerator()
 		assert (e);
 		assert (*++e == 2);
 		e++;
+
+		const int* pe = e;
+		--pe;
+		assert (*pe == 2);
 	}
 }
 

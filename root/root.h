@@ -1,7 +1,13 @@
-// root.h - root finding
+// root.h - policy based root finding
 #pragma once
 #include <functional>
 #include <iterator>
+
+/*
+double sqrt2 = root1d::find<N,D>([](double x) { return x*x - 2; }, 1, 2);
+
+X find<N,D>(
+*/
 
 namespace root1d {
 /*

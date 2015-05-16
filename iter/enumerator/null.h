@@ -133,8 +133,8 @@ inline void test_enumerator_null()
 		auto e(b);
 		while (e)
 			++e;
-//!!!		assert (3 == std::distance(b, e));
-		}
+//		assert (3 == std::distance(b, e));
+	}
 }
 
 #endif // _DEBUG

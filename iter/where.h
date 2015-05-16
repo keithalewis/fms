@@ -6,14 +6,14 @@
 namespace iter {
 
 	template<class P, class I, class T = typename std::iterator_traits<I>::value_type>
-	class where_ : public enumerator_base<I,T> {
+	class where_ : public enumerator<I,T> {
 		std::function<bool(const I&)> p;
-		I i;
 	public:
+		using enumerator<I,T>::i;
 		where_()
 		{ }
 		where_(P p, I i)
-			: p(p), i(until(p,i))
+			: enumerator<I,T>(until(p,i)), p(p)
 		{ }
 
 		operator bool() const
