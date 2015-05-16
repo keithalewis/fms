@@ -9,28 +9,25 @@
 
 namespace poly {
 
+	// sum c[i] x^i
 	template<class C, class X = typename std::iterator_traits<C>::value_type>
-	inline X nomial(C c, const X& x)
+	inline X nomial(iter::counted_enumerator<C> c, const X& x)
 	{
 		using iter::back;
-		using iter::sum;
 		using iter::pow;
+		using iter::sum;
 
 		return back(sum(c, pow(x)));
 	}
 
 	template<class C, class X = typename std::iterator_traits<C>::value_type>
-	inline X horner(C c, const X& x, bool reverse = false)
+	inline X horner(C c, const X& x)
 	{
 		using iter::accumulate;
 		using iter::back;
-		using iter::end;
-		using iter::sum;
-		using iter::pow;
+		using iter::rend;
 
-		return reverse 
-			? horner(rend(c), x)
-			: back(accumulate([x](const X& a, const X& b) { return a*x + b; }, c, X(0)));
+		return back(accumulate([x](const X& a, const X& b) { return a*x + b; }, rend(c), X(0)));
 	}
 }
 
@@ -40,8 +37,9 @@ namespace poly {
 inline void test_poly()
 {
 	int c[] = {1,2,3};
-	assert (poly::nomial(e(c,3), 4) == 1 + 2*4 + 3*4*4);
-	assert (poly::horner(c, 4, true) == poly::nomial(c, 4));
+	auto ec = e(c,3);
+	assert (poly::nomial(ec, 4) == 1 + 2*4 + 3*4*4);
+//	assert (poly::horner(ec, 4) == poly::nomial(ec, 4));
 }
 
 

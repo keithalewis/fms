@@ -26,14 +26,16 @@ namespace iter {
 
 		return e;
 	}
+	template<class I, class T = typename std::iterator_traits<I>::value_type>
+	inline auto end(counted_enumerator<I,T> e)
+	{
+		return e.end();
+	}
 	// counted reverse enumerator
 	template<class R>
 	inline auto rend(R r)
 	{
-		size_t n = r.size();
-		std::advance(r, n);
-
-		return r;//e(re(r),n);
+		return e(re(r.end()),r.size());
 	}
 	template<class E>
 	inline typename std::iterator_traits<E>::value_type back(E e)
@@ -50,7 +52,9 @@ inline void test_last() {
 	int a[] = {0,1,2};
 
 	assert (*iter::last(e(a,3)) == 2);
-/*
+	auto ea = iter::end(e(a,3));
+	assert (ea[-1] == 2);
+
 	auto ra = iter::rend(e(a,3));
 	assert (ra && *ra == 2);
 	++ra;
@@ -59,7 +63,7 @@ inline void test_last() {
 	assert (ra && *ra == 0);
 	ra++;
 	assert (!ra);
-*/
+
 }
 
 #endif // _DEBUG

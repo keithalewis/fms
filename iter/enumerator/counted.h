@@ -6,20 +6,25 @@ namespace iter {
 
 	// counted enumerator
 	template<class I, class T = typename std::iterator_traits<I>::value_type>
-	class counted_enumerator : public enumerator<I,T> {
-		mutable size_t n;
+	class counted_enumerator : public enumerator_base<I,T> {
+		I i;
+		size_t n;
 	public:
-		using enumerator<I,T>::i;
-
 		counted_enumerator()
 		{ }
 		counted_enumerator(I i, size_t n)
-			: enumerator<I,T>(i), n(n)
+			: i(i), n(n)
 		{ }
 
 		size_t size() const
 		{
 			return n;
+		}
+		I end()
+		{
+			std::advance(i, n);
+
+			return i;
 		}
 		operator bool() const
 		{
@@ -56,24 +61,33 @@ namespace iter {
 	{
 		return counted_enumerator<I,T>(i, n);
 	}
+
 	// specialization
-/*	template<class T, size_t N>
-	class counted_enumerator<T(&)[N],T> {
+	template<class T, size_t N>
+	class counted_enumerator<T(&)[N]> : public enumerator_base<T*,T> {
 		T* i;
 		size_t n;
 	public:
 		counted_enumerator()
 		{ }
-		counted_enumerator(T (&i)[N])
+		counted_enumerator(T(&i)[N])
 			: i(i), n(N)
 		{ }
-		operator T*()
+
+		size_t size() const
 		{
+			return n;
+		}
+		T* end()
+		{
+			std::advance(i, n);
+
 			return i;
 		}
+
 		operator bool() const
 		{
-			return n != 0; // infinite
+			return n != 0;
 		}
 		T operator*() const
 		{
@@ -95,7 +109,19 @@ namespace iter {
 			return e;
 		}
 	};
-*/
+	template<class T, size_t N>
+	inline auto make_counted_enumerator(T(&i)[N])
+	{
+		return make_counted_enumerator(i, N);
+	}
+	// shorthand
+	template<class T, size_t N>
+	inline auto ce(T(&i)[N])
+	{
+		return make_counted_enumerator(i, N);
+	}
+
+
 } // iter
 
 
@@ -106,10 +132,12 @@ using namespace iter;
 
 inline void test_enumerator_counted()
 {
-	int a[] = {1,2,0};
+	int a[] = {1,2,3};
 
 	{
 		auto e = make_counted_enumerator(a, 2);
+		auto f(e);
+		e = f;
 		assert (e);
 		assert (*++e == 2);
 		assert (e);
@@ -120,6 +148,11 @@ inline void test_enumerator_counted()
 		char foo[] = "foo";
 		auto n = e(foo, 3);
 		assert (*n++ == 'f' && *n++ == 'o' && *n++ == 'o' && !n);
+	}
+	{
+		auto b = ce(a);
+		assert (b.size() == 3);
+		assert (b.end()[-1] == 3);
 	}
 }
 

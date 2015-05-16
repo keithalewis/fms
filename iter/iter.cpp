@@ -38,13 +38,3 @@ int main()
 
 	return 0;
 }
-
-template<class I, class T = typename std::iterator_traits<I>::value_type>
-inline T poly(I i, T x)
-{
-	return back(sum(i*pow(x)));
-}
-inline int as_number(const char* s)
-{
-	return poly(re(end(s)), 10);
-}

@@ -8,7 +8,7 @@
 
 namespace iter {
 
-	// read-only input iterator with sentinel
+	// enumerator is an iterator with operator bool() const
 	template<class I, 
 		class T = typename std::iterator_traits<I>::value_type,
 		class C = typename std::iterator_traits<I>::iterator_category
@@ -53,18 +53,14 @@ namespace iter {
 		enumerator(I i)
 			: i(i)
 		{ }
-		template<class J>
-		enumerator(J j)
-			: i(j.i)
-		{ }
 
-/*		bool operator!=(const I& j)
-		{
-			return i.i != j.i;
-		}
 		operator I()
 		{
 			return i;
+		}
+/*		bool operator!=(const I& j)
+		{
+			return i.i != j.i;
 		}
 		operator const I&() const
 		{
@@ -139,8 +135,11 @@ namespace iter {
 			return e;
 		}
 	};
+
+	// specialize
 /*	template<class T, size_t N>
 	class enumerator<T(&)[N],T> {
+	protected:
 		T* i;
 		size_t n;
 	public:
@@ -177,6 +176,11 @@ namespace iter {
 			return e;
 		}
 	};
+	template<class T, size_t N>
+	inline auto make_enumerator(T(&i)[N])
+	{
+		return enumerator<T(&)[N]>(i);
+	}
 */
 	// epsilon_iterator ???
 } // iter

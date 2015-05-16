@@ -6,7 +6,11 @@
 /*
 double sqrt2 = root1d::find<N,D>([](double x) { return x*x - 2; }, 1, 2);
 
-X find<N,D>(
+template<class F, class N, class D>
+inline X find(F f, N n, D d)
+{
+	return back(accumulate(F, ?));
+}
 */
 
 namespace root1d {
