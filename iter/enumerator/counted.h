@@ -10,6 +10,7 @@ namespace iter {
 		I i;
 		size_t n;
 	public:
+		typedef std::true_type is_counted;
 		counted_enumerator()
 		{ }
 		counted_enumerator(I i, size_t n)
@@ -23,7 +24,24 @@ namespace iter {
 		I end()
 		{
 			std::advance(i, n);
+	
+			return i;
+		}
 
+		bool operator==(const counted_enumerator& j) const
+		{
+			return i == j.i;
+		}
+		bool operator!=(const counted_enumerator& j) const
+		{
+			return i != j.i;
+		}
+		operator I() const
+		{
+			return i;
+		}
+		I& iterator()
+		{
 			return i;
 		}
 		operator bool() const

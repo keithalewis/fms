@@ -12,7 +12,7 @@ namespace math {
 		using iter::prod;
 		using iter::sum;
 
-		return X(1 + back(sum(e(prod(c(x)/iota(X(1)))))));
+		return X(1 + sum0(e(prod(c(x)/iota(X(1))))));
 	}
 
 } // math
@@ -20,13 +20,22 @@ namespace math {
 #ifdef _DEBUG
 #include <ctime>
 #include <random>
+#include "include/ensure.h"
+#include "include/timer.h"
 
 template<class X = double>
 inline void test_exp()
 {
+	long long c;
+	auto 
+	ms = timer::time([]() { exp(1.0); }, 10000);
+	c = ms.count();
+	ms = timer::time([]() { math::exp(1.0); }, 1000);
+	c = ms.count();
+
 	X e1 = math::exp(X(1));
 	X e1_ = exp(X(1));
-	assert (fabs(e1 - e1_) <= 2*std::numeric_limits<X>::epsilon());
+	ensure (fabs(e1 - e1_) <= 2*std::numeric_limits<X>::epsilon());
 
 	std::default_random_engine dre;
 	std::uniform_real_distribution<X> u(-18,18); //
@@ -47,8 +56,8 @@ inline void test_exp()
 		if (de/e > max)
 			max = de/e;
 	}
-	assert (0*max < 10*std::numeric_limits<X>::epsilon());
-	assert (0*min > -12*std::numeric_limits<X>::epsilon());
+	ensure (0*max < 10*std::numeric_limits<X>::epsilon());
+	ensure (0*min > -12*std::numeric_limits<X>::epsilon());
 }
 
 #endif // _DEBUG

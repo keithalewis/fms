@@ -9,11 +9,29 @@ namespace iter {
 	class null_enumerator : public enumerator_base<I,T> {
 		I i;
 	public:
+		typedef std::false_type is_counted; // for tag dispatch
 		null_enumerator()
 		{ }
 		null_enumerator(I i)
 			: i(i)
 		{ }
+
+		bool operator==(const null_enumerator& j) const
+		{
+			return i == j.i;
+		}
+		bool operator!=(const null_enumerator& j) const
+		{
+			return i != j.i;
+		}
+		operator I() const
+		{
+			return i;
+		}
+		I& iterator()
+		{
+			return i;
+		}
 
 		operator bool() const
 		{

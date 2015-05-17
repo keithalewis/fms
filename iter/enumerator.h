@@ -8,6 +8,16 @@
 
 namespace iter {
 
+	// use has_member(size()) ???
+	template<class I>
+	struct enumerator_traits : public std::iterator_traits<I> {
+		typedef typename I::is_counted is_counted;
+	};
+	template<class T>
+	struct enumerator_traits<T*> : public std::iterator_traits<T*> {
+		typedef std::false_type is_counted;
+	};
+
 	// enumerator is an iterator with operator bool() const
 	template<class I, 
 		class T = typename std::iterator_traits<I>::value_type,
@@ -15,6 +25,7 @@ namespace iter {
 	>
 	struct enumerator_base : public std::iterator<C, T> {
 	public:
+		typedef std::false_type is_counted; // for tag dispatch
 		enumerator_base()
 		{ }
 		~enumerator_base()
@@ -48,25 +59,30 @@ namespace iter {
 	protected:
 		I i;
 	public:
+		typedef typename enumerator_traits<I>::is_counted is_counted; // for tag dispatch
 		enumerator()
 		{ }
 		enumerator(I i)
 			: i(i)
 		{ }
 
+		bool operator==(const enumerator& j) const
+		{
+			return i == j.i;
+		}
+		bool operator!=(const enumerator& j) const
+		{
+			return i == j.i;
+		}
 		operator I()
 		{
 			return i;
 		}
-/*		bool operator!=(const I& j)
-		{
-			return i.i != j.i;
-		}
-		operator const I&() const
+		I& iterator()
 		{
 			return i;
 		}
-*/		operator bool() const
+		operator bool() const
 		{
 			return true; // infinite
 		}
@@ -101,13 +117,26 @@ namespace iter {
 	protected:
 		T* i;
 	public:
+		typedef std::false_type is_counted; // for tag dispatch
 		enumerator()
 		{ }
 		enumerator(T* i)
 			: i(i)
 		{ }
 
-		operator const T*() const
+		bool operator==(const enumerator& j) const
+		{
+			return i == j.i;
+		}
+		bool operator!=(const enumerator& j) const
+		{
+			return i != j.i;
+		}
+		operator T*() const
+		{
+			return i;
+		}
+		T*& iterator()
 		{
 			return i;
 		}
@@ -150,13 +179,13 @@ inline void test_enumerator()
 	{
 		enumerator<int*> b(a), c;
 		c = b;
-//		ensure (b == c);
+		ensure (b == c);
 		ensure (*c == *b);
 		ensure (b);
 		ensure (*++b == 2);
 		b++; // not really the end
 		ensure (b && c);
-//		ensure (b == c); // operator bool() => true == true
+		ensure (b != c);
 	}
 	{
 		auto e = make_enumerator(a);
@@ -164,7 +193,7 @@ inline void test_enumerator()
 		ensure (*++e == 2);
 		e++;
 
-		const int* pe = e;
+		int* pe = e;
 		--pe;
 		ensure (*pe == 2);
 	}

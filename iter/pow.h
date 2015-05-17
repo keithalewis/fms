@@ -4,6 +4,7 @@
 
 namespace iter {
 
+	// 1, t, t^2, ...
 	template<class T>
 	class pow_ : public enumerator_base<T*, T> {
 		T t, t_; // t, t^n

@@ -3,6 +3,7 @@
 #pragma once
 #include <algorithm>
 #include <iterator>
+#include <type_traits>
 #include "enumerator/counted.h"
 
 namespace iter {
@@ -10,14 +11,27 @@ namespace iter {
 	// o(t,e[0]), o(o(t,e[0]), e[1]), ...
 	template<class O, class E, class T = typename std::iterator_traits<E>::value_type>
 	class accumulate_ : public enumerator_base<E,T> {
-		std::function<T(const T&,const T&)> o; E e; T t;
+		O o;
+//		std::function<T(const T&,const T&)> o;
+		E e; T t;
 	public:
+		typedef typename enumerator_traits<E>::is_counted is_counted;
+
 		accumulate_()
 		{ }
 		accumulate_(O o, E e, T t)
 			: o(o), e(e), t(e ? o(t,*e) : t)
 		{ }
 
+		size_t size() const
+		{
+			return e.size();
+		}
+
+		E& iterator()
+		{
+			return e;
+		}
 		operator bool() const
 		{
 			return e;

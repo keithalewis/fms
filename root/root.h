@@ -1,10 +1,13 @@
 // root.h - policy based root finding
+/*
+double sqrt2 = root1d::find<N,D>([](double x) { return x*x - 2; }, 1, 2);
+root1d::find(next(), done());
+*/
 #pragma once
 #include <functional>
 #include <iterator>
 
 /*
-double sqrt2 = root1d::find<N,D>([](double x) { return x*x - 2; }, 1, 2);
 
 template<class F, class N, class D>
 inline X find(F f, N n, D d)
@@ -14,7 +17,19 @@ inline X find(F f, N n, D d)
 */
 
 namespace root1d {
+
 /*
+	template<class I, class X = double, class Y = X>
+	struct next_ {
+		next_& step()
+		{
+			next_<I>::step();
+		}
+	};
+	template<class X = double, class Y = X>
+	class bisect : public next_<bisect, X, Y>
+	{
+
 	template<class I, class X>
 	struct next_ : std::iterator<std::input_iterator_tag, X> {
 		X operator*() const

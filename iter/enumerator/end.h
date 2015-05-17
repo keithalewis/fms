@@ -10,11 +10,29 @@ namespace iter {
 		I i;
 		J e;
 	public:
+		typedef typename enumerator_traits<I>::is_counted is_counted; // for tag dispatch
 		end_enumerator()
 		{ }
 		end_enumerator(I i, J e)
 			: i(i), e(e)
 		{ }
+
+		bool operator==(const end_enumerator& j) const
+		{
+			return i == j.i && e == j.e;
+		}
+		bool operator!=(const end_enumerator& j) const
+		{
+			return i != j.i || e != j.e;
+		}
+		operator I() const
+		{
+			return i;
+		}
+		I& iterator()
+		{
+			return i;
+		}
 
 		operator bool() const
 		{

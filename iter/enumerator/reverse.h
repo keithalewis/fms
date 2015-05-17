@@ -7,13 +7,31 @@ namespace iter {
 	// reverse enumerator
 	template<class T>
 	class reverse_enumerator : public enumerator_base<T*,T> {
-		T* i;
+		std::reverse_iterator<T*> i;
 	public:
+		typedef std::false_type is_counted; // for tag dispatch
 		reverse_enumerator()
 		{ }
 		reverse_enumerator(T* i)
-			: i(--i) // just like reverse iterators
+			: i(i) // just like reverse iterators
 		{ }
+
+		bool operator==(const reverse_enumerator& j) const
+		{
+			return i == j.i;
+		}
+		bool operator!=(const reverse_enumerator& j) const
+		{
+			return i != j.i;
+		}
+		operator T*() const
+		{
+			return i;
+		}
+		std::reverse_iterator<T*>& iterator()
+		{
+			return i;
+		}
 
 		operator bool() const
 		{
@@ -26,17 +44,17 @@ namespace iter {
 		}
 		reverse_enumerator& operator++()
 		{
-			--i;
+			++i;
 
 			return *this;
 		}
 		reverse_enumerator operator++(int)
 		{
-			reverse_enumerator i_(*this);
+			reverse_enumerator r(*this);
 
-			--i;
+			operator++();
 
-			return i_;
+			return r;
 		}
 	};
 	template<class T>

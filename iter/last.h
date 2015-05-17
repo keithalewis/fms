@@ -13,12 +13,13 @@ namespace iter {
 	{
 		E l(e);
 
-		while (e) {
-			l = e++;
+		while (++e) {
+			l = e;
 		}
 
 		return l;
 	}
+
 	template<class E>
 	inline E end(E e)
 	{
@@ -42,6 +43,17 @@ namespace iter {
 	inline typename std::iterator_traits<E>::value_type back(E e)
 	{
 		return *last(e);
+	}
+	// sum null enumerators
+	template<class E, class T = typename std::iterator_traits<E>::value_type>
+	inline T sum0(E e, T s = T(0))
+	{
+		while (e) {
+			s += *e;
+			++e;
+		}
+
+		return s;
 	}
 
 } // iter
