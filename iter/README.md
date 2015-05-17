@@ -1,4 +1,4 @@
-﻿# iter - input iterator for numerics
+﻿# iter - Iterators having operator bool() const
 
 An `enumerator` is an iterators that provides `operator bool() const` which returns `true` when
 it is valid to dereference the iterator.
