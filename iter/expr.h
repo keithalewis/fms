@@ -174,7 +174,17 @@ inline auto operator/(I i, J j)
 {
 	return make_div(i, j);
 }
-
+/*
+#include "concatenate.h"
+template<class I, class J,
+	class T = typename std::iterator_traits<I>::value_type, 
+	class U = typename std::iterator_traits<J>::value_type,
+	class V = std::common_type_t<T,U>>
+inline iter::concatenate_<I,J,V> operator,(I i, J j)
+{
+	return iter::concatenate_<I,J,V>(i,j);
+}
+*/
 #ifdef _DEBUG
 #include "include/ensure.h"
 
