@@ -5,30 +5,30 @@
 #endif 
 
 #include <stdexcept>
-#include "accumulate.h"
-#include "adjacent.h"
-#include "apply.h"
-#include "concatenate.h"
-#include "constant.h"
-#include "choose.h"
+//#include "accumulate.h"
+//#include "adjacent.h"
+//#include "apply.h"
+//#include "concatenate.h"
+//#include "constant.h"
+//#include "choose.h"
 #include "enumerator.h"
 #include "enumerator/counted.h"
-#include "enumerator/end.h"
-#include "enumerator/null.h"
-#include "enumerator/reverse.h"
-#include "expr.h"
-#include "factorial.h"
-#include "fmap.h"
-#include "iota.h"
-#include "last.h"
-#include "level.h"
-#include "pick.h"
-#include "pair.h"
-#include "pow.h"
-#include "skip.h"
-#include "take.h"
-#include "util.h"
-#include "where.h"
+//#include "enumerator/end.h"
+//#include "enumerator/null.h"
+//#include "enumerator/reverse.h"
+//#include "expr.h"
+//#include "factorial.h"
+//#include "fmap.h"
+//#include "iota.h"
+//#include "last.h"
+//#include "level.h"
+//#include "pick.h"
+//#include "pair.h"
+//#include "pow.h"
+//#include "skip.h"
+//#include "take.h"
+//#include "util.h"
+//#include "where.h"
 
 #ifdef _DEBUG
 #include "include/ensure.h"
@@ -37,7 +37,7 @@
 using namespace iter;
 
 inline void test_iterator()
-{
+{/*
 	int i = 1;
 	auto ci = c(i);
 	ensure (sizeof(i) == sizeof(ci));
@@ -71,7 +71,7 @@ inline void test_iterator()
 
 	ensure (all(take(10, iota(1))));
 	ensure (any(take(10, iota(0))));
-
+	*/
 }
 
 #endif // _DEBUG

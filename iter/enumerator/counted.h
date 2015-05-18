@@ -1,49 +1,43 @@
-// counted.h
+// counted.h - enumerators with a count
 #pragma once
 #include "../enumerator.h"
 
 namespace iter {
 
 	// counted enumerator
-	template<class I, class T = typename std::iterator_traits<I>::value_type>
-	class counted_enumerator : public enumerator_base<I,T> {
-		I i;
+	template<class I, 
+		class T = typename std::iterator_traits<I>::value_type,
+		class C = typename std::iterator_traits<I>::iterator_category
+	>
+	class counted_enumerator : public enumerator<I,T,C> {
 		size_t n;
 	public:
 		typedef std::true_type is_counted;
+		using enumerator<I,T,C>::i;
+
 		counted_enumerator()
 		{ }
 		counted_enumerator(I i, size_t n)
-			: i(i), n(n)
+			: enumerator<I,T,C>(i), n(n)
 		{ }
 
 		size_t size() const
 		{
 			return n;
 		}
+		I begin()
+		{
+			return i;
+		}
 		I end()
 		{
-			std::advance(i, n);
+			I e(i);
+
+			std::advance(e, n);
 	
-			return i;
+			return e;
 		}
 
-		bool operator==(const counted_enumerator& j) const
-		{
-			return i == j.i;
-		}
-		bool operator!=(const counted_enumerator& j) const
-		{
-			return i != j.i;
-		}
-		operator I() const
-		{
-			return i;
-		}
-		I& iterator()
-		{
-			return i;
-		}
 		operator bool() const
 		{
 			return n != 0;
@@ -75,21 +69,23 @@ namespace iter {
 	}
 	// shorthand
 	template<class I, class T = typename std::iterator_traits<I>::value_type>
-	inline counted_enumerator<I,T> e(I i, size_t n)
+	inline counted_enumerator<I,T> ce(I i, size_t n)
 	{
 		return counted_enumerator<I,T>(i, n);
 	}
 
 	// specialization
 	template<class T, size_t N>
-	class counted_enumerator<T(&)[N]> : public enumerator_base<T*,T> {
-		T* i;
+	class counted_enumerator<T(&)[N]> : public enumerator<T*,T,std::random_access_iterator_tag> {
 		size_t n;
 	public:
+		typedef std::true_type is_counted;
+		using enumerator<T*,T,std::random_access_iterator_tag>::i;
+
 		counted_enumerator()
 		{ }
 		counted_enumerator(T(&i)[N])
-			: i(i), n(N)
+			: enumerator<T*,T,std::random_access_iterator_tag>(i), n(N)
 		{ }
 
 		size_t size() const
@@ -98,9 +94,11 @@ namespace iter {
 		}
 		T* end()
 		{
-			std::advance(i, n);
+			T* e(i);
 
-			return i;
+			std::advance(e, n);
+
+			return e;
 		}
 
 		operator bool() const
@@ -139,7 +137,6 @@ namespace iter {
 		return make_counted_enumerator(i, N);
 	}
 
-
 } // iter
 
 
@@ -164,7 +161,7 @@ inline void test_enumerator_counted()
 	}
 	{
 		char foo[] = "foo";
-		auto n = e(foo, 3);
+		auto n = ce(foo, 3);
 		ensure (*n++ == 'f' && *n++ == 'o' && *n++ == 'o' && !n);
 	}
 	{
