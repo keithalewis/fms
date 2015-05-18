@@ -4,22 +4,28 @@
 
 namespace iter {
 
-	template<class F, class I, class T = typename std::iterator_traits<I>::value_type>
-	class fmap_ : public enumerator_base<I, std::result_of_t<F(T)>> {
+	template<class F, class I, 
+		class T = typename std::iterator_traits<I>::value_type,
+		class U = typename std::result_of_t<F(T)>,
+		class C = typename std::iterator_traits<I>::iterator_category
+	>
+	class fmap_ : public enumerator<I,U,C> {
 		F f;
-		I i;
 	public:
+		using enumerator<I,U,C>::i;
+		typedef typename enumerator_traits<I>::is_counted is_counted;
+
 		fmap_()
 		{ }
 		fmap_(F f, I i)
-			: f(f), i(i)
+			: enumerator<I,U,C>(i), f(f)
 		{ }
 
 		operator bool() const
 		{
 			return i;
 		}
-		std::result_of_t<F(T)> operator*()
+		U operator*()
 		{
 			return f(*i);
 		}
@@ -38,16 +44,21 @@ namespace iter {
 			return f_;
 		}
 	};
-	template<class F, class I, class T = typename std::iterator_traits<I>::value_type>
+	template<class F, class I, 
+		class T = typename std::iterator_traits<I>::value_type,
+		class U = typename std::result_of_t<F(T)>,
+		class C = typename std::iterator_traits<I>::iterator_category
+	>
 	inline auto fmap(F f, I i)
 	{
-		return fmap_<F,I,T>(f, i);
+		return fmap_<F,I,T,U,C>(f, i);
 	}
 
 	// {e0, e1, ...} => {e0[0], e0[1], ..., e1[0], e1[1], ...
-	template<class I, class T = typename std::iterator_traits<I>::value_type::value_type>
-	class flatten_ : public enumerator_base<I,T> {
-		I i; // iterator of iterators
+	template<class I, 
+		class T = typename std::iterator_traits<I>::value_type::value_type
+	>
+	class flatten_ : public enumerator<I,T,std::input_iterator_tag> {
 		typename std::iterator_traits<I>::value_type _i;
 		// skip empty iterators
 		void elide()
@@ -58,10 +69,13 @@ namespace iter {
 			}
 		}
 	public:
+		using enumerator<I,T,std::input_iterator_tag>::i;
+		typedef typename enumerator_traits<I>::is_counted is_counted;
+
 		flatten_()
 		{ }
 		flatten_(I i)
-			: i(i), _i(*i)
+			: enumerator<I,T,std::input_iterator_tag>(i), _i(*i)
 		{
 			elide();
 		}
@@ -97,10 +111,12 @@ namespace iter {
 			return f;
 		}
 	};
-	template<class I, class T = typename std::iterator_traits<I>::value_type::value_type>
+	template<class I, 
+		class T = typename std::iterator_traits<I>::value_type
+	>
 	inline auto flatten(I i)
 	{
-		return flatten_<I,T>(i);
+		return flatten_<I,typename T::value_type>(i);
 	}
 	// bind
 	// return
@@ -109,6 +125,7 @@ namespace iter {
 
 #ifdef _DEBUG
 #include "include/ensure.h"
+#include "constant.h"
 
 inline void test_fmap()
 {
@@ -116,7 +133,7 @@ inline void test_fmap()
 		int a[] = {0,1,2};
 	
 		// {{0,1,2},{1,2},{2}}
-		auto aa = fmap([&](int i) { return e(a+i, 3-i); }, a);
+		auto aa = fmap([&](int i) { return ce(a+i, 3-i); }, a);
 		auto b = *aa;
 		ensure (*b == 0);
 		ensure (*++b == 1);
@@ -133,7 +150,7 @@ inline void test_fmap()
 		ensure (*b == 2);
 		ensure (!++b);
 
-		auto dd = fmap([&](int i) { return e(a+i, 3-i); }, a);
+		auto dd = fmap([&](int i) { return ce(a+i, 3-i); }, a);
 		auto c = flatten(dd);
 		ensure (*c == 0);
 		++c;
@@ -149,7 +166,7 @@ inline void test_fmap()
 	}
 	{
 		int a[] = {1,0,2,0,0,3};
-		auto aa = fmap([&](int i) { return e(c(i),i); }, a);
+		auto aa = fmap([&](int i) { return ce(c(i),i); }, a);
 		auto _a = flatten(aa);
 		ensure (*_a == 1);
 		++_a;

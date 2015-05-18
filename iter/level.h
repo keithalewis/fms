@@ -4,9 +4,10 @@
 #include "enumerator.h"
 
 namespace iter {
-
+	
+	// (0,n), (1,n-1), ...(n, 0)
 	template<class T>
-	class level_ : public enumerator_base<T*,std::pair<T,T>> {
+	class level_ : public enumerator<void,std::pair<T,T>,std::input_iterator_tag> {
 		T i, n;
 	public:
 		level_()
@@ -22,7 +23,7 @@ namespace iter {
 
 		operator bool() const
 		{
-			return i > n;
+			return i <= n;
 		}
 		std::pair<T,T> operator*() const
 		{
@@ -61,7 +62,7 @@ inline void test_level()
 	l++;
 	ensure (*l == std::make_pair(2,1));
 	ensure (*++l == std::make_pair(3,0));
-	ensure (!l);
+	ensure (!++l);
 }
 
 #endif // _DEBUG

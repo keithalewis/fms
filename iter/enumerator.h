@@ -24,7 +24,7 @@ namespace iter {
 		class T = typename std::iterator_traits<I>::value_type,
 		class C = typename std::iterator_traits<I>::iterator_category
 	>
-	struct enumerator : public std::iterator<C,T> { // need to specialize for all categories!!!
+	struct enumerator : public std::iterator<C,T> {
 	protected:
 		I i;
 	public:
@@ -107,6 +107,12 @@ namespace iter {
 	{
 		return enumerator<I,T>(i);
 	}
+
+	// specialize for empty iterators
+	template<class T>
+	struct enumerator<void,T,std::input_iterator_tag> : public std::iterator<std::input_iterator_tag,T> {
+		typedef typename std::false_type is_counted;
+	};
 
 	// specializations for pointers
 	template<class T>

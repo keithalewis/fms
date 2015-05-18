@@ -6,30 +6,35 @@
 
 namespace iter {
 
-	// e[0] - t, e[1] - e[0], ...
-	template<class O, class E, class T = typename std::iterator_traits<E>::value_type>
-	class adjacent_ : public enumerator_base<E,T> {
+	// o(i[0], t), o(i[1], i[0]), ...
+	template<class O, class I, 
+		class T = typename std::iterator_traits<I>::value_type,
+		class C = typename std::iterator_traits<I>::iterator_category
+	>
+	class adjacent_ : public enumerator<I,T,C> {
 		O o;
-		E e;
 		T t;
 	public:
+		using enumerator<I,T,C>::i;
+		typedef typename enumerator_traits<I>::is_counted is_counted;
+
 		adjacent_()
 		{ }
-		adjacent_(O o, E e, T t)
-			: o(o), e(e), t(t)
+		adjacent_(O o, I i, T t)
+			: enumerator<I,T,C>(i), o(o), t(t)
 		{ }
 
 		operator bool() const
 		{
-			return e;
+			return i;
 		}
 		T operator*() const
 		{
-			return *e - t;
+			return o(*i, t);
 		}
 		adjacent_& operator++()
 		{
-			t = *e++;
+			t = *i++;
 
 			return *this;
 		}
@@ -42,15 +47,29 @@ namespace iter {
 			return a;
 		}
 	};
-	template<class O, class E, class T = typename std::iterator_traits<E>::value_type>
-	inline auto adjacent(O o, E e, T t)
+	template<class O, class I, 
+		class T = typename std::iterator_traits<I>::value_type,
+		class C = typename std::iterator_traits<I>::iterator_category
+	>
+	inline auto adjacent(O o, I i, T t)
 	{
-		return adjacent_<O,E,T>(o, e, t);
+		return adjacent_<O,I,T,C>(o, i, t);
 	}
-	template<class E, class T = typename std::iterator_traits<E>::value_type>
-	inline auto delta(E e, T t = T(0))
+	template<class I, 
+		class T = typename std::iterator_traits<I>::value_type,
+		class C = typename std::iterator_traits<I>::iterator_category
+	>
+	inline auto delta(I i, T t = T(0))
 	{
-		return adjacent(std::minus<T>{}, e, t);
+		return adjacent(std::minus<T>{}, i, t);
+	}
+	template<class I, 
+		class T = typename std::iterator_traits<I>::value_type,
+		class C = typename std::iterator_traits<I>::iterator_category
+	>
+	inline auto ratio(I i, T t = T(1))
+	{
+		return adjacent(std::divides<T>{}, i, t);
 	}
 
 } // iter
@@ -82,6 +101,15 @@ inline void test_adjacent()
 		ensure (*b++ == 0);
 		ensure (*b == 3);
 		ensure (*++b == 5);
+	}
+	{
+		int a[] = {1,2,4};
+		auto b = ratio(a, 1);
+		auto c(b);
+		b = c;
+		ensure (*b++ == 1);
+		ensure (*b == 2);
+		ensure (*++b == 2);
 	}
 }
 

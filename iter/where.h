@@ -6,14 +6,16 @@
 namespace iter {
 
 	template<class P, class I, class T = typename std::iterator_traits<I>::value_type>
-	class where_ : public enumerator<I,T> {
+	class where_ : public enumerator<I,T,std::input_iterator_tag> {
 		std::function<bool(const I&)> p;
 	public:
-		using enumerator<I,T>::i;
+		using enumerator<I,T,std::input_iterator_tag>::i;
+		typedef std::false_type is_counted;
+
 		where_()
 		{ }
 		where_(P p, I i)
-			: enumerator<I,T>(until(p,i)), p(p)
+			: enumerator<I,T,std::input_iterator_tag>(until(p,i)), p(p)
 		{ }
 
 		operator bool() const

@@ -5,8 +5,8 @@
 namespace iter {
 
 	// t, t + 1, ...
-	template<class T = double>
-	class iota_ : public enumerator_base<T*, T> {
+	template<class T>
+	class iota_ : public enumerator<void, T, std::input_iterator_tag> {
 		T t;
 	public:
 		iota_(T t = 0)
@@ -36,8 +36,8 @@ namespace iter {
 			return i_;
 		}
 	};
-	template<class T = double>
-	inline auto iota(const T& t = T(0))
+	template<class T>
+	inline auto iota(T t = T(0))
 	{
 		return iota_<T>(t);
 	}

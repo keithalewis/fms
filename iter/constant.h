@@ -5,7 +5,7 @@
 namespace iter {
 
 	template<class T = double>
-	class constant_ : public enumerator_base<const T*,T> {
+	class constant_ : public enumerator<void,T,std::input_iterator_tag> {
 		T t;
 	public:
 		// defaults so infinite
@@ -50,6 +50,14 @@ using namespace iter;
 
 inline void test_constant()
 {
+	int a[] = {1};
+	auto b = e(a);
+	// 32-bit!!!
+	ensure (4 == sizeof(a));
+	ensure (4 == sizeof(b));
+	auto d = c(1);
+	ensure (4 == sizeof(d)); // <- zero overhead
+
 	constant_<int> zero;
 	ensure (*zero == 0);
 	ensure (*++zero == 0);
