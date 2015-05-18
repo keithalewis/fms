@@ -5,15 +5,19 @@
 namespace iter {
 
 	// reverse enumerator
-	template<class T>
-	class reverse_enumerator : public enumerator_base<T*,T> {
-		std::reverse_iterator<T*> i;
+	template<class I, 
+		class T = typename std::iterator_traits<I>::value_type,
+		class C = typename std::iterator_traits<I>::iterator_category
+	>
+	class reverse_enumerator : public enumerator<std::reverse_iterator<I>,T,C> {
 	public:
-		typedef std::false_type is_counted; // for tag dispatch
+		using enumerator<std::reverse_iterator<I>>::i;
+		typedef typename enumerator_traits<I>::is_counted is_counted;
+
 		reverse_enumerator()
 		{ }
-		reverse_enumerator(T* i)
-			: i(i) // just like reverse iterators
+		reverse_enumerator(I i)
+			: enumerator<std::reverse_iterator<I>,T,C>(std::reverse_iterator<I>(i)) // just like reverse iterators
 		{ }
 
 		bool operator==(const reverse_enumerator& j) const
@@ -24,16 +28,12 @@ namespace iter {
 		{
 			return i != j.i;
 		}
-		operator T*() const
-		{
-			return i;
-		}
-		std::reverse_iterator<T*>& iterator()
+		std::reverse_iterator<I> iterator()
 		{
 			return i;
 		}
 
-		operator bool() const
+/*		operator bool() const
 		{
 			return true;
 		}
@@ -56,17 +56,25 @@ namespace iter {
 
 			return r;
 		}
-	};
-	template<class T>
-	inline reverse_enumerator<T> make_renumerator(T* i)
+*/	};
+	template<class I, 
+		class T = typename std::iterator_traits<I>::value_type,
+		class C = typename std::iterator_traits<I>::iterator_category
+	>
+	inline auto make_renumerator(I i)
 	{
-		return reverse_enumerator<T>(i);
+		return reverse_enumerator<I,T,C>(i);
 	}
-	template<class T>
-	inline reverse_enumerator<T> re(T* i)
+	template<class I, 
+		class T = typename std::iterator_traits<I>::value_type,
+		class C = typename std::iterator_traits<I>::iterator_category
+	>
+	inline auto re(I i)
 	{
-		return reverse_enumerator<T>(i);
+		return reverse_enumerator<I,T,C>(i);
 	}
+//	template<class T>
+//	inline auto re(T*
 
 } // iter
 
@@ -80,6 +88,9 @@ inline void test_enumerator_reverse()
 {
 	int a[] = {1,2,3};
 	auto ra = re(a + 3);
+	auto rb(ra);
+	ra = rb;
+	ensure (ra == rb);
 	ensure (*ra == 3);
 	ensure (*++ra == 2);
 	ra++;

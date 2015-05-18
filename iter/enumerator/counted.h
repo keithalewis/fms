@@ -154,20 +154,33 @@ inline void test_enumerator_counted()
 		auto f(e);
 		e = f;
 		ensure (e);
+		ensure (e == f);
+		ensure (e.size() == 2);
 		ensure (*++e == 2);
+		ensure (e.size() == 1);
 		ensure (e);
 		e++;
 		ensure (!e);
+		ensure (e.size() == 0);
 	}
 	{
 		char foo[] = "foo";
 		auto n = ce(foo, 3);
 		ensure (*n++ == 'f' && *n++ == 'o' && *n++ == 'o' && !n);
+		n = ce(foo);
+		ensure (n.size() == 4);
+		ensure (n[3] == 0);
+		auto o = ce("foo");
+		ensure (o.size() == 4);
 	}
 	{
 		auto b = ce(a);
 		ensure (b.size() == 3);
 		ensure (b.end()[-1] == 3);
+		b += 2;
+		ensure (*b == 3);
+		b -= 2;
+		ensure (*b == 1);
 	}
 }
 

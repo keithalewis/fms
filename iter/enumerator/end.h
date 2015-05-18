@@ -5,16 +5,20 @@
 namespace iter {
 
 	// end sentinel enumerator
-	template<class I, class J = I, class T = typename std::iterator_traits<I>::value_type>
-	class end_enumerator : public enumerator_base<I,T> {
-		I i;
+	template<class I, class J = I, 
+		class T = typename std::iterator_traits<I>::value_type,
+		class C = typename std::iterator_traits<I>::iterator_category
+	>
+	class end_enumerator : public enumerator<I,T,C> {
 		J e;
 	public:
-		typedef typename enumerator_traits<I>::is_counted is_counted; // for tag dispatch
+		using enumerator<I,T,C>::i;
+		typedef typename enumerator_traits<I>::is_counted is_counted;
+
 		end_enumerator()
 		{ }
 		end_enumerator(I i, J e)
-			: i(i), e(e)
+			: enumerator<I,T,C>(i), e(e)
 		{ }
 
 		bool operator==(const end_enumerator& j) const
@@ -25,7 +29,7 @@ namespace iter {
 		{
 			return i != j.i || e != j.e;
 		}
-		operator I() const
+/*		operator I() const
 		{
 			return i;
 		}
@@ -33,12 +37,12 @@ namespace iter {
 		{
 			return i;
 		}
-
+*/
 		operator bool() const
 		{
 			return i != e;
 		}
-		T operator*() const
+/*		T operator*() const
 		{
 			return *i;
 		}
@@ -56,22 +60,38 @@ namespace iter {
 
 			return e;
 		}
-	};
-	template<class I, class J = I, class T = typename std::iterator_traits<I>::value_type>
-	inline end_enumerator<I,J,T> make_end_enumerator(I i, J e)
+*/	};
+	template<class I, class J = I, 
+		class T = typename std::iterator_traits<I>::value_type,
+		class C = typename std::iterator_traits<I>::iterator_category
+	>
+	inline auto make_end_enumerator(I i, J e)
 	{
-		return end_enumerator<I,J,T>(i, e);
+		return end_enumerator<I,J,T,C>(i, e);
 	}
-	template<class I, class J = I, class T = typename std::iterator_traits<I>::value_type>
-	inline end_enumerator<I,J,T> ee(I i, J e)
+	template<class I, class J = I, 
+		class T = typename std::iterator_traits<I>::value_type,
+		class C = typename std::iterator_traits<I>::iterator_category
+	>
+	inline auto ee(I i, J e)
 	{
-		return end_enumerator<I,J,T>(i, e);
+		return end_enumerator<I,J,T,C>(i, e);
+	}
+	template<class C,
+		class I = typename C::iterator,
+		class T = typename C::value_type,
+		class IC = typename C::iterator::iterator_category
+	>
+	inline auto ee(C c)
+	{
+		return end_enumerator<I,I,T,IC>(std::begin(c), std::end(c));
 	}
 
 } // iter
 
 
 #ifdef _DEBUG
+#include <vector>
 #include "include/ensure.h"
 
 using namespace iter;
@@ -81,12 +101,16 @@ inline void test_enumerator_end()
 	int a[] = {1,2,0};
 
 	{
-		auto f = make_end_enumerator(std::begin(a), std::end(a));
+		auto f = ee(std::begin(a), std::end(a));
 		ensure (f);
 		ensure (*++f == 2);
 		f++;
 		ensure (*f++ == 0);
 		ensure (!f);
+	}
+	{
+//		std::vector<int> a = {1,2,3};
+//		auto b = ee(a);
 	}
 }
 

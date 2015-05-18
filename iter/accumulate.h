@@ -8,33 +8,32 @@
 
 namespace iter {
 
-	// o(t,e[0]), o(o(t,e[0]), e[1]), ...
-	template<class O, class E, class T = typename std::iterator_traits<E>::value_type>
-	class accumulate_ : public enumerator_base<E,T> {
+	// o(t,i[0]), o(o(t,i[0]), i[1]), ...
+	template<class O, class I, 
+		class T = typename std::iterator_traits<I>::value_type,
+		class C = typename std::iterator_traits<I>::interator_category
+	>
+	class accumulate_ : public enumerator<I,T,C> {
 		O o;
 //		std::function<T(const T&,const T&)> o;
-		E e; T t;
+		T t;
 	public:
-		typedef typename enumerator_traits<E>::is_counted is_counted;
+		using enumerator<I,T,C>::i;
+		typedef typename enumerator_traits<I>::is_counted is_counted;
 
 		accumulate_()
 		{ }
-		accumulate_(O o, E e, T t)
-			: o(o), e(e), t(e ? o(t,*e) : t)
+		accumulate_(O o, I i, T t)
+			: enumerator<I,T,C>(i), o(o), t(i ? o(t,*i) : t)
 		{ }
 
-		size_t size() const
+		I iterator()
 		{
-			return e.size();
-		}
-
-		E& iterator()
-		{
-			return e;
+			return i;
 		}
 		operator bool() const
 		{
-			return e;
+			return i;
 		}
 		T operator*() const
 		{
@@ -42,8 +41,8 @@ namespace iter {
 		}
 		accumulate_& operator++()
 		{
-			if (e)
-				t = o(t, *++e);
+			if (i)
+				t = o(t, *++i);
 
 			return *this;
 		}
@@ -56,24 +55,33 @@ namespace iter {
 			return a;
 		}
 	};
-	template<class O, class E, class T = typename std::iterator_traits<E>::value_type>
-	inline accumulate_<O,E,T> accumulate(O o, E e, T t)
+	template<class O, class I, 
+		class T = typename std::iterator_traits<I>::value_type,
+		class C = typename std::iterator_traits<I>::iterator_category
+	>
+	inline auto accumulate(O o, I i, T t)
 	{
-		return accumulate_<O,E,T>(o, e, t);
+		return accumulate_<O,I,T,C>(o, i, t);
 	}
 
 	// running sum of enumerator values
-	template<class E, class T = typename std::iterator_traits<E>::value_type>
-	inline accumulate_<std::plus<T>,E,T> sum(E e, T t = T(0))
+	template<class I, 
+		class T = typename std::iterator_traits<I>::value_type,
+		class C = typename std::iterator_traits<I>::iterator_category
+	>
+	inline auto sum(I i, T t = T(0))
 	{
-		return accumulate_<std::plus<T>,E,T>(std::plus<T>{}, e, t);
+		return accumulate_<std::plus<T>,I,T,C>(std::plus<T>{}, i, t);
 	}
 
 	// running product of  enumerator values
-	template<class E, class T = typename std::iterator_traits<E>::value_type>
-	inline accumulate_<std::multiplies<T>,E,T> prod(E e, T t = T(1))
+	template<class I, 
+		class T = typename std::iterator_traits<I>::value_type,
+		class C = typename std::iterator_traits<I>::iterator_category
+	>
+	inline auto prod(I i, T t = T(1))
 	{
-		return accumulate_<std::multiplies<T>,E,T>(std::multiplies<T>{}, e, t);
+		return accumulate_<std::multiplies<T>,I,T,C>(std::multiplies<T>{}, i, t);
 	}
 
 } // iter
@@ -84,13 +92,33 @@ namespace iter {
 inline void test_accumulate()
 {
 	int a[] = {1,2,3};
-	auto b = accumulate(std::plus<int>{}, e(a,3), 0);
-	auto c(b);
-	b = c;
-	ensure (*b++ == 1);
-	ensure (*b == 3);
-	ensure (*++b == 6);
-	ensure (!++b);
+	{	
+		auto b = accumulate(std::plus<int>{}, ce(a,3), 0);
+		auto c(b);
+		b = c;
+		ensure (*b++ == 1);
+		ensure (*b == 3);
+		ensure (*++b == 6);
+		ensure (!++b);
+	}
+	{	
+		auto b = sum(ce(a,3));
+		auto c(b);
+		b = c;
+		ensure (*b++ == 1);
+		ensure (*b == 3);
+		ensure (*++b == 6);
+		ensure (!++b);
+	}
+	{	
+		auto b = prod(ce(a,3));
+		auto c(b);
+		b = c;
+		ensure (*b++ == 1);
+		ensure (*b == 2);
+		ensure (*++b == 6);
+		ensure (!++b);
+	}
 }
 
 #endif // _DEBUG

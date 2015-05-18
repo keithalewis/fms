@@ -8,7 +8,7 @@ using namespace iter;
 int main() 
 {
 	try {
-		//test_accumulate();
+		test_accumulate();
 		//test_adjacent();
 		//test_apply();
 		//test_choose();
@@ -16,9 +16,9 @@ int main()
 		//test_constant();
 		test_enumerator();
 		test_enumerator_counted();
-		//test_enumerator_end();
-		//test_enumerator_null();
-		//test_enumerator_reverse();
+		test_enumerator_end();
+		test_enumerator_null();
+		test_enumerator_reverse();
 		//test_expr();
 		//test_factorial();
 		//test_fmap();
