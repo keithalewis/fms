@@ -1,12 +1,12 @@
 // expr.h - iter expressions
 #pragma once
 #include <functional>
-#include "constant.h"
+#include "enumerator.h"
 
 namespace iter {
 
 	template<class O, class I, class J, class T, class U, class V>
-	class binop : public enumerator_base<std::pair<I,J>,V,typename std::common_type_t<
+	class binop : public enumerator<std::pair<I,J>,V,typename std::common_type_t<
 			typename std::iterator_traits<I>::iterator_category,
 			typename std::iterator_traits<J>::iterator_category>> {
 		O o;

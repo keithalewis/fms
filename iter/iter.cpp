@@ -118,7 +118,7 @@ int main()
 		//test_last();
 		test_level();
 		//test_pick();
-		//test_pair();
+		test_pair();
 		test_pow();
 		//test_skip();
 		//test_take();

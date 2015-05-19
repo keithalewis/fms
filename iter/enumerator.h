@@ -47,7 +47,7 @@ namespace iter {
 		}
 		bool operator!=(const enumerator& j) const
 		{
-			return i == j.i;
+			return i != j.i;
 		}
 /*		operator I()
 		{

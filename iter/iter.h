@@ -23,7 +23,7 @@
 //#include "last.h"
 #include "level.h"
 //#include "pick.h"
-//#include "pair.h"
+#include "pair.h"
 #include "pow.h"
 //#include "skip.h"
 //#include "take.h"
