@@ -92,14 +92,16 @@ inline void test_apply()
 	++d;
 	ensure (*d == f(2));
 	
-/*	{ // not working with VC 2013
+	{
 		double a[] = {0,1,2};
-		auto i = apply(exp, a);
+		auto i = apply([](double x) { return exp(x); }, a);
+		//  this should work!!!
+		//auto i = apply(+exp, a);
 		ensure (*i++ == exp(0));
 		ensure (*i++ == exp(1));
 		ensure (*i++ == exp(2));
 	}
-*/
+
 }
 
 #endif // _DEBUG

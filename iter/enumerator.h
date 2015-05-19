@@ -24,7 +24,7 @@ namespace iter {
 		class T = typename std::iterator_traits<I>::value_type,
 		class C = typename std::iterator_traits<I>::iterator_category
 	>
-	struct enumerator : public std::iterator<C,T> {
+	struct enumerator : public std::iterator<C,T> { // !!!need to specialize for all categories
 	protected:
 		I i;
 	public:

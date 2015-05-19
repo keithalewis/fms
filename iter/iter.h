@@ -27,7 +27,7 @@
 #include "pow.h"
 //#include "skip.h"
 //#include "take.h"
-//#include "util.h"
+#include "util.h"
 #include "where.h"
 
 #ifdef _DEBUG

@@ -1,10 +1,14 @@
 // util.h - utilites
 #pragma once
 
-// e.g., pick(_(n, 2*n + 1), factorial{}, ) => (2n+1)!
+// e.g., pick(L(n, 2*n + 1), factorial{}, ) => (2n+1)!
 // lambda macro
-#ifndef _
-#define _(x,...) [](auto x) { return (__VA_ARGS__) ; }
+#ifndef L
+#define L(x,...) [](auto x) { return (__VA_ARGS__) ; }
+#endif
+// expressions using n
+#ifndef N
+#define N(...) [](size_t n) { return (__VA_ARGS__) ; }
 #endif
 
 namespace iter {
@@ -12,9 +16,11 @@ namespace iter {
 	template<class I>
 	inline bool all(I i)
 	{
-		while (i)
-			if (0 == *i++) 
+		while (i) {
+			if (0 == *i) 
 				return false;
+			++i;
+		}
 
 		return true;
 	}
@@ -22,11 +28,32 @@ namespace iter {
 	template<class I>
 	inline bool any(I i)
 	{
-		while (i)
-			if (0 != *i++) 
+		while (i) {
+			if (0 != *i) 
 				return true;
+			++i;
+		}
 
 		return false;
 	}
 
 } // iter
+#ifdef _DEBUG
+#include "include/ensure.h"
+#include "enumerator/counted.h"
+
+inline void test_util()
+{
+	int a[] = {1,2,3};
+	auto b = iter::ce(a);
+	ensure (all(b));
+	ensure (any(b));
+
+	auto c = L(x, x*x);
+	ensure (c(1.2) == 1.2*1.2);
+
+	auto d = N(n*n);
+	ensure (d(2) == 4);
+}
+
+#endif // _DEBUG

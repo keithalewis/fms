@@ -123,7 +123,7 @@ int main()
 		//test_skip();
 		//test_take();
 		test_where();
-
+		test_util();
 	}
 	catch (...) {
 		return -1;
