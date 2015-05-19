@@ -8,7 +8,7 @@ namespace iter {
 	template<class I, class J,
 		class T = typename std::iterator_traits<I>::value_type,
 		class U = typename std::iterator_traits<J>::value_type,
-		class C = typename typename std::common_type_t<
+		class C = typename std::common_type_t<
 			typename std::iterator_traits<I>::iterator_category,
 			typename std::iterator_traits<J>::iterator_category
 		>
@@ -49,7 +49,7 @@ namespace iter {
 	template<class I, class J,
 		class T = typename std::iterator_traits<I>::value_type,
 		class U = typename std::iterator_traits<J>::value_type,
-		class C = typename typename std::common_type_t<
+		class C = typename std::common_type_t<
 			typename std::iterator_traits<I>::iterator_category,
 			typename std::iterator_traits<J>::iterator_category
 		>

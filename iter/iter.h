@@ -16,7 +16,7 @@
 #include "enumerator/end.h"
 #include "enumerator/null.h"
 #include "enumerator/reverse.h"
-//#include "expr.h"
+#include "expr.h"
 #include "factorial.h"
 #include "fmap.h"
 #include "iota.h"

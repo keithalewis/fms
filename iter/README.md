@@ -26,3 +26,7 @@ Users never need to use the class directly, just the corresponding template func
 operator, => concatenate
 
 operator^ => monotonic cycle
+
+## TODO
+
+Specialize enumerator for all iterator categories, not just random access.

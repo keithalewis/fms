@@ -110,7 +110,7 @@ int main()
 		test_enumerator_end();
 		test_enumerator_null();
 		test_enumerator_reverse();
-		//test_expr();
+		test_expr();
 		test_factorial();
 		test_fmap();
 		//test_iterator();
