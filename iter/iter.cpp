@@ -119,7 +119,7 @@ int main()
 		//test_pick();
 		test_pair();
 		test_pow();
-		//test_skip();
+		test_skip();
 		//test_take();
 		test_where();
 		test_util();

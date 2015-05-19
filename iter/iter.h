@@ -25,7 +25,7 @@
 //#include "pick.h"
 #include "pair.h"
 #include "pow.h"
-//#include "skip.h"
+#include "skip.h"
 //#include "take.h"
 #include "util.h"
 #include "where.h"

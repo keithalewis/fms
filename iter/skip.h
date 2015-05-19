@@ -23,16 +23,18 @@ namespace iter {
 
 	// i[n[0]], i[n[0] + n[1]], ...
 	template<class N, class I, 
-		class T = typename std::iterator_traits<I>::value_type>
-	class skip_ : public enumerator<I,T> {
+		class T = typename std::iterator_traits<I>::value_type,
+		class C = typename std::iterator_traits<I>::iterator_category
+	>
+	class skip_ : public enumerator<I,T,C> {
 		N n;
-//		I i;
 	public:
-		using enumerator<I,T>::i;
+		using enumerator<I,T,C>::i;
+
 		skip_()
 		{ }
 		skip_(N n, I i)
-			: enumerator<I,T>(skipn(*n,i)), n(n)
+			: enumerator<I,T,C>(skipn(*n,i)), n(n)
 		{ }
 
 		operator bool() const
@@ -52,18 +54,20 @@ namespace iter {
 		}
 		skip_ operator++(int)
 		{
-			skip_ s_(*this);
+			skip_ s(*this);
 
 			operator++();
 
-			return s_;
+			return s;
 		}
 	};
 	template<class N, class I, 
-		class T = typename std::iterator_traits<I>::value_type>
+		class T = typename std::iterator_traits<I>::value_type,
+		class C = typename std::iterator_traits<I>::iterator_category
+	>
 	inline auto skip(N n, I i)
 	{
-		return skip_<N,I,T>(n, i);
+		return skip_<N,I,T,C>(n, i);
 	}
 
 } // iter
