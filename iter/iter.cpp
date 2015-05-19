@@ -101,7 +101,7 @@ int main()
 	try {
 		test_accumulate();
 		test_adjacent();
-		//test_apply();
+		test_apply();
 		test_choose();
 		test_concatenate();
 		test_constant();

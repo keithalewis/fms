@@ -4,6 +4,7 @@
 
 namespace iter {
 
+	// f(i[0]), f(i[1]), ...
 	template<class F, class I, 
 		class T = typename std::iterator_traits<I>::value_type,
 		class U = typename std::result_of_t<F(T)>,

@@ -1,4 +1,4 @@
-// apply.h - apply a function to an iter
+// apply.h - apply a function to enumerator values
 #pragma once
 #include <functional>
 #include "enumerator.h"
@@ -6,29 +6,34 @@
 
 namespace iter {
 
-	template<class F, class E, class T = typename std::iterator_traits<E>::value_type,
-		class U = typename std::result_of_t<F(T)>>
-	class apply_ : public enumerator_base<E,U> {
+	// f(*i[0]), f(*i[1]), ...
+	template<class F, class I, 
+		class T = typename std::iterator_traits<I>::value_type,
+		class U = typename std::result_of<F(T)>::type,
+		class C = typename std::iterator_traits<I>::iterator_category
+	>
+	class apply_ : public enumerator<I,U,C> {
 		std::function<U(T)> f;
-		E e;
 	public:
+		using enumerator<I,U,C>::i;
+
 		apply_()
 		{ }
-		apply_(F f, E e)
-			: f(f), e(e)
+		apply_(F f, I i)
+			: enumerator<I,U,C>(i), f(f)
 		{ }
 
 		operator bool() const
 		{
-			return e;
+			return i;
 		}
 		U operator*() const
 		{
-			return f(*e);
+			return f(*i);
 		}
 		apply_& operator++()
 		{
-			++e;
+			++i;
 
 			return *this;
 		}
@@ -41,10 +46,14 @@ namespace iter {
 			return a;
 		}
 	};
-	template<class F, class E, class T = typename std::iterator_traits<E>::value_type>
-	inline auto apply(F f, E e)
+	template<class F, class I, 
+		class T = typename std::iterator_traits<I>::value_type,
+		class U = typename std::result_of<F(T)>::type,
+		class C = typename std::iterator_traits<I>::iterator_category
+	>
+	inline auto apply(F f, I i)
 	{
-		return apply_<F,E,T>(f, e);
+		return apply_<F,I,T,U,C>(f, i);
 	}
 	// f[0], f[1], ...
 	template<class F>
@@ -52,7 +61,6 @@ namespace iter {
 	{
 		return apply(f, iota<size_t>());
 	}
-
 
 } // iter
 
@@ -64,7 +72,7 @@ using namespace iter;
 inline void test_apply()
 {
 	int a[] = {0,1,2};
-	auto b = apply([](int e) { return e*e; }, a);
+	auto b = apply([](int i) { return i*i; }, a);
 	decltype(b) c;
 	c = b;
 	ensure (*b == 0);
@@ -77,18 +85,19 @@ inline void test_apply()
 	c++;
 	ensure (*c == 4);
 
-	auto d = apply([](int n) { return 1 + n + n*n; });
-	ensure (*d == 1);
-	ensure (*++d == 3);
+	auto f = [](int n) { return 1 + n + n*n; };
+	auto d = apply(f);
+	ensure (*d == f(0));
+	ensure (*++d == f(1));
 	++d;
-	ensure (*d == 7);
+	ensure (*d == f(2));
 	
 /*	{ // not working with VC 2013
 		double a[] = {0,1,2};
-		auto e = apply(exp, a);
-		ensure (*e++ == exp(0));
-		ensure (*e++ == exp(1));
-		ensure (*e++ == exp(2));
+		auto i = apply(exp, a);
+		ensure (*i++ == exp(0));
+		ensure (*i++ == exp(1));
+		ensure (*i++ == exp(2));
 	}
 */
 }
