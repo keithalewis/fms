@@ -57,7 +57,7 @@ namespace iter {
 		{
 			return i;
 		}
-*/		I iterator()
+*/		I& iterator()
 		{
 			return i;
 		}
@@ -150,7 +150,7 @@ namespace iter {
 		{
 			return i;
 		}
-*/		T* iterator()
+*/		T*& iterator()
 		{
 			return i;
 		}
@@ -268,7 +268,7 @@ namespace iter {
 		{
 			return i;
 		}
-*/		T* iterator()
+*/		const T* iterator() const
 		{
 			return i;
 		}

@@ -23,7 +23,7 @@ namespace iter {
 #include "include/ensure.h"
 
 inline void test_take() {
-	int a[] = {0,1,2};
+/*	int a[] = {0,1,2};
 	auto b = take(2, a);
 	ensure (*b == 0);
 	ensure (*b == 0);
@@ -38,6 +38,6 @@ inline void test_take() {
 	ensure (*c == 2);
 	++c;
 	ensure (!c);
-}
+*/}
 
 #endif // _DEBUG

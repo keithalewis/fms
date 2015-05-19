@@ -7,6 +7,24 @@
 
 namespace iter {
 
+	template<class E>
+	inline size_t size(E e)
+	{
+		size_t n = 0;
+
+		while (e) {
+			++n;
+			--e;
+		}
+
+		return n;
+	}
+	template<class I, class T = typename std::iterator_traits<I>::value_type>
+	inline auto size(counted_enumerator<I,T> e)
+	{
+		return e.size();
+	}
+
 	/// iterate to just before end
 	template<class E>
 	inline E last(E e)
@@ -75,11 +93,15 @@ namespace iter {
 inline void test_last() {
 	int a[] = {0,1,2};
 
-	ensure (*iter::last(ce(a,3)) == 2);
-	auto ea = iter::end(ce(a,3));
+	auto b = ce(a);
+	ensure (b.size() == 3);
+	ensure (size(b) == 3);
+
+	ensure (*iter::last(b) == 2);
+	auto ea = iter::end(b);
 	ensure (ea[-1] == 2);
 
-	auto ra = iter::rend(ce(a,3));
+	auto ra = iter::rend(b);
 	ensure (ra && *ra == 2);
 	++ra;
 	ensure (ra && *ra == 1);
