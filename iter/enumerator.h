@@ -146,11 +146,7 @@ namespace iter {
 		{
 			return i;
 		}
-		operator T*()
-		{
-			return i;
-		}
-		operator T*() const
+		operator const T*()
 		{
 			return i;
 		}

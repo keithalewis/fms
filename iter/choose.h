@@ -7,7 +7,7 @@ namespace iter {
 	// combinatorial choose
 	// c(n,0), c(n,1), ...
 	template<class T = double>
-	class choose_ : public enumerator_base<T*,T> {
+	class choose_ : public enumerator<void,T,std::input_iterator_tag> {
 		T n, k, nk;
 	public:
 		choose_(T n = 0)

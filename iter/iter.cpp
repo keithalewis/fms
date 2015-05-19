@@ -3,14 +3,13 @@
 #include "iter.h"
 
 using namespace iter;
-
-template<class y, class... x>
-using f = std::function<y(x...)>;
-template<class y, class... x>
-using ff  = std::function<y(f<y,x...>, x...)>;
+/*
 
 template<class y, class... x>
 struct Y { 
+	using f = std::function<y(x...)>;
+	using ff  = std::function<y(f<y,x...>, x...)>;
+	
 	ff<y,x...> g;
 	y operator()(x... xs) const
 	{
@@ -31,11 +30,13 @@ inline int gcd(int a, int b)
 	return gcd(a%b, b);
 }
 
+#include "util.h"
+
 void coprime()
 {
-	auto co = [](auto p) { return 1 == gcd((*p).first,(*p).second); };
+//	auto co = [](auto p) { return 1 == gcd((*p).first,(*p).second); };
 	auto l = [](int n) { return level(n); };
-	auto w = where(co, flatten(fmap(l, iota(2))));
+	auto w = where(_(p, 1 == gcd((*p).first,(*p).second)), flatten(fmap(l, iota(2))));
 	auto x = *w;
 	x = *++w;
 	x = *++w;
@@ -79,7 +80,6 @@ void coprime()
 	x = *++w;
 	x = *++w;
 }
-/*
 (0,0,0)
 
 (1,0,0)
@@ -97,13 +97,13 @@ void triples()
 
 int main() 
 {
-	coprime();
+//	coprime();
 	try {
 		test_accumulate();
 		test_adjacent();
 		//test_apply();
-		//test_choose();
-		//test_concatenate();
+		test_choose();
+		test_concatenate();
 		test_constant();
 		test_enumerator();
 		test_enumerator_counted();
@@ -111,7 +111,7 @@ int main()
 		test_enumerator_null();
 		test_enumerator_reverse();
 		//test_expr();
-		//test_factorial();
+		test_factorial();
 		test_fmap();
 		//test_iterator();
 		test_iota();
@@ -119,7 +119,7 @@ int main()
 		test_level();
 		//test_pick();
 		//test_pair();
-		//test_pow();
+		test_pow();
 		//test_skip();
 		//test_take();
 		test_where();

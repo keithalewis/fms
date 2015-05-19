@@ -6,7 +6,7 @@ namespace iter {
 
 	// 1, t, t^2, ...
 	template<class T>
-	class pow_ : public enumerator_base<T*, T> {
+	class pow_ : public enumerator<void, T, std::input_iterator_tag> {
 		T t, t_; // t, t^n
 	public:
 		pow_(T t = T(0))

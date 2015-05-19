@@ -1,9 +1,10 @@
 // util.h - utilites
 #pragma once
 
-// e.g., pick(_(2*n + 1), factorial{}, ) => (2n+1)!
+// e.g., pick(_(n, 2*n + 1), factorial{}, ) => (2n+1)!
+// lambda macro
 #ifndef _
-#define _(e) apply([](size_t n) { return e; })
+#define _(x,...) [](auto x) { return (__VA_ARGS__) ; }
 #endif
 
 namespace iter {

@@ -8,7 +8,7 @@ namespace iter {
 
 	// 0!, 1!, ...
 	template<class N = unsigned long long>
-	class factorial_ : public enumerator_base<const N*,N> {
+	class factorial_ : public enumerator<void,N,std::input_iterator_tag> {
 		N n, n_; // n, n!
 	public:
 		factorial_()
