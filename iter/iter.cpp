@@ -113,9 +113,8 @@ int main()
 		test_expr();
 		test_factorial();
 		test_fmap();
-		//test_iterator();
 		test_iota();
-		//test_last();
+		test_last();
 		test_level();
 		//test_pick();
 		test_pair();

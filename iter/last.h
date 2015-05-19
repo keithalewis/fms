@@ -37,7 +37,7 @@ namespace iter {
 	template<class R>
 	inline auto rend(R r)
 	{
-		return e(re(r.end()),r.size());
+		return ce(re(r.end()),r.size());
 	}
 	template<class E>
 	inline typename std::iterator_traits<E>::value_type back(E e)
@@ -55,6 +55,17 @@ namespace iter {
 
 		return s;
 	}
+	// multiply null enumerators
+	template<class E, class T = typename std::iterator_traits<E>::value_type>
+	inline T prod1(E e, T s = T(1))
+	{
+		while (e) {
+			s *= *e;
+			++e;
+		}
+
+		return s;
+	}
 
 } // iter
 
@@ -64,11 +75,11 @@ namespace iter {
 inline void test_last() {
 	int a[] = {0,1,2};
 
-	ensure (*iter::last(e(a,3)) == 2);
-	auto ea = iter::end(e(a,3));
+	ensure (*iter::last(ce(a,3)) == 2);
+	auto ea = iter::end(ce(a,3));
 	ensure (ea[-1] == 2);
 
-	auto ra = iter::rend(e(a,3));
+	auto ra = iter::rend(ce(a,3));
 	ensure (ra && *ra == 2);
 	++ra;
 	ensure (ra && *ra == 1);

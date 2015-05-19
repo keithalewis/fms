@@ -20,7 +20,7 @@
 #include "factorial.h"
 #include "fmap.h"
 #include "iota.h"
-//#include "last.h"
+#include "last.h"
 #include "level.h"
 //#include "pick.h"
 #include "pair.h"
