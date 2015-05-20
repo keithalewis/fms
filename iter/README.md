@@ -10,7 +10,7 @@ The basic idea is that `enumerator<I,T>` is an iterator
 that uses `I` for iteration and returns value_type `T`,
 perhaps different from `I::value_type`.
 The canonical example is applying a function from T → U on an input iterator.
-The resulting iterator should be of type `enumerator<T,U>`.
+The resulting iterator should be of type `enumerator<I,U>`.
 
 
 All classes deriving from `enumerator` are  simple: drag in the
