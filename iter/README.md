@@ -24,6 +24,10 @@ will be supplied at compile time.
 The convention is to use `class_` for class names and `class` instead of `make_class`. 
 Users never need to use the class directly, just the corresponding template function.
 
+The purpose is to make C++ more expressive for implementing numerical algorithms. The
+bias is to assume all iterators are input iterators over constant data. The inspiration
+comes from Fortran and APL, but incorporates recent functional programming notions.
+
 ## TODO
 
 Specialize enumerator for all iterator categories, not just input iterator.
