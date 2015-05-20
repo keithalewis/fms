@@ -12,7 +12,6 @@ perhaps different from `I::value_type`.
 The canonical example is applying a function from T → U on an input iterator.
 The resulting iterator should be of type `enumerator<I,U>`.
 
-
 All classes deriving from `enumerator` are  simple: drag in the
 iterator with `using enumerator::i` then add
 the necessary accoutrements in the constructor and implement
