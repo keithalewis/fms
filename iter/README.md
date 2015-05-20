@@ -1,4 +1,4 @@
-﻿# iter - iterators that know when they are done
+﻿# enumerators - iterators that know when they are done
 
 An `enumerator` is an iterators that provides `operator bool() const`
 which returns `true` when it is valid to dereference the iterator.
