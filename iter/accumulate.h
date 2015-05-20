@@ -14,8 +14,8 @@ namespace iter {
 		class C = typename std::iterator_traits<I>::interator_category
 	>
 	class accumulate_ : public enumerator<I,T,C> {
-		O o;
-//		std::function<T(const T&,const T&)> o;
+//		O o;
+		std::function<T(const T&,const T&)> o;
 		T t;
 	public:
 		using enumerator<I,T,C>::i;

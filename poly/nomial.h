@@ -8,7 +8,7 @@ namespace poly {
 	template<class C, class X = typename std::iterator_traits<C>::value_type>
 	inline X nomial(C c, const X& x)
 	{
-		return back(sum(c*pow(x)));
+		return sum0(c*pow(x));
 	}
 /*
 	template<class X, size_t N, class C = X>

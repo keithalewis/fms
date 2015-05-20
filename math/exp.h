@@ -4,15 +4,11 @@
 
 namespace math {
 
+	// sum_0 x^n/n!
 	template<class X = double>
 	inline X exp(const X& x)
 	{
-		using iter::e;
-		using iter::iota;
-		using iter::prod;
-		using iter::sum;
-
-		return X(1 + sum0(e(prod(c(x)/iota(X(1))))));
+		return X(1 + sum0(ne(prod(c(x)/iota(X(1))))));
 	}
 
 } // math

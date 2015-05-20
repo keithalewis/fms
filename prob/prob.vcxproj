@@ -81,6 +81,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="normal.h" />
+    <ClInclude Include="normal_.h" />
     <ClInclude Include="prob.h" />
   </ItemGroup>
   <ItemGroup>

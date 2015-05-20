@@ -62,7 +62,7 @@ namespace iter {
 	{
 		return *last(e);
 	}
-	// sum null enumerators
+	// sum enumerators
 	template<class E, class T = typename std::iterator_traits<E>::value_type>
 	inline T sum0(E e, T s = T(0))
 	{

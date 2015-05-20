@@ -5,11 +5,6 @@
 #include "math/exp.h"
 #include "poly/hermite.h"
 
-constexpr double arctan(double z)
-{
-	return z;
-}
-
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
 #endif
@@ -29,10 +24,7 @@ namespace prob {
 
 	class marsaglia {};
 	class bell {};
-
-	// implementations
-	template<class I = marsaglia>
-
+/*
 	template<class I>
 	inline X std_normal(const X&);
 
@@ -42,7 +34,7 @@ namespace prob {
 	{
 		return X(0.5)*(1 + (x > 0 ? 1 : -1)*sqrt(1 - math::exp(-2*x*x/pi)));
 	}
-
+*/
 	template<class X = double>
 	struct normal {
 
@@ -50,7 +42,7 @@ namespace prob {
 //		template<>
 		static X cdf/*<marsaglia>*/(const X& x)
 		{
-			return X(0.5) + exp(-x*x/2)*x*sum0(e(prod(c(x*x)/(c(2)*iota(X(0)) + c(1)))))/sqrt2pi;
+			return X(0.5) + x*sum0(ne(prod(c(x*x)/E_(2*n + 1))))*exp(-x*x/2)/sqrt2pi;
 		}
 		
 		static X pdf(const X& x)
@@ -61,7 +53,7 @@ namespace prob {
 		{
 			return 0;
 		}
-		// derivative
+		// n-th derivative
 		static X ddf(size_t n, const X& x)
 		{
 			if (n == 0)

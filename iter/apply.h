@@ -15,6 +15,7 @@ namespace iter {
 	class apply_ : public enumerator<I,U,C> {
 		std::function<U(T)> f;
 	public:
+//		typedef U value_type;
 		using enumerator<I,U,C>::i;
 
 		apply_()

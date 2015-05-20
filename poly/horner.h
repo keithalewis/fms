@@ -7,15 +7,7 @@ namespace poly {
 	template<class C, class X = typename std::iterator_traits<C>::value_type>
 	inline X horner(C c, const X& x)
 	{
-		using iter::accumulate;
-		using iter::back;
-		using iter::rend;
-
-		auto rc = rend(c);
-		auto ac = accumulate([x](const X& a, const X& b) { return a*x + b; }, rc, X(0));
-		return back(ac);
-
-//		return back(accumulate([x](const X& a, const X& b) { return a*x + b; }, rend(c), X(0)));
+		return back(accumulate([x](const X& a, const X& b) { return a*x + b; }, rend(c), X(0)));
 	}
 
 } // poly

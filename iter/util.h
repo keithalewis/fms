@@ -3,12 +3,16 @@
 
 // e.g., pick(L(n, 2*n + 1), factorial{}, ) => (2n+1)!
 // lambda macro
-#ifndef L
-#define L(x,...) [](auto x) { return (__VA_ARGS__) ; }
+#ifndef L_
+#define L_(x,...) [](auto x) { return (__VA_ARGS__) ; }
 #endif
 // expressions using n
-#ifndef N
-#define N(...) [](size_t n) { return (__VA_ARGS__) ; }
+#ifndef N_
+#define N_(...) [](auto n) { return (__VA_ARGS__) ; }
+#endif
+// enumerator over n
+#ifndef E_
+#define E_(...) apply([](auto n) { return (__VA_ARGS__) ; })
 #endif
 
 namespace iter {
@@ -49,10 +53,10 @@ inline void test_util()
 	ensure (all(b));
 	ensure (any(b));
 
-	auto c = L(x, x*x);
+	auto c = L_(x, x*x);
 	ensure (c(1.2) == 1.2*1.2);
 
-	auto d = N(n*n);
+	auto d = N_(n*n);
 	ensure (d(2) == 4);
 }
 

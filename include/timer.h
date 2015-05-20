@@ -1,7 +1,6 @@
 // timer.h - timing functions
 #pragma once
 #include <chrono>
-#include <thread>
 
 namespace timer {
 
@@ -21,23 +20,28 @@ namespace timer {
 } // timer
 #ifdef _DEBUG
 #include <functional>
+#include <thread>
 #include "ensure.h"
+
+#ifdef _WIN32
+extern "C" void __stdcall Sleep(unsigned long);
+#define sleep Sleep
+#endif
 
 inline void test_timer()
 {
 	using namespace std::chrono;
-	using std::this_thread::sleep_for;
 
 	auto 
-	d = timer::time([]() { sleep_for(milliseconds(10)); });
+	d = timer::time([]() { Sleep(10); });
 	ensure (d.count() >= 10);
 	ensure (d.count() - 10 < 10);
 
-	d = timer::time([]() { sleep_for(milliseconds(100)); });
+	d = timer::time([]() { Sleep(100); });
 	ensure (d.count() >= 100);
 	ensure (d.count() - 100 < 10);
 
-	d = timer::time([]() { sleep_for(milliseconds(10)); }, 10);
+	d = timer::time([]() { Sleep(10); }, 10);
 	ensure (d.count() >= 100);
 	ensure (d.count() - 100 < 60);
 }

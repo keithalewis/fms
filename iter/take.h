@@ -9,13 +9,26 @@ namespace iter {
 	inline counted_enumerator<I> take(N n, I i)
 	{
 		if (n >= 0)
-			return e(i, n);
+			return ce(i, n);
 
 		while (skipn(-n, i))
 			++i;
 
-		return e(i, -n);;
+		return ce(i, -n);
 	}
+	// specialize take for counted_enumerator
+	template<class N, class I, class T = typename std::iterator_traits<I>::value_type>
+	inline auto take(N n, counted_enumerator<I,T> e)
+	{
+		if (n >= 0)
+			return ce(e.iterator(), n);
+
+		auto i = e.end();
+		std::advance(i, n);
+
+		return ce(i, -n);
+	}
+
 
 } // iter
 
@@ -23,7 +36,7 @@ namespace iter {
 #include "include/ensure.h"
 
 inline void test_take() {
-/*	int a[] = {0,1,2};
+	int a[] = {0,1,2};
 	auto b = take(2, a);
 	ensure (*b == 0);
 	ensure (*b == 0);
@@ -32,12 +45,12 @@ inline void test_take() {
 	++b;
 	ensure (!b);
 
-	auto c = take(-2, e(a,3));
+	auto c = take(-2, ce(a,3));
 	ensure (*c == 1);
 	++c;
 	ensure (*c == 2);
 	++c;
 	ensure (!c);
-*/}
+}
 
 #endif // _DEBUG

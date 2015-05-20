@@ -6,8 +6,8 @@
 namespace iter {
 
 	// i[n], i[n+1], ...
-	template<class I>
-	inline I skipn(size_t n, I i)
+	template<class N, class I>
+	inline I skipn(N n, I i)
 	{
 		while (i && n--)
 			++i;
@@ -15,18 +15,18 @@ namespace iter {
 		return i;
 	}
 	// specialize skip for counted_enumerator
-	template<class I, class T = typename std::iterator_traits<I>::value_type>
-	inline auto skipn(size_t n, counted_enumerator<I,T> e)
+	template<class N, class I, class T = typename std::iterator_traits<I>::value_type>
+	inline auto skipn(N n, counted_enumerator<I,T> e)
 	{
-		n = std::min(n, e.size());
+		n = std::min<size_t>(n, e.size());
 		std::advance(e.iterator(), n);
 
 		return counted_enumerator<I,T>(e.iterator(), e.size() - n);
 	}
 
 	// *i[n]
-	template<class I>
-	inline typename std::iterator_traits<I>::value_type at(size_t n, I i)
+	template<class N, class I>
+	inline typename std::iterator_traits<I>::value_type at(N n, I i)
 	{
 		return *skipn(n, i);
 	}
