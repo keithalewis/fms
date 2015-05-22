@@ -79,6 +79,15 @@
     <ClInclude Include="until.h">
       <Filter>algorithm</Filter>
     </ClInclude>
+    <ClInclude Include="zigg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="elide.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="flatten.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />

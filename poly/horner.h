@@ -4,9 +4,11 @@
 
 namespace poly {
 
+	// c[0] + x(c[1] + ... + x(c[n-2] + x*c[n-1])...)
 	template<class C, class X = typename std::iterator_traits<C>::value_type>
 	inline X horner(C c, const X& x)
 	{
+		// accumulate reverse iterator from the end
 		return back(accumulate([x](const X& a, const X& b) { return a*x + b; }, rend(c), X(0)));
 	}
 
@@ -14,6 +16,7 @@ namespace poly {
 
 #ifdef _DEBUG
 #include "include/ensure.h"
+#include "nomial.h"
 
 inline void test_horner()
 {

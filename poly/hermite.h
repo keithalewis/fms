@@ -23,10 +23,9 @@ namespace poly {
 	{
 		static std::map<size_t,std::function<X(const X&)>> H_;
 
-		if (H_.find(n) == H_.end())
-			H_[n] = Hermite(n);
+		auto Hn = H_.find(n);
 
-		return H_[n];
+		return Hn == H_.end() ? H_[n] = Hermite(n) : Hn->second;
 	};
 
 } // poly

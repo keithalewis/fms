@@ -8,23 +8,12 @@ namespace poly {
 	template<class C, class X = typename std::iterator_traits<C>::value_type>
 	inline X nomial(C c, const X& x)
 	{
+		// static_assert(C::is_counted::value, "poly::nomial: coefficients must be counted");
+
 		return sum0(c*pow(x));
 	}
-/*
-	template<class X, size_t N, class C = X>
-	struct poly_ {
-		template<C c0, C... c_>
-		X nomial(const X& x)
-		{
-			return c0 + x*nomial<c_...>(x);
-		}
-		template<C c0>
-		X nomial(const X& x)
-		{
-			return c0;
-		}
-	};
-*/
+
+
 } // poly
 
 #ifdef _DEBUG

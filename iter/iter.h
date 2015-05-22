@@ -11,6 +11,7 @@
 #include "concatenate.h"
 #include "constant.h"
 #include "choose.h"
+#include "elide.h"
 #include "enumerator.h"
 #include "enumerator/counted.h"
 #include "enumerator/end.h"
@@ -18,6 +19,7 @@
 #include "enumerator/reverse.h"
 #include "expr.h"
 #include "factorial.h"
+#include "flatten.h"
 #include "fmap.h"
 #include "iota.h"
 #include "last.h"
@@ -29,6 +31,7 @@
 #include "take.h"
 #include "util.h"
 #include "where.h"
+#include "zigg.h"
 
 #ifdef _DEBUG
 #include "include/ensure.h"

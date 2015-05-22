@@ -31,6 +31,8 @@ comes from Fortran and APL, but incorporates recent functional programming notio
 
 Specialize enumerator for all iterator categories, not just input iterator.
 
+Get `is_counted` working.
+
 operator, => concatenate
 
 operator^ => monotonic cycle

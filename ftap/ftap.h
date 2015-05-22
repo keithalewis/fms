@@ -1,6 +1,11 @@
 // ftap.h - Fundamental Theorem of Asset Pricing
+// price - X
+// cash flow - C
+// deflator - Pi
 // X_j Pi_j = (C_{j+1} + X_{j+1}) Pi_{j+1}|A_j
-// V_j = Delta_j . X_j, Delta_j = sum_{i <= j} Gamma_i
+// trade - Gamma
+// position - Delta_j = sum_{i <= j} Gamma_i
+// value - V_j = Delta_j . X_j
 #pragma once
 #include <algorithm>
 #include <functional>
@@ -8,56 +13,16 @@
 
 namespace ftap {
 
-	// pair of iterators
-	template<class I>
-	using range = std::pair<I,I>;
-
-	template<class I>
-	inline /* std::enable_if .. ::type */ range<I> make_range(I b, I e)
+	template<class Trade, class Time, class N = double>
+	inline N position(Trade Gamma, Time t)
 	{
-		return std::make_pair<I,I>(b, e);
+		return sum0(until(t, Gamma));
 	}
 
-	template<class I>
-	inline I begin(range<I> r) { return r.first; }
-	template<class I>
-	inline I end(range<I> r) { return r.second; }
-
-	template<class I, class F>
-	inline F for_each(range<I> r, F f) { return std::for_each(begin(r), end(r), f); }
-
-	template<class I>
-	class range_iterator {
-
-	};
-
-	template<class Atom>
-	struct algebra {
-		typedef Atom atom_type;
-	};
-
-	template<class Price, class CashFlow, class Measure>
-	struct model {
-		const Price& X;
-		const CashFlow& C;
-		const Measure& Pi;
-		model(const Price& X, const CashFlow& C, const Measure& Pi)
-			: X(X), C(C), Pi(Pi)
-		{ }
-	};
-
-	template<class Positions, class Prices>
-	inline value(Positions delta, Prices x) -> std::function<
+	template<class Position, class Price, class N = double>
+	inline N value(Position Delta, Price X)
 	{
-		return std::inner_product(std::begin(delta), std::end(delta), std::begin(x), 0);
+		return sum0(Delta*X);
 	}
-/*
-	template<class Model>
-	std::function<R(typename Measure::atoms)> value(Price X, CashFlow C, Measure Pi)
-	{
-		return [X,C,Pi](typename Measure::atoms a) {
 
-		}
-	}
-*/
 } // ftap

@@ -1,5 +1,6 @@
 // counted.h - enumerators with a count
 #pragma once
+#include <vector>
 #include "../enumerator.h"
 
 namespace iter {
@@ -20,7 +21,6 @@ namespace iter {
 		counted_enumerator(I i, size_t n)
 			: enumerator<I,T,C>(i), n(n)
 		{ }
-
 		size_t size() const
 		{
 			return n;
@@ -136,7 +136,12 @@ namespace iter {
 	{
 		return make_counted_enumerator(i, N);
 	}
-
+/*	template<class T>
+	inline auto ce(const std::vector<T>& v)
+	{
+		return make_counted_enumerator(v.begin(), v.size());
+	}
+*/
 } // iter
 
 
@@ -182,6 +187,17 @@ inline void test_enumerator_counted()
 		b -= 2;
 		ensure (*b == 1);
 	}
+/*	{
+		std::vector<int> a = {1,2,3};
+		auto b = ce(a);
+		ensure (b.size() == a.size());
+		ensure (*b == a[0]);
+		ensure (*++b == a[1]);
+		b++;
+		ensure (*b == a[2]);
+		ensure (!++b);
+	}
+*/
 }
 
 #endif // _DEBUG

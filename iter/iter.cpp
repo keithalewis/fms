@@ -105,6 +105,7 @@ int main()
 		test_choose();
 		test_concatenate();
 		test_constant();
+		test_elide();
 		test_enumerator();
 		test_enumerator_counted();
 		test_enumerator_end();
@@ -112,6 +113,7 @@ int main()
 		test_enumerator_reverse();
 		test_expr();
 		test_factorial();
+		test_flatten();
 		test_fmap();
 		test_iota();
 		test_last();
@@ -122,7 +124,9 @@ int main()
 		test_skip();
 		test_take();
 		test_where();
+		test_until();
 		test_util();
+		test_zigg();
 	}
 	catch (...) {
 		return -1;

@@ -1,18 +1,14 @@
 // ftap.cpp - test ftap functions
 #include <iostream>
-//#include "ftap.h"
-#include "timeseries.h"
-
-using namespace timeseries;
+#include "ftap.h"
 
 int main(void)
 {
 	try {
-		test_forward_iterator();
-		test_apply();
-		test_pair();
 	}
-	catch (...) {
+	catch (const std::exception& ex) {
+		std::cerr << ex.what() << std::endl;
+
 		return -1;
 	}
 

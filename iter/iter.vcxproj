@@ -86,6 +86,9 @@
     <ClInclude Include="choose.h" />
     <ClInclude Include="concatenate.h" />
     <ClInclude Include="constant.h" />
+    <ClInclude Include="elide.h" />
+    <ClInclude Include="flatten.h" />
+    <ClInclude Include="zigg.h" />
     <ClInclude Include="enumerator.h" />
     <ClInclude Include="enumerator\counted.h" />
     <ClInclude Include="enumerator\end.h" />
