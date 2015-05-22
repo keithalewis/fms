@@ -1,4 +1,5 @@
 // iter.cpp
+#include <iostream>
 #include "include/ensure.h"
 #include "iter.h"
 
@@ -36,67 +37,32 @@ void coprime()
 {
 //	auto co = [](auto p) { return 1 == gcd((*p).first,(*p).second); };
 	auto l = [](int n) { return level(n); };
-	auto w = where(_(p, 1 == gcd((*p).first,(*p).second)), flatten(fmap(l, iota(2))));
+	auto w = where(_(p, 1 == gcd((*p).first,(*p).second)), join(fmap(l, iota(2))));
 	auto x = *w;
-	x = *++w;
-	x = *++w;
-	x = *++w;
-	x = *++w;
-	x = *++w;
-	x = *++w;
-	x = *++w;
-	x = *++w;
-	x = *++w;
-	x = *++w;
-	x = *++w;
-	x = *++w;
-	x = *++w;
-	x = *++w;
-	x = *++w;
-	x = *++w;
-	x = *++w;
-	x = *++w;
-	x = *++w;
-	x = *++w;
-	x = *++w;
-	x = *++w;
-	x = *++w;
-	x = *++w;
-	x = *++w;
-	x = *++w;
-	x = *++w;
-	x = *++w;
-	x = *++w;
-	x = *++w;
-	x = *++w;
-	x = *++w;
-	x = *++w;
-	x = *++w;
-	x = *++w;
-	x = *++w;
-	x = *++w;
-	x = *++w;
-	x = *++w;
-	x = *++w;
-	x = *++w;
-}
-(0,0,0)
-
-(1,0,0)
-(0,1,0)
-(0,0,1)
-
-(2,0,0)
-(1,1,0)
-(1,0,1)
-(0,1,1)
+	}
 */
-void triples()
+
+template<class T>
+inline T expensive(T t)
 {
+	std::cout << "expensive(" << t << ")" << std::endl;
+
+	return t;
+}
+inline void test_min_element()
+{
+	int a[] = {3,2,1,2,3};
+	auto b = iter::min(fmap(expensive<int>,a));
+	auto k = *b;
+	k = *++b;
+	k = *++b;
+	k = *++b;
+	k = *++b;
 }
 
 int main() 
 {
+	test_min_element();
 //	coprime();
 	try {
 		test_accumulate();
@@ -113,9 +79,9 @@ int main()
 		test_enumerator_reverse();
 		test_expr();
 		test_factorial();
-		test_flatten();
 		test_fmap();
 		test_iota();
+		test_join();
 		test_last();
 		test_level();
 		test_pick();
@@ -134,4 +100,3 @@ int main()
 
 	return 0;
 }
-

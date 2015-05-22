@@ -85,9 +85,10 @@
     <ClInclude Include="elide.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="flatten.h">
+    <ClInclude Include="join.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="unit.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />

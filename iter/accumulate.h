@@ -74,7 +74,7 @@ namespace iter {
 		return accumulate_<std::plus<T>,I,T,C>(std::plus<T>{}, i, t);
 	}
 
-	// running product of  enumerator values
+	// running product of enumerator values
 	template<class I, 
 		class T = typename std::iterator_traits<I>::value_type,
 		class C = typename std::iterator_traits<I>::iterator_category
@@ -82,6 +82,41 @@ namespace iter {
 	inline auto prod(I i, T t = T(1))
 	{
 		return accumulate_<std::multiplies<T>,I,T,C>(std::multiplies<T>{}, i, t);
+	}
+
+	// can't use std::min directly???
+	template<class T>
+	struct min_ {
+		const T& operator()(const T& t, const T& u)
+		{
+			return std::min(t,u);
+		}
+	};
+	// running min enumerator values
+	template<class I, 
+		class T = typename std::iterator_traits<I>::value_type,
+		class C = typename std::iterator_traits<I>::iterator_category
+	>
+	inline auto min(I i, T t = std::numeric_limits<T>::max())
+	{
+		return accumulate_<min_<T>,I,T,C>(min_<T>{}, i, t);
+	}
+
+	template<class T>
+	struct max_ {
+		const T& operator()(const T& t, const T& u)
+		{
+			return std::max(t,u);
+		}
+	};
+	// running max enumerator values
+	template<class I, 
+		class T = typename std::iterator_traits<I>::value_type,
+		class C = typename std::iterator_traits<I>::iterator_category
+	>
+	inline auto max(I i, T t = -std::numeric_limits<T>::max())
+	{
+		return accumulate_<max_<T>,I,T,C>(max_<T>{}, i, t);
 	}
 
 } // iter

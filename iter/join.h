@@ -1,4 +1,4 @@
-// flatten.h - remove one level of enumeration
+// join.h - remove one level of enumeration
 #pragma once
 #include "enumerator.h"
 
@@ -8,7 +8,7 @@ namespace iter {
 	template<class I, 
 		class T = typename std::iterator_traits<I>::value_type::value_type
 	>
-	class flatten_ : public enumerator<I,T,std::input_iterator_tag> {
+	class join_ : public enumerator<I,T,std::input_iterator_tag> {
 		typename std::iterator_traits<I>::value_type _i;
 		// skip empty iterators (is this bad???)
 /*		void elide()
@@ -22,9 +22,9 @@ namespace iter {
 		using enumerator<I,T,std::input_iterator_tag>::i;
 		typedef typename enumerator_traits<I>::is_counted is_counted;
 
-		flatten_()
+		join_()
 		{ }
-		flatten_(I i)
+		join_(I i)
 			: enumerator<I,T,std::input_iterator_tag>(i), _i(*i)
 		{
 //			elide();
@@ -38,7 +38,7 @@ namespace iter {
 		{
 			return *_i;
 		}
-		flatten_& operator++()
+		join_& operator++()
 		{
 			if (i) {
 				if (_i)
@@ -52,9 +52,9 @@ namespace iter {
 
 			return *this;
 		}
-		flatten_ operator++(int)
+		join_ operator++(int)
 		{
-			flatten_ f(*this);
+			join_ f(*this);
 
 			operator++();
 
@@ -64,9 +64,9 @@ namespace iter {
 	template<class I, 
 		class T = typename std::iterator_traits<I>::value_type
 	>
-	inline auto flatten(I i)
+	inline auto join(I i)
 	{
-		return flatten_<I,typename T::value_type>(i);
+		return join_<I,typename T::value_type>(i);
 	}
 	// bind
 	// return
@@ -78,13 +78,13 @@ namespace iter {
 #include "constant.h"
 #include "fmap.h"
 
-inline void test_flatten()
+inline void test_join()
 {
 	{
 		int a[] = {0,1,2};
 	
 		auto dd = fmap([&](int i) { return ce(a+i, 3-i); }, a);
-		auto c = flatten(dd);
+		auto c = join(dd);
 		ensure (*c == 0);
 		++c;
 		ensure (*c == 1);
@@ -100,7 +100,7 @@ inline void test_flatten()
 	{
 		int a[] = {1,0,2,0,0,3};
 		auto aa = fmap([&](int i) { return ce(c(i),i); }, a);
-		auto _a = flatten(aa);
+		auto _a = join(aa);
 		ensure (*_a == 1);
 		++_a;
 		ensure (!*_a);

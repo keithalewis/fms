@@ -14,7 +14,7 @@ namespace iter {
 
 #ifdef _DEBUG
 #include "include/ensure.h"
-#include "flatten.h"
+#include "join.h"
 #include "fmap.h"
 #include "skip.h"
 
@@ -43,7 +43,7 @@ inline void test_elide()
 	}
 	{
 		int a[] = {1,0,2,0,0,3};
-		auto f = flatten(elide(fmap([&](int i) { return ce(c(i),i); }, a)));
+		auto f = join(elide(fmap([&](int i) { return ce(c(i),i); }, a)));
 		ensure (*f == 1);
 		ensure (*++f == 2);
 		ensure (*++f == 2);
