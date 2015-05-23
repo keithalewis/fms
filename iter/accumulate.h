@@ -71,7 +71,7 @@ namespace iter {
 	>
 	inline auto sum(I i, T t = T(0))
 	{
-		return accumulate_<std::plus<T>,I,T,C>(std::plus<T>{}, i, t);
+		return accumulate(std::plus<T>{}, i, t);
 	}
 
 	// running product of enumerator values
@@ -123,6 +123,9 @@ namespace iter {
 
 #ifdef _DEBUG
 #include "include/ensure.h"
+#include "constant.h"
+#include "iota.h"
+#include "last.h"
 
 inline void test_accumulate()
 {
@@ -153,6 +156,11 @@ inline void test_accumulate()
 		ensure (*b == 2);
 		ensure (*++b == 6);
 		ensure (!++b);
+	}
+	{
+		auto a = ce(iota(1),5);
+		ensure (1 == back(min(a)));
+		ensure (5 == back(max(a)));
 	}
 }
 

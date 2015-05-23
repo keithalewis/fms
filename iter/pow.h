@@ -9,8 +9,8 @@ namespace iter {
 	class pow_ : public enumerator<void, T, std::input_iterator_tag> {
 		T t, t_; // t, t^n
 	public:
-		pow_(T t = T(0))
-			: t(t), t_(1)
+		pow_(T t = T(1))
+			: t(t), t_(T(1))
 		{ }
 
 		operator bool() const

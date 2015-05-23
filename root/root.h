@@ -1,11 +1,13 @@
 // root.h - policy based root finding
 /*
-double sqrt2 = root1d::find<N,D>([](double x) { return x*x - 2; }, 1, 2);
-root1d::find(next(), done());
+bisect<> b(1,2);
+relative r;
+double sqrt2 = root1d::find<N,D>([](double x) { return x*x - 2; }, b, r);
+root1d::find(f,n,d);
 */
 #pragma once
 #include <functional>
-#include <iterator>
+#include "iter/iter.h"
 
 /*
 

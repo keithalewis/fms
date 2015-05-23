@@ -52,7 +52,7 @@ namespace iter {
 			typename std::iterator_traits<J>::value_type
 		>
 	>
-	inline concatenate_<I,J,V> concatenate(I i, J j)
+	inline auto concatenate(I i, J j)
 	{
 		return concatenate_<I,J,V>(i, j);
 	}

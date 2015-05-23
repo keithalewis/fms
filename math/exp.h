@@ -22,11 +22,17 @@ namespace math {
 template<class X = double>
 inline void test_exp()
 {
+	{
+		auto a = ne(prod(pow(1.)/iota(1.)));
+		auto b = buffer(0,a);
+		b = skipn(100,b);
+		++b;
+	}
 	long long c;
 	auto 
-	ms = timer::time([]() { exp(1.0); }, 10000);
+	ms = timer::time([]() { exp(0.1); }, 10*1000*1000);
 	c = ms.count();
-	ms = timer::time([]() { math::exp(1.0); }, 1000);
+	ms = timer::time([]() { math::exp(0.1); }, 10*1000);
 	c = ms.count();
 
 	X e1 = math::exp(X(1));

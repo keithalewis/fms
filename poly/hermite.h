@@ -1,4 +1,5 @@
 // hermite.h - Hermite polynomials
+// Copyright (c) 2015 KALX, LLC. All rights reserved. No warranty made.
 #pragma once
 #include <functional>
 #include <map>

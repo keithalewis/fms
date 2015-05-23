@@ -10,19 +10,20 @@ namespace iter {
 	>
 	class zigg_ : public enumerator<I,T,std::input_iterator_tag> {
 		typename std::iterator_traits<I>::value_type i_, _i; // current and next iter
+		size_t n;
 	public:
 		using enumerator<I,T,std::input_iterator_tag>::i;
 
 		zigg_()
 		{ }
 		zigg_(I i)
-			: enumerator<I,T,std::input_iterator_tag>(i), i_(*i), _i(*++i)
+			: enumerator<I,T,std::input_iterator_tag>(i), i_(*i), _i(*++i), n(0)
 		{ }
 
 		// current enumerator index
 		size_t at() const
 		{
-			return i;
+			return n;
 		}
 
 		operator bool() const
@@ -73,24 +74,10 @@ using namespace iter;
 
 inline void test_zigg()
 {
-	/*
-	auto z = c(1)*iota(1);
-	auto y = [](int i) { return c(i)*iota(i); };
-	auto x = fmap([](int i) { return iota(i); }, iota(0));
-	auto w = *x;
-	w = *++x;
-	w = *++x;
-	w = *++x;
-	auto a = fmap([](int i) { return c(i)*iota(i); }, iota(0));
-	auto b = *a;
-	ensure (*b == 0);
-	ensure (*++b == 1);
-	b = *++a;
-	ensure (*b == 1);
-	a++;
-	b = *a;
-	ensure (*b == 2);
-	*/
+//	int a[] = {1,3,5};
+//	int b[] = {0,4,8};
+	// =>
+	// 1,4,8
 }
 
 #endif // _DEBUG

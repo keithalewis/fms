@@ -8,6 +8,8 @@
 #include "accumulate.h"
 #include "adjacent.h"
 #include "apply.h"
+#include "bind.h"
+#include "buffer.h"
 #include "concatenate.h"
 #include "constant.h"
 #include "choose.h"

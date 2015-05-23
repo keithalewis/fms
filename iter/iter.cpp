@@ -68,6 +68,8 @@ int main()
 		test_accumulate();
 		test_adjacent();
 		test_apply();
+		test_bind();
+		test_buffer();
 		test_choose();
 		test_concatenate();
 		test_constant();
@@ -90,6 +92,7 @@ int main()
 		test_skip();
 		test_take();
 		test_where();
+		test_unit();
 		test_until();
 		test_util();
 		test_zigg();

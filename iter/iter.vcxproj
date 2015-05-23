@@ -83,6 +83,8 @@
   <ItemGroup>
     <ClInclude Include="adjacent.h" />
     <ClInclude Include="apply.h" />
+    <ClInclude Include="bind.h" />
+    <ClInclude Include="buffer.h" />
     <ClInclude Include="choose.h" />
     <ClInclude Include="concatenate.h" />
     <ClInclude Include="constant.h" />

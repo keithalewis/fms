@@ -88,7 +88,15 @@
     <ClInclude Include="join.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="unit.h" />
+    <ClInclude Include="unit.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="bind.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="buffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />
