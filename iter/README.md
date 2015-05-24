@@ -1,6 +1,6 @@
 ﻿# enumerators - iterators that know when they are done
 
-An `enumerator` is an iterators that provides `operator bool() const`
+An `enumerator` is an iterator that provides `operator bool() const`
 which returns `true` when it is valid to dereference the iterator.
 This is similar to `MoveNext` in the `IEnumerator` C# interface,
 but fits in better with C++ notions of iteration.
