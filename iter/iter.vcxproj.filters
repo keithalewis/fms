@@ -65,19 +65,19 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="last.h">
-      <Filter>algorithm</Filter>
+      <Filter>Header Files\algorithm</Filter>
     </ClInclude>
     <ClInclude Include="pick.h">
-      <Filter>algorithm</Filter>
+      <Filter>Header Files\algorithm</Filter>
     </ClInclude>
     <ClInclude Include="skip.h">
-      <Filter>algorithm</Filter>
+      <Filter>Header Files\algorithm</Filter>
     </ClInclude>
     <ClInclude Include="take.h">
-      <Filter>algorithm</Filter>
+      <Filter>Header Files\algorithm</Filter>
     </ClInclude>
     <ClInclude Include="until.h">
-      <Filter>algorithm</Filter>
+      <Filter>Header Files\algorithm</Filter>
     </ClInclude>
     <ClInclude Include="zigg.h">
       <Filter>Header Files</Filter>
@@ -97,6 +97,9 @@
     <ClInclude Include="buffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="cycle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />
@@ -111,7 +114,7 @@
     <Filter Include="Header Files\enumerator">
       <UniqueIdentifier>{075084ea-f906-4c10-b753-6780ed4aca62}</UniqueIdentifier>
     </Filter>
-    <Filter Include="algorithm">
+    <Filter Include="Header Files\algorithm">
       <UniqueIdentifier>{3e42f424-5787-4512-9025-a309eb013225}</UniqueIdentifier>
     </Filter>
   </ItemGroup>

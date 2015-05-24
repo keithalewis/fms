@@ -42,27 +42,8 @@ void coprime()
 	}
 */
 
-template<class T>
-inline T expensive(T t)
-{
-	std::cout << "expensive(" << t << ")" << std::endl;
-
-	return t;
-}
-inline void test_min_element()
-{
-	int a[] = {3,2,1,2,3};
-	auto b = iter::min(fmap(expensive<int>,a));
-	auto k = *b;
-	k = *++b;
-	k = *++b;
-	k = *++b;
-	k = *++b;
-}
-
 int main() 
 {
-	test_min_element();
 //	coprime();
 	try {
 		test_accumulate();
@@ -73,6 +54,7 @@ int main()
 		test_choose();
 		test_concatenate();
 		test_constant();
+		test_cycle();
 		test_elide();
 		test_enumerator();
 		test_enumerator_counted();

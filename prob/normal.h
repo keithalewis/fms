@@ -24,17 +24,17 @@ namespace prob {
 
 	class marsaglia {};
 	class bell {};
-/*
-	template<class I>
+
+	template<class X, class I>
 	inline X std_normal(const X&);
 
 	// 0.5(1 + sgn(x) sqrt(1 - exp(-2 x^2/pi)
-	template<>
-	inline X std_normal<bell>(const X& x)
+	template<class X>
+	inline X std_normal<X,bell>(const X& x)
 	{
-		return X(0.5)*(1 + (x > 0 ? 1 : -1)*sqrt(1 - math::exp(-2*x*x/pi)));
+		return X(0.5)*(1 + (x > 0 ? 1 : -1)*sqrt(1 - exp(-2*x*x/pi)));
 	}
-*/
+
 	template<class X = double>
 	struct normal {
 
@@ -47,7 +47,7 @@ namespace prob {
 		
 		static X pdf(const X& x)
 		{
-			return math::exp(-x*x/2)/sqrt2pi;
+			return exp(-x*x/2)/sqrt2pi;
 		}
 		static X inv(const X& x)
 		{
@@ -62,7 +62,7 @@ namespace prob {
 				return pdf(x);
 
 			// (-1)^{n-1}H_{n-1}(x) e^{-x^2/2}/sqrt2pi
-			return (n%2?-1:1)*poly::H(n-1)(x)*math::exp(-x*x/2)/sqrt2pi;
+			return (n%2?-1:1)*poly::H(n-1)(x)*exp(-x*x/2)/sqrt2pi;
 		}
 	};
 

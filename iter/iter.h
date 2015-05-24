@@ -13,6 +13,7 @@
 #include "concatenate.h"
 #include "constant.h"
 #include "choose.h"
+#include "cycle.h"
 #include "elide.h"
 #include "enumerator.h"
 #include "enumerator/counted.h"
