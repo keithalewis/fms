@@ -8,6 +8,7 @@ int main()
 		test_hermite();
 		test_horner();
 		test_nomial();
+//		test_pochhammer();
 	}
 	catch (...) {
 		return -1;

@@ -12,7 +12,7 @@ namespace cumulant {
 //		auto a = last(ne(kappa*prod(c(s)/iota(X(1)))));
 
 //		return a;
-		return map([s](K k) { return last(ne(k*prod(c(s)/iota(X(1))))); }, kappa);
+		return map([s](K k) { return last(ne(k*prod(c<X>(s)/iota<X>(X(1))))); }, kappa);
 	}
 
 	// (n-1)! mu^n

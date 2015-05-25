@@ -12,7 +12,6 @@ namespace iter {
 	class reverse_enumerator : public enumerator<std::reverse_iterator<I>,T,C> {
 	public:
 		using enumerator<std::reverse_iterator<I>>::i;
-		typedef typename enumerator_traits<I>::is_counted is_counted;
 
 		reverse_enumerator()
 		{ }

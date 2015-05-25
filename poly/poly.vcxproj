@@ -87,6 +87,7 @@
     <ClInclude Include="hermite.h" />
     <ClInclude Include="horner.h" />
     <ClInclude Include="nomial.h" />
+    <ClInclude Include="pochhammer.h" />
     <ClInclude Include="poly.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

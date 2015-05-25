@@ -15,7 +15,6 @@ namespace iter {
 		std::function<U(T)> f;
 	public:
 		using enumerator<I,U,C>::i;
-		typedef typename enumerator_traits<I>::is_counted is_counted;
 
 		fmap_()
 		{ }
@@ -66,7 +65,6 @@ namespace iter {
 		std::function<U(T)> f;
 	public:
 		using enumerator<I,U,C>::i;
-		typedef typename enumerator_traits<I>::is_counted is_counted;
 
 		map_()
 		{ }

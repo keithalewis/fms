@@ -8,4 +8,5 @@
 #include "bell.h"
 #include "hermite.h"
 #include "horner.h"
+#include "pochhammer.h"
 

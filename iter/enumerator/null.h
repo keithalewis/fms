@@ -33,7 +33,6 @@ namespace iter {
 	public:
 		using enumerator<I,T,C>::i;
 
-		typedef std::false_type is_counted; // for tag dispatch
 		null_enumerator()
 		{ }
 		null_enumerator(I i)

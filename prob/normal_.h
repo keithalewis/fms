@@ -12,10 +12,10 @@ namespace prob {
 		template<class K>
 		static X cdf(const X& x, K kappa)
 		{
-			auto B = apply([kappa](int n) { return Bell(n, kappa); }, itoa(1));
-			auto H_ = apply([x](int n) { return H(n)(x); }, itoa(0));
+			auto B = apply([kappa](int n) { return Bell(n, kappa); }, iota(1));
+			auto H_ = apply([x](int n) { return H(n)(x); }, iota(0));
 
-			return normal::cdf(x) - X(0.5)*exp(-x*x/2)*sum0(ne(B*H_/factorial()))/sqrt2pi;
+			return normal<X>::cdf(x) - X(0.5)*exp(-x*x/2)*sum0(ne(B*H_/factorial()))/sqrt2pi;
 		}
 	};
 

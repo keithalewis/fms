@@ -10,7 +10,6 @@ namespace iter {
 		std::function<bool(const I&)> p;
 	public:
 		using enumerator<I,T,std::input_iterator_tag>::i;
-		typedef std::false_type is_counted;
 
 		where_()
 		{ }

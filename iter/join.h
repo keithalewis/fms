@@ -11,24 +11,14 @@ namespace iter {
 	class join_ : public enumerator<I,T,std::input_iterator_tag> {
 		typename std::iterator_traits<I>::value_type _i;
 		// skip empty iterators (is this bad???)
-/*		void elide()
-		{
-			while (i && !_i) {
-				++i;
-				_i = *i;
-			}
-		}
-*/	public:
+	public:
 		using enumerator<I,T,std::input_iterator_tag>::i;
-		typedef typename enumerator_traits<I>::is_counted is_counted;
 
 		join_()
 		{ }
 		join_(I i)
 			: enumerator<I,T,std::input_iterator_tag>(i), _i(*i)
-		{
-//			elide();
-		}
+		{ }
 
 		operator bool() const
 		{
@@ -47,7 +37,6 @@ namespace iter {
 					++i;
 					_i = *i;
 				}
-//				elide();
 			}
 
 			return *this;

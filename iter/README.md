@@ -31,7 +31,6 @@ comes from Fortran and APL, but incorporates recent functional programming notio
 
 Specialize enumerator for all iterator categories, not just input iterator.
 
-Get `is_counted` working.
 
 Class finite_enumerator instead of counted? end/null enumerators are finite, but not counted.
 Better name might be reversible_enumerator? 

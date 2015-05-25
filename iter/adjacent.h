@@ -16,7 +16,6 @@ namespace iter {
 		T t;
 	public:
 		using enumerator<I,T,C>::i;
-		typedef typename enumerator_traits<I>::is_counted is_counted;
 
 		adjacent_()
 		{ }

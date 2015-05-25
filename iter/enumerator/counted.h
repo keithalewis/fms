@@ -13,7 +13,6 @@ namespace iter {
 	class counted_enumerator : public enumerator<I,T,C> {
 		size_t n;
 	public:
-		typedef std::true_type is_counted;
 		using enumerator<I,T,C>::i;
 
 		counted_enumerator()
@@ -79,7 +78,6 @@ namespace iter {
 	class counted_enumerator<T(&)[N]> : public enumerator<T*,T,std::random_access_iterator_tag> {
 		size_t n;
 	public:
-		typedef std::true_type is_counted;
 		using enumerator<T*,T,std::random_access_iterator_tag>::i;
 
 		counted_enumerator()

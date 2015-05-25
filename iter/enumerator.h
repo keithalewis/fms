@@ -9,16 +9,6 @@
 
 namespace iter {
 
-	// use has_member(size()) ???
-	template<class I>
-	struct enumerator_traits {
-		typedef typename I::is_counted is_counted;
-	};
-	template<class T>
-	struct enumerator_traits<T*> {
-		typedef std::false_type is_counted;
-	};
-
 	// iterator with operator bool() const
 	template<class I, 
 		class T = typename std::iterator_traits<I>::value_type,
@@ -28,13 +18,11 @@ namespace iter {
 	protected:
 		I i;
 	public:
-		typedef std::false_type is_counted;
 		typedef typename std::iterator<C,T>::iterator_category iterator_category;
 		typedef typename std::iterator<C,T>::value_type value_type;
 		typedef typename std::iterator<C,T>::difference_type difference_type;
 		typedef typename std::iterator<C,T>::pointer pointer;
 		typedef typename std::iterator<C,T>::reference reference;
-
 
 		enumerator()
 		{ }
@@ -112,7 +100,6 @@ namespace iter {
 	// specialize for empty iterators
 	template<class T>
 	struct enumerator<void,T,std::input_iterator_tag> : public std::iterator<std::input_iterator_tag,T> {
-		typedef typename std::false_type is_counted;
 	};
 
 	// specializations for pointers
@@ -121,7 +108,6 @@ namespace iter {
 	protected:
 		T* i;
 	public:
-		typedef std::false_type is_counted; // for tag dispatch
 		using C = std::random_access_iterator_tag;
 		typedef typename std::iterator<C,T>::iterator_category iterator_category;
 		typedef typename std::iterator<C,T>::value_type value_type;
@@ -236,7 +222,6 @@ namespace iter {
 	protected:
 		const T* i;
 	public:
-		typedef std::false_type is_counted; // for tag dispatch
 		using C = std::random_access_iterator_tag;
 		typedef typename std::iterator<C,T>::iterator_category iterator_category;
 		typedef typename std::iterator<C,T>::value_type value_type;

@@ -13,7 +13,6 @@ namespace iter {
 		J e;
 	public:
 		using enumerator<I,T,C>::i;
-		typedef typename enumerator_traits<I>::is_counted is_counted;
 
 		end_enumerator()
 		{ }
