@@ -182,11 +182,11 @@ inline void test_enumerator_counted()
 		auto b = ce(a);
 		ensure (b.size() == 3);
 		ensure (b.end()[-1] == 3);
-		b += 2;
+/*		b += 2;
 		ensure (*b == 3);
 		b -= 2;
 		ensure (*b == 1);
-	}
+*/	}
 /*	{
 		std::vector<int> a = {1,2,3};
 		auto b = ce(a);

@@ -26,14 +26,25 @@ namespace prob {
 	class bell {};
 
 	template<class X, class I>
-	inline X std_normal(const X&);
-
-	// 0.5(1 + sgn(x) sqrt(1 - exp(-2 x^2/pi)
+	struct std_normal {
+		static X cdf(const X&);
+	};
 	template<class X>
-	inline X std_normal<X,bell>(const X& x)
-	{
-		return X(0.5)*(1 + (x > 0 ? 1 : -1)*sqrt(1 - exp(-2*x*x/pi)));
-	}
+	struct std_normal<X,bell> {
+		// 0.5(1 + sgn(x) sqrt(1 - exp(-2 x^2/pi)
+		static X cdf(const X& x)
+		{
+			return X(0.5)*(1 + (x > 0 ? 1 : -1)*sqrt(1 - exp(-2*x*x/pi)));
+		}
+	};
+	template<class X>
+	struct std_normal<X,marsaglia> {
+		// 0.5 + exp(-x*x/2) sum x^{2n + 1}/(2n + 1)!!/sqrt2pi
+		static X cdf(const X& x)
+		{
+			return X(0.5) + x*sum0(ne(prod(c(x*x)/E_(2*n + 1))))*exp(-x*x/2)/sqrt2pi;
+		}
+	};
 
 	template<class X = double>
 	struct normal {

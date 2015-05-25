@@ -80,6 +80,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="cumulant.h" />
     <ClInclude Include="normal.h" />
     <ClInclude Include="normal_.h" />
     <ClInclude Include="prob.h" />

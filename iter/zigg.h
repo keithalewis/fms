@@ -62,6 +62,13 @@ namespace iter {
 			return z;
 		}
 	};
+	template<class I, 
+		class T = typename std::iterator_traits<I>::value_type::value_type
+	>
+	inline auto zigg(I i)
+	{
+		return zigg_<I,T>(i);
+	}
 
 } // iter
 
@@ -74,10 +81,28 @@ using namespace iter;
 
 inline void test_zigg()
 {
-//	int a[] = {1,3,5};
-//	int b[] = {0,4,8};
-	// =>
-	// 1,4,8
+/*	int a[2][3] = {
+		{1,3,5},
+		{0,4,8}
+	};
+	// => 1,4,8
+	auto aa = concatenate(unit(e(a[0])),unit(e(a[1])));
+	auto b = *aa;
+	ensure (*b == 1);
+	ensure (*++b == 3);
+	ensure (*++b == 5);
+	aa++;
+	b = *aa;
+	ensure (*b == 0);
+	ensure (*++b == 4);
+	ensure (*++b == 8);
+
+	aa = concatenate(unit(e(a[0])),unit(e(a[1])));
+	auto z = zigg(aa);
+	ensure (*z == 1);
+	ensure (*++z == 4);
+	ensure (*++z == 8);
+	*/
 }
 
 #endif // _DEBUG

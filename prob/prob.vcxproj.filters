@@ -24,6 +24,9 @@
     <ClInclude Include="normal_.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="cumulant.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="prob.cpp">

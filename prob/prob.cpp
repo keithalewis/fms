@@ -5,6 +5,7 @@
 int main(void)
 {
 	try {
+		test_cumulant();
 		test_normal();
 	}
 	catch (...) {

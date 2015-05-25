@@ -35,6 +35,7 @@ namespace iter {
 		typedef typename std::iterator<C,T>::pointer pointer;
 		typedef typename std::iterator<C,T>::reference reference;
 
+
 		enumerator()
 		{ }
 		enumerator(I i)
@@ -128,6 +129,7 @@ namespace iter {
 		typedef typename std::iterator<C,T>::pointer pointer;
 		typedef typename std::iterator<C,T>::reference reference;
 
+
 		enumerator()
 		{ }
 		enumerator(T* i)
@@ -219,11 +221,11 @@ namespace iter {
 		{
 			return i - j.i;
 		}
-/*		T& operator[](difference_type n)
+		T& operator[](difference_type n)
 		{
 			return i[n];
 		}
-*/		const T& operator[](difference_type n) const
+		const T& operator[](difference_type n) const
 		{
 			return i[n];
 		}

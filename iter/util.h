@@ -53,11 +53,19 @@ inline void test_util()
 	ensure (all(b));
 	ensure (any(b));
 
+	// x -> x*x
 	auto c = L_(x, x*x);
 	ensure (c(1.2) == 1.2*1.2);
 
+	// n -> n*n
 	auto d = N_(n*n);
 	ensure (d(2) == 4);
+
+	// 1, 2 + 1, 2*2 + 1, ... 
+	auto f = E_(2*n + 1);
+	ensure (*f == 1);
+	ensure (*++f == 2 + 1);
+	ensure (*++f == 2*2 + 1);
 }
 
 #endif // _DEBUG
