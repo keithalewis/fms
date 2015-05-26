@@ -15,7 +15,7 @@ namespace poly {
 			: n(0)
 		{ }
 		pochhammer_(const X& x, int n)
-			: x(x), xi(x), n(n)
+			: n(n), x(x), xi(x)
 		{
 		}
 

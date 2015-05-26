@@ -4,6 +4,7 @@
 #include "iter.h"
 
 using namespace iter;
+
 /*
 
 template<class y, class... x>
@@ -42,9 +43,28 @@ void coprime()
 	}
 */
 
+
+template<class I>
+inline auto next_prime(I i)
+{
+	auto p = *i;
+
+	return concatenate(unit(p), where([p](I i) { return *i % p != 0; }, ++i));
+}
+
 int main() 
 {
-//	coprime();
+	auto p2 = next_prime(iota(2));
+	ensure (2 == *p2);
+	auto p3 = next_prime(++p2);
+	ensure (3 == *p3);
+	auto p5 = next_prime(++p3);
+	ensure (5 == *p5);
+	auto p7 = next_prime(++p5);
+	ensure (7 == *p7);
+	auto p11 = next_prime(++p7);
+	ensure (11 == *p11);
+
 	try {
 		test_accumulate();
 		test_adjacent();

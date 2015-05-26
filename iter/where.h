@@ -7,7 +7,7 @@ namespace iter {
 
 	template<class P, class I, class T = typename std::iterator_traits<I>::value_type>
 	class where_ : public enumerator<I,T,std::input_iterator_tag> {
-		std::function<bool(const I&)> p;
+		P p;
 	public:
 		using enumerator<I,T,std::input_iterator_tag>::i;
 

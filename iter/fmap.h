@@ -55,14 +55,14 @@ namespace iter {
 		return fmap_<F,I,T,U,C>(f, i);
 	}
 
-	// f(i[0]), f(i[1]), ...
+	// f(i0), f(i1), ...
 	template<class F, class I, 
 		class T = typename std::iterator_traits<I>::value_type,
 		class U = typename std::result_of_t<F(I)>,
 		class C = typename std::iterator_traits<I>::iterator_category
 	>
 	class map_ : public enumerator<I,U,C> {
-		std::function<U(T)> f;
+		F f;
 	public:
 		using enumerator<I,U,C>::i;
 
@@ -135,7 +135,6 @@ inline void test_fmap()
 		b = *aa;
 		ensure (*b == 2);
 		ensure (!++b);
-
 	}
 }
 

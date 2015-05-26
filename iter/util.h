@@ -12,7 +12,7 @@
 #endif
 // enumerator over n
 #ifndef E_
-#define E_(...) apply([](auto n) { return (__VA_ARGS__) ; })
+#define E_(...) fmap([](auto n) { return (__VA_ARGS__) ; }, iota(0))
 #endif
 
 namespace iter {

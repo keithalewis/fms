@@ -7,20 +7,20 @@ namespace poly {
 
 	template<class K, class X = typename std::iterator_traits<K>::value_type>
 	class bell_ : public enumerator<void,X,std::input_iterator_tag> {
-		K x, x_;
+		concatenate_<K,constant_<X>> x;
 		X n;
 		std::vector<X> B;
 	public:
 		bell_()
 		{ }
-		template<class K>
+		// extent x with 0's
 		bell_(K x)
-			: x(x), n(X(0)), B({X(1)})
+			: x(concatenate(x,c(X(0)))), n(X(0)), B({X(1)})
 		{ }
 
 		operator bool() const
 		{
-			return x_;
+			return true;
 		}
 		X operator*() const
 		{
@@ -30,9 +30,9 @@ namespace poly {
 		//	 choose(n,k) B(n-k,x[0],...,x[n-k]) x[k+1]
 		bell_& operator++()
 		{
-			++x_; // sentinel
-			++n;
 			B.push_back(sum0(choose(n)*re(B.end())*x));
+
+			++n;
 
 			return *this;
 		}
@@ -123,6 +123,11 @@ inline void test_bell()
 	auto b = bell(iota<double>(1));
 	int i = 0;
 	ensure (*b == Bell<>(i, iota<double>(1)));
+	ensure (*++b == Bell<>(++i, iota<double>(1)));
+	ensure (*++b == Bell<>(++i, iota<double>(1)));
+	ensure (*++b == Bell<>(++i, iota<double>(1)));
+	ensure (*++b == Bell<>(++i, iota<double>(1)));
+	ensure (*++b == Bell<>(++i, iota<double>(1)));
 	ensure (*++b == Bell<>(++i, iota<double>(1)));
 }
 

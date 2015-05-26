@@ -56,6 +56,16 @@ namespace iter {
 	{
 		return concatenate_<I,J,V>(i, j);
 	}
+	template<class I>
+	inline auto cat(I i)
+	{
+		return i;
+	}
+	template<class I, class... Is>
+	inline auto cat(I i, Is... is)
+	{
+		return concatenate(i, cat(is...));
+	}
 
 } // iter
 /*
@@ -81,6 +91,9 @@ inline auto operator,(iter::enumerator<T*,T> i, iter::enumerator<U*,U> j)
 #include "include/ensure.h"
 #include "enumerator/counted.h"
 #include "enumerator/null.h"
+#include "fmap.h"
+#include "unit.h"
+#include "util.h"
 
 using namespace iter;
 
@@ -108,6 +121,21 @@ inline void test_concatenate()
 		c++;
 		ensure (*c == 4);
 	}
+	{
+		auto a = ce(iota(0),2);
+		auto b = cat(a);
+		auto aa = cat(a,a);
+		ensure(*aa++ == 0 && *aa++ == 1);
+		ensure(*aa++ == 0 && *aa++ == 1);
+		auto aaa = cat(a,a,a);
+		ensure(*aaa++ == 0 && *aaa++ == 1);
+		ensure(*aaa++ == 0 && *aaa++ == 1);
+
+		auto d = ce(iota<double>(0), 2);
+		auto ad = cat(a,d);
+		ensure(*ad++ == 0 && *ad++ == 1);
+		ensure(*ad++ == 0 && *ad++ == 1);
+	}
 /*	{
 		auto c = operator,(ne(i),ce(j,2));
 		ensure (*c == 1);
@@ -117,6 +145,30 @@ inline void test_concatenate()
 		ensure (*c == 4);
 	}
 */
+	{	// cartesian product
+		auto a = ce(iota(1),2); // {1,2}
+		auto b = ce(iota(0),3); // {0,1,2}
+		// {{1,0}, {1,1}, {1,2}
+		//  {2,0}, {2,1}, {2,2}}
+		auto x = fmap(N_(cat(unit(1),unit(n))), b);
+		auto y = *x;
+		ensure (*y == 1 && *++y == 0);
+		y = *++x;
+		ensure (*y == 1 && *++y == 1);
+		y = *++x;
+		ensure (*y == 1 && *++y == 2);
+	}
+	{
+		auto a = ce(iota(1),2); // {1,2}
+		auto b = ce(iota(0),3); // {0,1,2}
+/*		auto axb = fmap([](auto i) { 
+			return fmap([i](auto j) { 
+				return cat(unit(i),unit(j)); 
+			}, b); 
+		}, a);
+*/
+	}
+
 }
 
 #endif // _DEBUG

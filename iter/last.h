@@ -20,7 +20,7 @@ namespace iter {
 		return n;
 	}
 	template<class I, class T = typename std::iterator_traits<I>::value_type>
-	inline auto size(counted_enumerator<I,T> e)
+	inline auto size(const counted_enumerator<I,T>& e)
 	{
 		return e.size();
 	}
@@ -47,13 +47,14 @@ namespace iter {
 		return e;
 	}
 	template<class I, class T = typename std::iterator_traits<I>::value_type>
-	inline auto end(counted_enumerator<I,T> e)
+	inline auto end(const counted_enumerator<I,T>& e)
 	{
 		return e.end();
 	}
+
 	// counted reverse enumerator
 	template<class R>
-	inline auto rend(R r)
+	inline auto rend(const R& r)
 	{
 		return ce(re(r.end()),r.size());
 	}
@@ -73,7 +74,7 @@ namespace iter {
 
 		return s;
 	}
-	// multiply null enumerators
+	// multiply enumerators
 	template<class E, class T = typename std::iterator_traits<E>::value_type>
 	inline T prod1(E e, T s = T(1))
 	{

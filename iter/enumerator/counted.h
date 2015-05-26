@@ -24,11 +24,11 @@ namespace iter {
 		{
 			return n;
 		}
-		I begin()
+		I begin() const
 		{
 			return i;
 		}
-		I end()
+		I end() const
 		{
 			I e(i);
 

@@ -23,14 +23,14 @@
 namespace prob {
 
 	class marsaglia {};
-	class bell {};
+	class bell_impl {};
 
 	template<class X, class I>
 	struct std_normal {
 		static X cdf(const X&);
 	};
 	template<class X>
-	struct std_normal<X,bell> {
+	struct std_normal<X,bell_impl> {
 		// 0.5(1 + sgn(x) sqrt(1 - exp(-2 x^2/pi)
 		static X cdf(const X& x)
 		{

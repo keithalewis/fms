@@ -31,9 +31,8 @@ comes from Fortran and APL, but incorporates recent functional programming notio
 
 Specialize enumerator for all iterator categories, not just input iterator.
 
+Need a concept of advance-able enumerator. Counted meand a `size()` member function exists.
 
-Class finite_enumerator instead of counted? end/null enumerators are finite, but not counted.
-Better name might be reversible_enumerator? 
 
 operator, => concatenate
 
