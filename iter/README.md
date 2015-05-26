@@ -33,6 +33,9 @@ Specialize enumerator for all iterator categories, not just input iterator.
 
 Need a concept of advance-able enumerator. Counted means a `size()` member function exists?
 
+Use `enable_if` to detect when non-capturing lambdas can be decayed to function pointers
+using the unary `operator+` trick? 
+
 operator, => concatenate
 
 operator^ => monotonic cycle
