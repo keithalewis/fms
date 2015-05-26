@@ -7,7 +7,7 @@ root1d::find(f,n,d);
 */
 #pragma once
 #include <functional>
-#include "iter/iter.h"
+//#include "iter/iter.h"
 
 /*
 

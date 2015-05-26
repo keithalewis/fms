@@ -134,12 +134,6 @@ namespace iter {
 	{
 		return make_counted_enumerator(i, N);
 	}
-/*	template<class T>
-	inline auto ce(const std::vector<T>& v)
-	{
-		return make_counted_enumerator(v.begin(), v.size());
-	}
-*/
 } // iter
 
 

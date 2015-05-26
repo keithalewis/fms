@@ -5,7 +5,7 @@
 namespace prob {
 namespace cumulant {
 
-	// cumulants for Esscher transformation
+	// cumulants for Esscher transformations
 	template<class K, 
 		class X = typename std::iterator_traits<K>::value_type>
 	class esscher_ : public enumerator<K,X,std::input_iterator_tag> {
