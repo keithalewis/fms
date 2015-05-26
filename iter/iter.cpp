@@ -54,6 +54,7 @@ inline auto next_prime(I i)
 
 int main() 
 {
+	/*
 	auto p2 = next_prime(iota(2));
 	ensure (2 == *p2);
 	auto p3 = next_prime(++p2);
@@ -64,7 +65,7 @@ int main()
 	ensure (7 == *p7);
 	auto p11 = next_prime(++p7);
 	ensure (11 == *p11);
-
+	*/
 	try {
 		test_accumulate();
 		test_adjacent();

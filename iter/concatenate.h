@@ -123,7 +123,6 @@ inline void test_concatenate()
 	}
 	{
 		auto a = ce(iota(0),2);
-		auto b = cat(a);
 		auto aa = cat(a,a);
 		ensure(*aa++ == 0 && *aa++ == 1);
 		ensure(*aa++ == 0 && *aa++ == 1);
@@ -146,7 +145,7 @@ inline void test_concatenate()
 	}
 */
 	{	// cartesian product
-		auto a = ce(iota(1),2); // {1,2}
+//		auto a = ce(iota(1),2); // {1,2}
 		auto b = ce(iota(0),3); // {0,1,2}
 		// {{1,0}, {1,1}, {1,2}
 		//  {2,0}, {2,1}, {2,2}}
@@ -158,17 +157,6 @@ inline void test_concatenate()
 		y = *++x;
 		ensure (*y == 1 && *++y == 2);
 	}
-	{
-		auto a = ce(iota(1),2); // {1,2}
-		auto b = ce(iota(0),3); // {0,1,2}
-/*		auto axb = fmap([](auto i) { 
-			return fmap([i](auto j) { 
-				return cat(unit(i),unit(j)); 
-			}, b); 
-		}, a);
-*/
-	}
-
 }
 
 #endif // _DEBUG

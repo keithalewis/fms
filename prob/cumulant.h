@@ -5,7 +5,7 @@
 namespace prob {
 namespace cumulant {
 
-	// cumulants for Esscher transformations
+	// cumulants for Esscher transformation
 	template<class K, 
 		class X = typename std::iterator_traits<K>::value_type>
 	class esscher_ : public enumerator<K,X,std::input_iterator_tag> {
@@ -84,25 +84,27 @@ inline void test_cumulant()
 	using namespace prob;
 	using namespace cumulant;
 
-	auto p = poisson(0.1);
-	auto p_ = poisson(0.1,0.2);
-	auto q = esscher(p, 0.2);
 
-	double x = *p_;
-	double y = *q;
+	{
+		auto p = poisson(0.1);
+		auto p_ = poisson(0.1,0.2);
+		auto q = esscher(p, 0.2);
 
-	x = *++p_;
-	y = *++q;
+		double x = *p_;
+		double y = *q;
 
-	x = *++p_;
-	y = *++q;
+		x = *++p_;
+		y = *++q;
 
-	x = *++p_;
-	y = *++q;
+		x = *++p_;
+		y = *++q;
 
-	x = *++p_;
-	y = *++q;
+		x = *++p_;
+		y = *++q;
 
+		x = *++p_;
+		y = *++q;
+	}
 }
 
 #endif // _DEBUG

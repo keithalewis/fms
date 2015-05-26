@@ -337,8 +337,9 @@ namespace iter {
 } // iter
 
 #ifdef _DEBUG
-#include "include/ensure.h"
 #include <vector>
+#include "include/ensure.h"
+#include "enumerator/counted.h"
 
 using namespace iter;
 
@@ -373,17 +374,24 @@ inline void test_enumerator()
 	{
 		auto b = e(a);
 
+		int i;
+		i = 0;
 		for (auto c : b) {
-			ensure (c == a[0]);
-			break;
+			ensure (c == a[i++]);
+			if (i == 2)
+				break;
 		}
+		i = 0;
 		for (auto& c : b) {
-			ensure (c == a[0]);
-			break;
+			ensure (c == a[i++]);
+			if (i == 2)
+				break;
 		}
+		i = 0;
 		for (const auto& c : b) {
-			ensure (c == a[0]);
-			break;
+			ensure (c == a[i++]);
+			if (i == 2)
+				break;
 		}
 
 		auto d(b);

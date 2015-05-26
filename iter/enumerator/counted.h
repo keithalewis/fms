@@ -62,13 +62,13 @@ namespace iter {
 		}
 	};
 	template<class I, class T = typename std::iterator_traits<I>::value_type>
-	inline counted_enumerator<I,T> make_counted_enumerator(I i, size_t n)
+	inline auto make_counted_enumerator(I i, size_t n)
 	{
 		return counted_enumerator<I,T>(i, n);
 	}
 	// shorthand
 	template<class I, class T = typename std::iterator_traits<I>::value_type>
-	inline counted_enumerator<I,T> ce(I i, size_t n)
+	inline auto ce(I i, size_t n)
 	{
 		return counted_enumerator<I,T>(i, n);
 	}
@@ -174,6 +174,10 @@ inline void test_enumerator_counted()
 		auto b = ce(a);
 		ensure (b.size() == 3);
 		ensure (b.end()[-1] == 3);
+		int i = 0;
+		for (auto c : b) {
+			ensure (c == a[i++]);
+		}
 /*		b += 2;
 		ensure (*b == 3);
 		b -= 2;

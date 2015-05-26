@@ -58,6 +58,7 @@ inline void test_bind()
 	auto a = iota(2);
 	auto b = concatenate(unit(*a), where([a](auto i) { return *i % *a != 0; }, ++a));
 	auto c = *b;
+	ensure (c == 2);
 	c = *++b;
 	c = *++b;
 	c = *++b;
