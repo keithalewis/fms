@@ -147,7 +147,7 @@ inline void test_accumulate()
 		static_assert (24 <= sizeof(horner1), "MSVC: 24, gcc: 32");
 //		auto d = accumulate(horner1, b, 0);
 
-		// capture by hand
+		// use local types
 		struct horner {
 			int x;
 			horner(int x) : x(x) { }

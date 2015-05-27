@@ -1,34 +1,30 @@
 // counted.h - enumerators with a count
 #pragma once
+#include <utility>
 #include <vector>
 #include "../enumerator.h"
 
 namespace iter {
 
 	// counted enumerator
-	template<class I, 
-		class T = typename std::iterator_traits<I>::value_type,
-		class C = typename std::iterator_traits<I>::iterator_category
-	>
-	class counted_enumerator : public enumerator<I,T,C> {
+	template<class I, class T = typename std::iterator_traits<I>::value_type>
+	class counted_enumerator_ : public enumerator_<I,T> {
+	protected:
 		size_t n;
 	public:
-		using enumerator<I,T,C>::i;
+		using enumerator_<I,T>::i;
 
-		counted_enumerator()
+		counted_enumerator_()
 		{ }
-		counted_enumerator(I i, size_t n)
-			: enumerator<I,T,C>(i), n(n)
+		counted_enumerator_(I i, size_t n)
+			: enumerator_<I,T>(i), n(n)
 		{ }
 
 		size_t size() const
 		{
 			return n;
 		}
-		I begin() const
-		{
-			return i;
-		}
+		// hide enumerator_::end
 		I end() const
 		{
 			I e(i);
@@ -46,16 +42,16 @@ namespace iter {
 		{
 			return *i;
 		}
-		counted_enumerator& operator++()
+		counted_enumerator_& operator++()
 		{
 			++i;
 			--n;
 
 			return *this;
 		}
-		counted_enumerator operator++(int)
+		counted_enumerator_ operator++(int)
 		{
-			counted_enumerator e(*this);
+			counted_enumerator_ e(*this);
 
 			operator++();
 
@@ -63,28 +59,28 @@ namespace iter {
 		}
 	};
 	template<class I, class T = typename std::iterator_traits<I>::value_type>
-	inline auto make_counted_enumerator(I i, size_t n)
+	inline auto counted_enumerator(I i, size_t n)
 	{
-		return counted_enumerator<I,T>(i, n);
+		return counted_enumerator_<I,T>(i, n);
 	}
 	// shorthand
 	template<class I, class T = typename std::iterator_traits<I>::value_type>
 	inline auto ce(I i, size_t n)
 	{
-		return counted_enumerator<I,T>(i, n);
+		return counted_enumerator_<I,T>(i, n);
 	}
 
 	// specialization
 	template<class T, size_t N>
-	class counted_enumerator<T(&)[N]> : public enumerator<T*,T,std::random_access_iterator_tag> {
+	class counted_enumerator_<T(&)[N]> : public enumerator_<T*,T> {
 		size_t n;
 	public:
-		using enumerator<T*,T,std::random_access_iterator_tag>::i;
+		using enumerator_<T*,T>::i;
 
-		counted_enumerator()
+		counted_enumerator_()
 		{ }
-		counted_enumerator(T(&i)[N])
-			: enumerator<T*,T,std::random_access_iterator_tag>(i), n(N)
+		counted_enumerator_(T(&i)[N])
+			: enumerator_<T*,T>(i), n(N)
 		{ }
 
 		size_t size() const
@@ -108,16 +104,16 @@ namespace iter {
 		{
 			return *i;
 		}
-		counted_enumerator& operator++()
+		counted_enumerator_& operator++()
 		{
 			++i;
 			--n;
 
 			return *this;
 		}
-		counted_enumerator operator++(int)
+		counted_enumerator_ operator++(int)
 		{
-			counted_enumerator e(*this);
+			counted_enumerator_ e(*this);
 
 			operator++();
 
@@ -125,15 +121,21 @@ namespace iter {
 		}
 	};
 	template<class T, size_t N>
-	inline auto make_counted_enumerator(T(&i)[N])
+	inline auto counted_enumerator(T(&i)[N])
 	{
-		return make_counted_enumerator(i, N);
+		return counted_enumerator(i, N);
 	}
 	// shorthand
 	template<class T, size_t N>
 	inline auto ce(T(&i)[N])
 	{
-		return make_counted_enumerator(i, N);
+		return counted_enumerator(i, N);
+	}
+
+	template<class T>
+	inline auto ce(const std::vector<T>& v)
+	{
+		return counted_enumerator(v.begin(), v.size());
 	}
 } // iter
 
@@ -148,7 +150,7 @@ inline void test_enumerator_counted()
 	int a[] = {1,2,3};
 
 	{
-		auto e = make_counted_enumerator(a, 2);
+		auto e = counted_enumerator(a, 2);
 		auto f(e);
 		e = f;
 		ensure (e);
@@ -179,12 +181,22 @@ inline void test_enumerator_counted()
 		for (auto c : b) {
 			ensure (c == a[i++]);
 		}
-/*		b += 2;
-		ensure (*b == 3);
-		b -= 2;
-		ensure (*b == 1);
-*/	}
-/*	{
+		i = 0;
+		for (auto& c : b) {
+			ensure (c == a[i++]);
+		}
+		i = 0;
+		for (const auto& c : b) {
+			ensure (c == a[i++]);
+		}
+
+		int* c = b;
+		c += 2;
+		ensure (*c == 3);
+		c -= 2;
+		ensure (*c == 1);
+	}
+	{
 		std::vector<int> a = {1,2,3};
 		auto b = ce(a);
 		ensure (b.size() == a.size());
@@ -193,8 +205,9 @@ inline void test_enumerator_counted()
 		b++;
 		ensure (*b == a[2]);
 		ensure (!++b);
+		ensure (a.end() == b.end());
 	}
-*/
+
 }
 
 #endif // _DEBUG

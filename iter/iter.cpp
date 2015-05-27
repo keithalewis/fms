@@ -69,6 +69,9 @@ int main()
 	try {
 		test_enumerator();
 		test_accumulate();
+		test_pair();
+		test_expr();
+		test_enumerator_counted();
 /*		test_adjacent();
 		test_apply();
 		test_bind();
@@ -78,11 +81,9 @@ int main()
 		test_constant();
 		test_cycle();
 		test_elide();
-		test_enumerator_counted();
 		test_enumerator_end();
 		test_enumerator_null();
 		test_enumerator_reverse();
-		test_expr();
 		test_factorial();
 		test_fmap();
 		test_iota();
@@ -90,7 +91,6 @@ int main()
 		test_last();
 		test_level();
 		test_pick();
-		test_pair();
 		test_pow();
 		test_skip();
 		test_take();
