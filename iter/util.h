@@ -1,5 +1,6 @@
 // util.h - utilites
 #pragma once
+#include "fmap.h"
 
 // e.g., pick(L(n, 2*n + 1), factorial{}, ) => (2n+1)!
 // lambda macro

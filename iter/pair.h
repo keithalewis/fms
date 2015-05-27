@@ -22,7 +22,7 @@ namespace iter {
 			: enumerator<std::pair<I,J>,std::pair<T,U>,C>(std::make_pair(i,j))
 		{ }
 
-		operator bool() const
+		explicit operator bool() const
 		{
 			return i.first && i.second;
 		}
@@ -68,10 +68,10 @@ using namespace iter;
 
 inline void test_pair()
 {
-	int a[] = {0,1,2};
+/*	int a[] = {0,1,2};
 	int b[] = {2,4,5};
 
-	auto c = pair(std::begin(a),std::begin(b));
+	auto c = iter::pair(std::begin(a),std::begin(b));
 	auto f(c);
 	c = f;
 	ensure (*c == std::make_pair(0,2));
@@ -91,6 +91,7 @@ inline void test_pair()
 	ensure (c != d);
 	d = c;
 	ensure (c == d);
+*/
 }
 
 #endif // _DEBUG

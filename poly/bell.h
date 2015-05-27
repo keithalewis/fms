@@ -18,7 +18,7 @@ namespace poly {
 			: x(concatenate(x,c(X(0)))), n(X(0)), B({X(1)})
 		{ }
 
-		operator bool() const
+		explicit operator bool() const
 		{
 			return true;
 		}

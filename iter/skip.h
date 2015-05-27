@@ -47,7 +47,7 @@ namespace iter {
 			: enumerator<I,T,C>(skipn(*n,i)), n(n)
 		{ }
 
-		operator bool() const
+		explicit operator bool() const
 		{
 			return i;
 		}

@@ -24,8 +24,8 @@ namespace timer {
 #include "ensure.h"
 
 #ifdef _WIN32
-extern "C" void __stdcall Sleep(unsigned long);
-#define sleep Sleep
+//extern "C" void __stdcall Sleep(unsigned long);
+//#define sleep Sleep
 #endif
 
 inline void test_timer()

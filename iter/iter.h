@@ -6,6 +6,7 @@
 
 #include <stdexcept>
 #include "accumulate.h"
+/*
 #include "adjacent.h"
 #include "apply.h"
 #include "bind.h"
@@ -36,6 +37,7 @@
 #include "util.h"
 #include "where.h"
 #include "zigg.h"
+*/
 
 #ifdef _DEBUG
 #include "include/ensure.h"

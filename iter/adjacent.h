@@ -23,7 +23,7 @@ namespace iter {
 			: enumerator<I,T,C>(i), o(o), t(t)
 		{ }
 
-		operator bool() const
+		explicit operator bool() const
 		{
 			return i;
 		}

@@ -17,7 +17,7 @@ namespace math {
 #include <ctime>
 #include <random>
 #include "include/ensure.h"
-#include "include/timer.h"
+//#include "include/timer.h"
 
 template<class X = double>
 inline void test_exp()
@@ -29,7 +29,7 @@ inline void test_exp()
 		++b;
 	}
 	long long c;
-	auto 
+/*	auto 
 	ms = timer::time([]() { exp(0.1); }, 10*1000*1000);
 	c = ms.count();
 	ms = timer::time([]() { math::exp(0.1); }, 10*1000);
@@ -38,7 +38,7 @@ inline void test_exp()
 	X e1 = math::exp(X(1));
 	X e1_ = exp(X(1));
 	ensure (fabs(e1 - e1_) <= 2*std::numeric_limits<X>::epsilon());
-
+*/
 	std::default_random_engine dre;
 	std::uniform_real_distribution<X> u(-18,18); //
 

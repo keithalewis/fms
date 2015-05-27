@@ -1,69 +1,46 @@
-// enumerator.h - iter::enumerator with operator bool
-// Copyright (c) KALX, LLC
+// enumerator.h - input iterators having operator bool()
+// Copyright (c) KALX, LLC. All rights reserved. No warranty made.
 
 #pragma once
-#include <cmath>
-#include <functional>
 #include <iterator>
-#include <type_traits>
 
 namespace iter {
 
-	// iterator with operator bool() const
-	template<class I, 
-		class T = typename std::iterator_traits<I>::value_type,
-		class C = typename std::iterator_traits<I>::iterator_category
-	>
-	struct enumerator : public std::iterator<C,T> { // !!!need to specialize for all categories
+	// iterator having explicit operator bool() const
+	template<class I, class T = typename std::iterator_traits<I>::value_type>
+	struct enumerator_ : public std::iterator<std::input_iterator_tag,T> {
 	protected:
 		I i;
 	public:
-		typedef typename std::iterator<C,T>::iterator_category iterator_category;
-		typedef typename std::iterator<C,T>::value_type value_type;
-		typedef typename std::iterator<C,T>::difference_type difference_type;
-		typedef typename std::iterator<C,T>::pointer pointer;
-		typedef typename std::iterator<C,T>::reference reference;
-
-		enumerator()
+		enumerator_()
 		{ }
-		enumerator(I i)
+		enumerator_(I i)
 			: i(i)
 		{ }
 
-		bool operator==(const enumerator& j) const
+		bool operator==(const enumerator_& j) const
 		{
 			return i == j.i;
 		}
-		bool operator!=(const enumerator& j) const
+		bool operator!=(const enumerator_& j) const
 		{
 			return i != j.i;
 		}
-/*		operator I()
+
+		operator I() const
 		{
 			return i;
 		}
-		operator I&()
+		I begin() const
 		{
 			return i;
 		}
-*/		I& iterator()
-		{
-			return i;
-		}
-		I begin()
-		{
-			return i;
-		}
-		const I& begin() const
-		{
-			return i;
-		}
-		const I end() const
+		I end() const
 		{
 			return nullptr;
 		}
 
-		operator bool() const
+		explicit operator bool() const
 		{
 			return true; // infinite
 		}
@@ -71,15 +48,15 @@ namespace iter {
 		{
 			return *i;
 		}
-		enumerator& operator++()
+		enumerator_& operator++()
 		{
 			++i;
 
 			return *this;
 		}
-		enumerator operator++(int)
+		enumerator_ operator++(int)
 		{
-			enumerator e(*this);
+			enumerator_ e(*this);
 
 			operator++();
 
@@ -87,183 +64,48 @@ namespace iter {
 		}
 	};
 	template<class I, class T = typename std::iterator_traits<I>::value_type>
-	inline enumerator<I,T> make_enumerator(I i)
+	inline auto enumerator(I i)
 	{
-		return enumerator<I,T>(i);
+		return enumerator_<I,T>(i);
 	}
+	// shorthand
 	template<class I, class T = typename std::iterator_traits<I>::value_type>
-	inline enumerator<I,T> e(I i)
+	inline auto e(I i)
 	{
 		return enumerator<I,T>(i);
 	}
 
 	// specialize for empty iterators
 	template<class T>
-	struct enumerator<void,T,std::input_iterator_tag> : public std::iterator<std::input_iterator_tag,T> {
+	struct enumerator_<void,T> : public std::iterator<std::input_iterator_tag,T> {
 	};
 
 	// specializations for pointers
 	template<class T>
-	class enumerator<T*,T> : public std::iterator<std::random_access_iterator_tag,T> {
+	class enumerator_<T*,T> : public std::iterator<std::random_access_iterator_tag,T> {
 	protected:
 		T* i;
 	public:
-		using C = std::random_access_iterator_tag;
-		typedef typename std::iterator<C,T>::iterator_category iterator_category;
-		typedef typename std::iterator<C,T>::value_type value_type;
-		typedef typename std::iterator<C,T>::difference_type difference_type;
-		typedef typename std::iterator<C,T>::pointer pointer;
-		typedef typename std::iterator<C,T>::reference reference;
-
-
-		enumerator()
+		enumerator_()
 		{ }
-		enumerator(T* i)
+		enumerator_(T* i)
 			: i(i)
 		{ }
 
-		bool operator==(const enumerator& j) const
+		bool operator==(const enumerator_& j) const
 		{
 			return i == j.i;
 		}
-		bool operator!=(const enumerator& j) const
+		bool operator!=(const enumerator_& j) const
 		{
 			return i != j.i;
 		}
-/*		operator T*()
-		{
-			return i;
-		}
-		operator const T*()
-		{
-			return i;
-		}
-*/		T*& iterator()
-		{
-			return i;
-		}
-		T* begin()
-		{
-			return i;
-		}
-		const T* begin() const
-		{
-			return i;
-		}
-		T* end() const
-		{
-			return nullptr;
-		}
 
-		operator bool() const
-		{
-			return true; // infinite
-		}
-		T operator*() const
-		{
-			return *i;
-		}
-		enumerator& operator++()
-		{
-			++i;
-
-			return *this;
-		}
-		enumerator operator++(int)
-		{
-			enumerator e(*this);
-
-			operator++();
-
-			return e;
-		}
-		enumerator& operator--()
-		{
-			--i;
-
-			return *this;
-		}
-		enumerator operator--(int)
-		{
-			enumerator e(*this);
-
-			operator--();
-
-			return e;
-		}
-		enumerator& operator+=(difference_type n)
-		{
-			i += n;
-
-			return *this;
-		}
-		enumerator& operator-=(difference_type n)
-		{
-			i -= n;
-
-			return *this;
-		}
-		difference_type operator-(const enumerator& j) const
-		{
-			return i - j.i;
-		}
-		T& operator[](difference_type n)
-		{
-			return i[n];
-		}
-		const T& operator[](difference_type n) const
-		{
-			return i[n];
-		}
-	};
-	// specializations for pointers
-	template<class T>
-	class enumerator<const T*,T> : public std::iterator<std::random_access_iterator_tag,T> {
-	protected:
-		const T* i;
-	public:
-		using C = std::random_access_iterator_tag;
-		typedef typename std::iterator<C,T>::iterator_category iterator_category;
-		typedef typename std::iterator<C,T>::value_type value_type;
-		typedef typename std::iterator<C,T>::difference_type difference_type;
-		typedef typename std::iterator<C,T>::pointer pointer;
-		typedef typename std::iterator<C,T>::reference reference;
-
-		enumerator()
-		{ }
-		enumerator(const T* i)
-			: i(i)
-		{ }
-
-		bool operator==(const enumerator& j) const
-		{
-			return i == j.i;
-		}
-		bool operator!=(const enumerator& j) const
-		{
-			return i != j.i;
-		}
-/*		operator const T*()
-		{
-			return i;
-		}
-		operator T*()
-		{
-			return i;
-		}
 		operator T*() const
 		{
 			return i;
 		}
-*/		const T* iterator() const
-		{
-			return i;
-		}
-		T* begin()
-		{
-			return i;
-		}
-		const T* begin() const
+		T* begin() const
 		{
 			return i;
 		}
@@ -272,7 +114,7 @@ namespace iter {
 			return nullptr;
 		}
 
-		operator bool() const
+		explicit operator bool() const
 		{
 			return true; // infinite
 		}
@@ -280,94 +122,117 @@ namespace iter {
 		{
 			return *i;
 		}
-		enumerator& operator++()
+		enumerator_& operator++()
 		{
 			++i;
 
 			return *this;
 		}
-		enumerator operator++(int)
+		enumerator_ operator++(int)
 		{
-			enumerator e(*this);
+			enumerator_ e(*this);
 
 			operator++();
 
 			return e;
 		}
-		enumerator& operator--()
+	};
+
+	// specializations for const pointers
+	template<class T>
+	class enumerator_<const T*,T> : public std::iterator<std::random_access_iterator_tag,T> {
+	protected:
+		const T* i;
+	public:
+		enumerator_()
+		{ }
+		enumerator_(const T* i)
+			: i(i)
+		{ }
+
+		bool operator==(const enumerator_& j) const
 		{
-			--i;
+			return i == j.i;
+		}
+		bool operator!=(const enumerator_& j) const
+		{
+			return i != j.i;
+		}
+
+		operator T*() const
+		{
+			return i;
+		}
+		T* begin() const
+		{
+			return i;
+		}
+		T* end() const
+		{
+			return nullptr;
+		}
+
+		explicit operator bool() const
+		{
+			return true; // infinite
+		}
+		T operator*() const
+		{
+			return *i;
+		}
+		enumerator_& operator++()
+		{
+			++i;
 
 			return *this;
 		}
-		enumerator operator--(int)
+		enumerator_ operator++(int)
 		{
-			enumerator e(*this);
+			enumerator_ e(*this);
 
-			operator--();
+			operator++();
 
 			return e;
-		}
-		enumerator& operator+=(difference_type n)
-		{
-			i += n;
-
-			return *this;
-		}
-		enumerator& operator-=(difference_type n)
-		{
-			i -= n;
-
-			return *this;
-		}
-		difference_type operator-(const enumerator& j) const
-		{
-			return i - j.i;
-		}
-/*		T& operator[](difference_type n)
-		{
-			return i[n];
-		}
-*/		const T& operator[](difference_type n) const
-		{
-			return i[n];
 		}
 	};
 
 } // iter
 
 #ifdef _DEBUG
+#include <type_traits>
 #include <vector>
 #include "include/ensure.h"
-#include "enumerator/counted.h"
 
 using namespace iter;
 
 inline void test_enumerator()
 {
-	int a[] = {1,2,0};
+
+	int a[] = {1,2,3};
 
 	{
-		enumerator<int*> b(a), c;
+		enumerator_<int*> b(a), c;
 		c = b;
 		ensure (b == c);
 		ensure (*c == *b);
 		ensure (b);
 		ensure (*++b == 2);
 		b++; // not really the end
-		ensure (b && c);
 		ensure (b != c);
 	}
 	{
-		auto b = make_enumerator(a);
+		auto b = enumerator(a);
 		auto c(b);
 		b = c;
 		ensure (b);
 		ensure (*++b == 2);
 		b++;
+		using C = std::iterator_traits<decltype(b)>::iterator_category;
+		static_assert(std::is_same<C,std::random_access_iterator_tag>::value,
+			"supposted to all specialize operator T*() const");
 		ensure (std::distance(c,b) == 2);
 
-		int* pb = b.iterator();
+		int* pb = b; // calls operator T*() const
 		--pb;
 		ensure (*pb == 2);
 	}
@@ -381,6 +246,7 @@ inline void test_enumerator()
 			if (i == 2)
 				break;
 		}
+		ensure (b.end() == nullptr);
 		i = 0;
 		for (auto& c : b) {
 			ensure (c == a[i++]);
@@ -393,20 +259,6 @@ inline void test_enumerator()
 			if (i == 2)
 				break;
 		}
-
-		auto d(b);
-		
-		d += 1;
-		ensure (d != b);
-		d += -1;
-		ensure (d == b);
-
-		d -= 1;
-		ensure (d != b);
-		d -= -1;
-		ensure (d == b);
-
-		ensure (d - b == 0);
 	}
 	{
 		std::vector<int> a = {1,2,3};
@@ -416,8 +268,8 @@ inline void test_enumerator()
 		b++;
 		ensure (*b == 3);
 		b = a.begin();
-//		auto c = e(a.end());
-//		ensure (std::distance(b,c) == a.size()); // operator bool() called!!!
+		auto c = e(a.end());
+		ensure (static_cast<size_t>(std::distance(b,c)) == a.size());
 	}
 }
 

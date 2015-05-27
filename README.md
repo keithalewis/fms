@@ -3,7 +3,7 @@
 This is a software library for solving mathematical finance problems.
 
 ## [iter](iter/README.md)
-An `enumerator` is an  iterator having an `operator bool() const` member function.
+An `enumerator` is an  iterator having an `explicit operator bool() const` member function.
 
 ## [poly](poly/README.md)
 Polynomial related functions.

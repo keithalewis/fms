@@ -29,8 +29,14 @@ namespace iter {
 		{
 			return t[n + (n < 0 ? size() : 0)];
 		}
-		// same operator bool
-		// same operator*
+		explicit operator bool() const
+		{
+			return I::operator bool();
+		}
+		T operator*() const
+		{
+			return I::operator*();
+		}
 		buffer_& operator++()
 		{
 			if (n == 0 || (n > 0 && size() < n)) {
@@ -60,7 +66,14 @@ namespace iter {
 
 			return *this;
 		}
-		// same operator++(int)
+		buffer_ operator++(int)
+		{
+			buffer_ b(*this);
+
+			operator++();
+
+			return b;
+		}
 	};
 
 	template<class I/*, 

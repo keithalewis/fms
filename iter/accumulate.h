@@ -1,38 +1,32 @@
 // accumulate.h - std::accumulate for enumerations
 // accumulate, sum = accumulate<plus>, prod = accumulate<multiplies>
 #pragma once
-#include <algorithm>
-#include <iterator>
-#include <type_traits>
-#include "enumerator/counted.h"
+#include <limits>
+#include "enumerator.h"
 
 namespace iter {
 
 	// o(t,i[0]), o(o(t,i[0]), i[1]), ...
 	template<class O, class I, 
-		class T = typename std::iterator_traits<I>::value_type,
-		class C = typename std::iterator_traits<I>::interator_category
+		class T = typename std::iterator_traits<I>::value_type
 	>
-	class accumulate_ : public enumerator<I,T,C> {
-//		O o;
-		std::function<T(const T&,const T&)> o;
+	class accumulate_ : public I {
+		O o;
 		T t;
 	public:
-		using enumerator<I,T,C>::i;
-
 		accumulate_()
 		{ }
 		accumulate_(O o, I i, T t)
-			: enumerator<I,T,C>(i), o(o), t(i ? o(t,*i) : t)
+			: I(i), o(o), t(i ? o(t,*i) : t)
 		{ }
 
 		I iterator()
 		{
-			return i;
+			return *this;
 		}
-		operator bool() const
+		explicit operator bool() const
 		{
-			return i;
+			return I::operator bool();
 		}
 		T operator*() const
 		{
@@ -40,8 +34,8 @@ namespace iter {
 		}
 		accumulate_& operator++()
 		{
-			if (i)
-				t = o(t, *++i);
+			if (I::operator bool())
+				t = o(t, *I::operator++());
 
 			return *this;
 		}
@@ -55,32 +49,25 @@ namespace iter {
 		}
 	};
 	template<class O, class I, 
-		class T = typename std::iterator_traits<I>::value_type,
-		class C = typename std::iterator_traits<I>::iterator_category
+		class T = typename std::iterator_traits<I>::value_type
 	>
 	inline auto accumulate(O o, I i, T t)
 	{
-		return accumulate_<O,I,T,C>(o, i, t);
+		return accumulate_<O,I,T>(o, i, t);
 	}
 
 	// running sum of enumerator values
-	template<class I, 
-		class T = typename std::iterator_traits<I>::value_type,
-		class C = typename std::iterator_traits<I>::iterator_category
-	>
+	template<class I, class T = typename std::iterator_traits<I>::value_type>
 	inline auto sum(I i, T t = T(0))
 	{
 		return accumulate(std::plus<T>{}, i, t);
 	}
 
 	// running product of enumerator values
-	template<class I, 
-		class T = typename std::iterator_traits<I>::value_type,
-		class C = typename std::iterator_traits<I>::iterator_category
-	>
+	template<class I, class T = typename std::iterator_traits<I>::value_type>
 	inline auto prod(I i, T t = T(1))
 	{
-		return accumulate_<std::multiplies<T>,I,T,C>(std::multiplies<T>{}, i, t);
+		return accumulate_<std::multiplies<T>,I,T>(std::multiplies<T>{}, i, t);
 	}
 
 	// can't use std::min directly???
@@ -92,13 +79,10 @@ namespace iter {
 		}
 	};
 	// running min enumerator values
-	template<class I, 
-		class T = typename std::iterator_traits<I>::value_type,
-		class C = typename std::iterator_traits<I>::iterator_category
-	>
+	template<class I, class T = typename std::iterator_traits<I>::value_type>
 	inline auto min(I i, T t = std::numeric_limits<T>::max())
 	{
-		return accumulate_<min_<T>,I,T,C>(min_<T>{}, i, t);
+		return accumulate_<min_<T>,I,T>(min_<T>{}, i, t);
 	}
 
 	template<class T>
@@ -109,57 +93,79 @@ namespace iter {
 		}
 	};
 	// running max enumerator values
-	template<class I, 
-		class T = typename std::iterator_traits<I>::value_type,
-		class C = typename std::iterator_traits<I>::iterator_category
-	>
+	template<class I, class T = typename std::iterator_traits<I>::value_type>
 	inline auto max(I i, T t = -std::numeric_limits<T>::max())
 	{
-		return accumulate_<max_<T>,I,T,C>(max_<T>{}, i, t);
+		return accumulate_<max_<T>,I,T>(max_<T>{}, i, t);
 	}
 
 } // iter
 
 #ifdef _DEBUG
+#include <functional>
 #include "include/ensure.h"
-#include "constant.h"
-#include "iota.h"
-#include "last.h"
 
 inline void test_accumulate()
 {
 	int a[] = {1,2,3};
 	{	
-		auto b = accumulate(std::plus<int>{}, ce(a,3), 0);
+		auto b = accumulate(std::plus<int>{}, e(a), 0);
 		auto c(b);
 		b = c;
 		ensure (*b++ == 1);
 		ensure (*b == 3);
 		ensure (*++b == 6);
-		ensure (!++b);
 	}
 	{	
-		auto b = sum(ce(a,3));
+		auto b = sum(e(a));
 		auto c(b);
 		b = c;
 		ensure (*b++ == 1);
 		ensure (*b == 3);
 		ensure (*++b == 6);
-		ensure (!++b);
 	}
 	{	
-		auto b = prod(ce(a,3));
+		auto b = prod(e(a));
 		auto c(b);
 		b = c;
 		ensure (*b++ == 1);
 		ensure (*b == 2);
 		ensure (*++b == 6);
-		ensure (!++b);
 	}
 	{
-		auto a = ce(iota(1),5);
-		ensure (1 == back(min(a)));
-		ensure (5 == back(max(a)));
+		auto b = e(std::reverse_iterator<int*>(a + 3));
+		auto c(b);
+		b = c;
+		ensure (*b == a[2]);
+		ensure (b);
+		
+		int x = 4;
+		// capturing lambdas have deleted copy assignment
+//		auto d = accumulate([](const int& a, const int& b) { return x*a + b; }, b, 0);
+
+		std::function<int(int,int)> horner1 = [x](const int& a, const int& b) { return x*a + b; };
+		static_assert (24 <= sizeof(horner1), "MSVC: 24, gcc: 32");
+//		auto d = accumulate(horner1, b, 0);
+
+		// capture by hand
+		struct horner {
+			int x;
+			horner(int x) : x(x) { }
+			int operator()(const int& a, const int& b) { return x*a + b; }
+		};
+		auto h = horner(1);
+		auto g(h);
+		h = g;
+		static_assert (sizeof(int) == sizeof(horner), "time for a new compiler");
+		auto d = accumulate(horner(x), b, 0);
+		ensure (*d == a[2]);
+		d++;
+		ensure (*d == a[1] + x*a[2]);
+		ensure (*++d == a[0] + x*(a[1] + x*a[2]));
+
+		auto f(d);
+		d = f;
+		ensure (d);
 	}
 }
 

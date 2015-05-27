@@ -3,7 +3,7 @@
 #pragma once
 #include <functional>
 #include <map>
-#include "iter/iter.h"
+#include "iter/enumerator.h"
 
 namespace poly {
 
@@ -20,7 +20,10 @@ namespace poly {
 			: n(X(0)), x(x), H(X(1)), H_(X(0))
 		{ }
 
-		// same operator bool() 
+		explicit operator bool() const
+		{
+			return true;
+		}
 		X operator*() const
 		{
 			return H;
@@ -34,7 +37,14 @@ namespace poly {
 
 			return *this;
 		}
-		// same operator++(int)
+		hermite_ operator++(int)
+		{
+			hermite_ h(*this);
+
+			operator++();
+
+			return h;
+		}
 	};
 	template<class X = double>
 	inline auto hermite(const X& x)
@@ -47,7 +57,7 @@ namespace poly {
 	inline std::function<X(X)> Hermite(size_t n)
 	{
 		if (n == 0)
-			return [](const X& x) { return 1; };
+			return [](const X&) { return 1; };
 		if (n == 1)
 			return [](const X& x) { return x; };
 			

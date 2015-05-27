@@ -67,8 +67,9 @@ int main()
 	ensure (11 == *p11);
 	*/
 	try {
+		test_enumerator();
 		test_accumulate();
-		test_adjacent();
+/*		test_adjacent();
 		test_apply();
 		test_bind();
 		test_buffer();
@@ -77,7 +78,6 @@ int main()
 		test_constant();
 		test_cycle();
 		test_elide();
-		test_enumerator();
 		test_enumerator_counted();
 		test_enumerator_end();
 		test_enumerator_null();
@@ -99,7 +99,7 @@ int main()
 		test_until();
 		test_util();
 		test_zigg();
-	}
+*/	}
 	catch (...) {
 		return -1;
 	}

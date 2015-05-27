@@ -39,7 +39,7 @@ namespace iter {
 			: enumerator<I,T,C>(i)
 		{ }
 
-		operator bool() const
+		explicit operator bool() const
 		{
 			return detail::operator_bool<T>(operator*());
 		}

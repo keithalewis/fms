@@ -17,8 +17,14 @@ namespace iter {
 			: I(i), b(i)
 		{ }
 
-		// same operator bool() const
-		// same operator*()
+		operator bool() const
+		{
+			return I::operator bool();
+		}
+		T operator*() const
+		{
+			return I::operator*();
+		}
 		cycle_& operator++()
 		{
 			I::operator++();
@@ -27,7 +33,14 @@ namespace iter {
 
 			return *this;
 		}
-		// same operator++(int)
+		cycle_ operator++(int)
+		{
+			cycle_ c(*this);
+
+			operator++();
+
+			return c;
+		}
 	};
 	template<class I, 
 		class T = typename std::iterator_traits<I>::value_type,

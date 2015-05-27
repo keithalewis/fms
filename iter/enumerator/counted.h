@@ -20,6 +20,7 @@ namespace iter {
 		counted_enumerator(I i, size_t n)
 			: enumerator<I,T,C>(i), n(n)
 		{ }
+
 		size_t size() const
 		{
 			return n;
@@ -37,7 +38,7 @@ namespace iter {
 			return e;
 		}
 
-		operator bool() const
+		explicit operator bool() const
 		{
 			return n != 0;
 		}
@@ -99,7 +100,7 @@ namespace iter {
 			return e;
 		}
 
-		operator bool() const
+		explicit operator bool() const
 		{
 			return n != 0;
 		}

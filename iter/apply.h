@@ -20,7 +20,7 @@ namespace iter {
 			: I(i), f(f)
 		{ }
 
-		operator bool() const
+		explicit operator bool() const
 		{
 			return I::operator bool();
 		}

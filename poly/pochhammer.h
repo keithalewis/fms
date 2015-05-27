@@ -23,7 +23,7 @@ namespace poly {
 		{
 			return n >= 0 ? n : -n;
 		}
-		operator bool() const
+		explicit operator bool() const
 		{
 			return n != 0;
 		}

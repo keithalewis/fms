@@ -16,7 +16,7 @@ namespace iter {
 		~choose_()
 		{ }
 
-		operator bool() const
+		explicit operator bool() const
 		{
 			return k <= n;
 		}
