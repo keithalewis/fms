@@ -24,14 +24,23 @@ namespace iter {
 		{
 			return n;
 		}
+
+		I iterator() const
+		{
+			return i;
+		}
+		counted_enumerator_ begin() const
+		{
+			return *this;
+		}
 		// hide enumerator_::end
-		I end() const
+		counted_enumerator_ end() const
 		{
 			I e(i);
 
 			std::advance(e, n);
 	
-			return e;
+			return counted_enumerator_(e, 0);
 		}
 
 		explicit operator bool() const
@@ -87,13 +96,18 @@ namespace iter {
 		{
 			return n;
 		}
-		T* end()
+
+		T* iterator() const
 		{
-			T* e(i);
-
-			std::advance(e, n);
-
-			return e;
+			return i;
+		}
+		counted_enumerator_ begin() const
+		{
+			return *this;
+		}
+		counted_enumerator_ end()
+		{
+			return counted_iterator(i + n, 0);
 		}
 
 		explicit operator bool() const
@@ -132,10 +146,11 @@ namespace iter {
 		return counted_enumerator(i, N);
 	}
 
-	template<class T>
-	inline auto ce(const std::vector<T>& v)
+	// containers
+	template<class C>
+	inline auto ce(const C& c)
 	{
-		return counted_enumerator(v.begin(), v.size());
+		return counted_enumerator(c.begin(), c.size());
 	}
 } // iter
 
@@ -169,28 +184,28 @@ inline void test_enumerator_counted()
 		ensure (*n++ == 'f' && *n++ == 'o' && *n++ == 'o' && !n);
 		n = ce(foo);
 		ensure (n.size() == 4);
-		ensure (n[3] == 0);
+		ensure (n.iterator()[3] == 0);
 		auto o = ce("foo");
 		ensure (o.size() == 4);
 	}
 	{
 		auto b = ce(a);
 		ensure (b.size() == 3);
-		ensure (b.end()[-1] == 3);
+//		ensure (b.end()[-1] == 3);
 		int i = 0;
 		for (auto c : b) {
 			ensure (c == a[i++]);
 		}
 		i = 0;
-		for (auto& c : b) {
-			ensure (c == a[i++]);
-		}
+//		for (auto& c : b) {
+//			ensure (c == a[i++]);
+//		}
 		i = 0;
 		for (const auto& c : b) {
 			ensure (c == a[i++]);
 		}
 
-		int* c = b;
+		int* c = b.iterator();
 		c += 2;
 		ensure (*c == 3);
 		c -= 2;
@@ -205,7 +220,19 @@ inline void test_enumerator_counted()
 		b++;
 		ensure (*b == a[2]);
 		ensure (!++b);
-		ensure (a.end() == b.end());
+
+		int i = 0;
+		b = ce(a);
+		for (auto c : b) {
+			ensure (c == a[i++]);
+		}
+//		for (auto& c : b) {
+//			ensure (c == a[i++]);
+//		}
+		i = 0;
+		for (const auto& c : b) {
+			ensure (c == a[i++]);
+		}
 	}
 
 }

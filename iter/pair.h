@@ -7,16 +7,20 @@ namespace iter {
 
 	template<class I, class J,
 		class T = typename std::iterator_traits<I>::value_type,
-		class U = typename std::iterator_traits<J>::value_type
+		class U = typename std::iterator_traits<J>::value_type,
+		class C = typename std::common_type_t<
+			typename std::iterator_traits<I>::iterator_category,
+			typename std::iterator_traits<J>::iterator_category
+		>
 	>
-	class pair_ : public enumerator_<std::pair<I,J>,std::pair<T,U>> {
+	class pair_ : public enumerator_<std::pair<I,J>,std::pair<T,U>,C> {
 	public:
-		using enumerator_<std::pair<I,J>,std::pair<T,U>>::i;
+		using enumerator_<std::pair<I,J>,std::pair<T,U>,C>::i;
 
 		pair_()
 		{ }
 		pair_(I i, J j)
-			: enumerator_<std::pair<I,J>,std::pair<T,U>>(std::make_pair(i,j))
+			: enumerator_<std::pair<I,J>,std::pair<T,U>,C>(std::make_pair(i,j))
 		{ }
 
 		explicit operator bool() const
@@ -45,11 +49,15 @@ namespace iter {
 	};
 	template<class I, class J,
 		class T = typename std::iterator_traits<I>::value_type,
-		class U = typename std::iterator_traits<J>::value_type
+		class U = typename std::iterator_traits<J>::value_type,
+		class C = typename std::common_type_t<
+			typename std::iterator_traits<I>::iterator_category,
+			typename std::iterator_traits<J>::iterator_category
+		>
 	>
 	inline auto pair(I i, J j)
 	{
-		return pair_<I,J,T,U>(i, j);
+		return pair_<I,J,T,U,C>(i, j);
 	}
 
 } // iter

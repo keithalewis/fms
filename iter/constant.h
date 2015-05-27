@@ -5,15 +5,15 @@
 namespace iter {
 
 	template<class T = double>
-	class constant_ : public enumerator<void,T,std::input_iterator_tag> {
+	class constant_ : public enumerator_<void,T,std::input_iterator_tag> {
 		T t;
 	public:
-		// defaults so infinite
 		constant_(const T& t = 0)
 			: t(t)
 		{ }
 
-		operator bool() const
+		// defaults to infinite
+		explicit operator bool() const
 		{
 			return true;
 		}
@@ -31,13 +31,13 @@ namespace iter {
 		}
 	};
 	template<class T>
-	inline constant_<T> constant(const T& t)
+	inline auto constant(const T& t)
 	{
 		return constant_<T>(t);
 	}
 	// shorthand
 	template<class T>
-	inline constant_<T> c(const T& t)
+	inline auto c(const T& t)
 	{
 		return constant_<T>(t);
 	}

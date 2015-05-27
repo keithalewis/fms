@@ -5,10 +5,14 @@
 #endif 
 
 #include <stdexcept>
-#include "accumulate.h"
-#include "pair.h"
-#include "expr.h"
+#include "enumerator.h"
 #include "enumerator/counted.h"
+#include "enumerator/end.h"
+#include "enumerator/null.h"
+#include "enumerator/reverse.h"
+#include "expr.h"
+//#include "accumulate.h"
+//#include "pair.h"
 /*
 #include "adjacent.h"
 #include "apply.h"
@@ -20,9 +24,6 @@
 #include "cycle.h"
 #include "elide.h"
 #include "enumerator.h"
-#include "enumerator/end.h"
-#include "enumerator/null.h"
-#include "enumerator/reverse.h"
 #include "factorial.h"
 #include "fmap.h"
 #include "iota.h"

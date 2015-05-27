@@ -1,5 +1,6 @@
 // null.h - null terminated enumerators
 #pragma once
+#include <cmath>
 #include <limits>
 #include <numeric>
 #include "../enumerator.h"
@@ -25,18 +26,15 @@ namespace iter {
 	}
 
 	// null terminated enumerator
-	template<class I, 
-		class T = typename std::iterator_traits<I>::value_type,
-		class C = typename std::iterator_traits<I>::iterator_category
-	>
-	class null_enumerator : public enumerator<I,T,C> {
+	template<class I, class T = typename std::iterator_traits<I>::value_type>
+	class null_enumerator_ : public enumerator_<I,T> {
 	public:
-		using enumerator<I,T,C>::i;
+		using enumerator_<I,T>::i;
 
-		null_enumerator()
+		null_enumerator_()
 		{ }
-		null_enumerator(I i)
-			: enumerator<I,T,C>(i)
+		null_enumerator_(I i)
+			: enumerator_<I,T>(i)
 		{ }
 
 		explicit operator bool() const
@@ -47,31 +45,31 @@ namespace iter {
 		{
 			return *i;
 		}
-		null_enumerator& operator++()
+		null_enumerator_& operator++()
 		{
 			++i;
 
 			return *this;
 		}
-		null_enumerator operator++(int)
+		null_enumerator_ operator++(int)
 		{
-			null_enumerator e(*this);
+			null_enumerator_ n(*this);
 
 			operator++();
 
-			return e;
+			return n;
 		}
 	};
 	template<class I, class T = typename std::iterator_traits<I>::value_type>
-	inline null_enumerator<I,T> make_null_enumerator(I i)
+	inline auto null_enumerator(I i)
 	{
-		return null_enumerator<I,T>(i);
+		return null_enumerator_<I,T>(i);
 	}
 	// shorthand
 	template<class I, class T = typename std::iterator_traits<I>::value_type>
-	inline null_enumerator<I,T> ne(I i)
+	inline auto ne(I i)
 	{
-		return null_enumerator<I,T>(i);
+		return null_enumerator_<I,T>(i);
 	}
 
 } // iter
@@ -86,7 +84,7 @@ using namespace iter;
 inline void test_enumerator_null()
 {
 	{
-		auto b = make_null_enumerator("foo");
+		auto b = null_enumerator("foo");
 		auto e(b);
 		while (e)
 			++e;

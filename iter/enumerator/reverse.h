@@ -4,96 +4,99 @@
 
 namespace iter {
 
-	// reverse enumerator
-	template<class I, 
-		class T = typename std::iterator_traits<I>::value_type,
-		class C = typename std::iterator_traits<I>::iterator_category
-	>
-	class reverse_enumerator : public enumerator<std::reverse_iterator<I>,T,C> {
+	// reverse enumerator if I is bidirectional or random access
+	template<class I, class T = typename std::iterator_traits<I>::value_type>
+	class reverse_enumerator_ : public enumerator_<std::reverse_iterator<I>,T> {
 	public:
-		using enumerator<std::reverse_iterator<I>>::i;
+		using enumerator_<std::reverse_iterator<I>>::i;
 
-		reverse_enumerator()
+		reverse_enumerator_()
 		{ }
-		reverse_enumerator(I i)
-			: enumerator<std::reverse_iterator<I>,T,C>(std::reverse_iterator<I>(i)) // just like reverse iterators
+		reverse_enumerator_(I i)
+			: enumerator_<std::reverse_iterator<I>,T>(std::reverse_iterator<I>(i))
 		{ }
 
-		bool operator==(const reverse_enumerator& j) const
+		bool operator==(const reverse_enumerator_& j) const
 		{
 			return i == j.i;
 		}
-		bool operator!=(const reverse_enumerator& j) const
+		bool operator!=(const reverse_enumerator_& j) const
 		{
 			return i != j.i;
 		}
+
 		std::reverse_iterator<I> iterator()
 		{
 			return i;
 		}
-
-/*		explicit operator bool() const
+/*
+		explicit operator bool() const
 		{
-			return true;
+			return i.operator bool();
 		}
-
+*/
 		T operator*() const
 		{
 			return *i;
 		}
-		reverse_enumerator& operator++()
+		reverse_enumerator_& operator++()
 		{
 			++i;
 
 			return *this;
 		}
-		reverse_enumerator operator++(int)
+		reverse_enumerator_ operator++(int)
 		{
-			reverse_enumerator r(*this);
+			reverse_enumerator_ r(*this);
 
 			operator++();
 
 			return r;
 		}
-*/	};
-	template<class I, 
-		class T = typename std::iterator_traits<I>::value_type,
-		class C = typename std::iterator_traits<I>::iterator_category
-	>
-	inline auto make_renumerator(I i)
+	};
+	template<class I, class T = typename std::iterator_traits<I>::value_type>
+	inline auto reverse_enumerator(I i)
 	{
-		return reverse_enumerator<I,T,C>(i);
+		return reverse_enumerator_<I,T>(i);
 	}
-	template<class I, 
-		class T = typename std::iterator_traits<I>::value_type,
-		class C = typename std::iterator_traits<I>::iterator_category
-	>
+	template<class I, class T = typename std::iterator_traits<I>::value_type>
 	inline auto re(I i)
 	{
-		return reverse_enumerator<I,T,C>(i);
+		return reverse_enumerator_<I,T>(i);
 	}
-//	template<class T>
-//	inline auto re(T*
 
 } // iter
 
 
 #ifdef _DEBUG
 #include "include/ensure.h"
+#include "counted.h"
 
 using namespace iter;
 
 inline void test_enumerator_reverse()
 {
 	int a[] = {1,2,3};
-	auto ra = re(a + 3);
-	auto rb(ra);
-	ra = rb;
-	ensure (ra == rb);
-	ensure (*ra == 3);
-	ensure (*++ra == 2);
-	ra++;
-	ensure (*ra == 1);
+	{
+		auto ra = re(a + 3);
+		auto rb(ra);
+		ra = rb;
+		ensure (ra == rb);
+		ensure (*ra == 3);
+		ensure (*++ra == 2);
+		ra++;
+		ensure (*ra == 1);
+	}
+	{
+		auto b = ce(re(a + 3),3);
+		auto c(b);
+		b = c;
+		ensure (*b == 3);
+		ensure (*++b == 2);
+		b++;
+		ensure (*b == 1);
+		ensure (!++b);
+	}
 }
 
 #endif // _DEBUG

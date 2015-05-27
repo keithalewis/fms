@@ -1,14 +1,16 @@
 // enumerator.h - input iterators having operator bool()
 // Copyright (c) KALX, LLC. All rights reserved. No warranty made.
-
 #pragma once
 #include <iterator>
 
 namespace iter {
 
 	// iterator having explicit operator bool() const
-	template<class I, class T = typename std::iterator_traits<I>::value_type>
-	struct enumerator_ : public std::iterator<std::input_iterator_tag,T> {
+	template<class I, 
+		class T = typename std::iterator_traits<I>::value_type,
+		class C = typename std::iterator_traits<I>::iterator_category
+	>
+	struct enumerator_ : public std::iterator<C,T> {
 	protected:
 		I i;
 	public:
@@ -31,7 +33,7 @@ namespace iter {
 		{
 			return i;
 		}
-		I begin() const
+		I iterator() const
 		{
 			return i;
 		}
@@ -63,26 +65,32 @@ namespace iter {
 			return e;
 		}
 	};
-	template<class I, class T = typename std::iterator_traits<I>::value_type>
+	template<class I, 
+		class T = typename std::iterator_traits<I>::value_type,
+		class C = typename std::iterator_traits<I>::iterator_category
+	>
 	inline auto enumerator(I i)
 	{
-		return enumerator_<I,T>(i);
+		return enumerator_<I,T,C>(i);
 	}
 	// shorthand
-	template<class I, class T = typename std::iterator_traits<I>::value_type>
+	template<class I, 
+		class T = typename std::iterator_traits<I>::value_type,
+		class C = typename std::iterator_traits<I>::iterator_category
+	>
 	inline auto e(I i)
 	{
-		return enumerator<I,T>(i);
+		return enumerator<I,T,C>(i);
 	}
 
 	// specialize for empty iterators
 	template<class T>
-	struct enumerator_<void,T> : public std::iterator<std::input_iterator_tag,T> {
+	struct enumerator_<void,T,std::input_iterator_tag> : public std::iterator<std::input_iterator_tag,T> {
 	};
 
 	// specializations for pointers
 	template<class T>
-	class enumerator_<T*,T> : public std::iterator<std::random_access_iterator_tag,T> {
+	class enumerator_<T*,T,std::random_access_iterator_tag> : public std::iterator<std::random_access_iterator_tag,T> {
 	protected:
 		T* i;
 	public:
@@ -101,11 +109,11 @@ namespace iter {
 			return i != j.i;
 		}
 
-		operator T*() const
+/*		operator T*() const
 		{
 			return i;
 		}
-		T* begin() const
+*/		T* iterator() const
 		{
 			return i;
 		}
@@ -140,7 +148,7 @@ namespace iter {
 
 	// specializations for const pointers
 	template<class T>
-	class enumerator_<const T*,T> : public std::iterator<std::random_access_iterator_tag,T> {
+	class enumerator_<const T*,T,std::random_access_iterator_tag> : public std::iterator<std::random_access_iterator_tag,T> {
 	protected:
 		const T* i;
 	public:
@@ -159,15 +167,15 @@ namespace iter {
 			return i != j.i;
 		}
 
-		operator T*() const
+		operator const T*() const
 		{
 			return i;
 		}
-		T* begin() const
+		const T* iterator() const
 		{
 			return i;
 		}
-		T* end() const
+		const T* end() const
 		{
 			return nullptr;
 		}
@@ -229,36 +237,12 @@ inline void test_enumerator()
 		b++;
 		using C = std::iterator_traits<decltype(b)>::iterator_category;
 		static_assert(std::is_same<C,std::random_access_iterator_tag>::value,
-			"supposted to all specialize operator T*() const");
-		ensure (std::distance(c,b) == 2);
+			"supposted to specialize operator T*() const");
+		ensure (std::distance(c.iterator(),b.iterator()) == 2);
 
-		int* pb = b; // calls operator T*() const
+		int* pb = b.iterator();
 		--pb;
 		ensure (*pb == 2);
-	}
-	{
-		auto b = e(a);
-
-		int i;
-		i = 0;
-		for (auto c : b) {
-			ensure (c == a[i++]);
-			if (i == 2)
-				break;
-		}
-		ensure (b.end() == nullptr);
-		i = 0;
-		for (auto& c : b) {
-			ensure (c == a[i++]);
-			if (i == 2)
-				break;
-		}
-		i = 0;
-		for (const auto& c : b) {
-			ensure (c == a[i++]);
-			if (i == 2)
-				break;
-		}
 	}
 	{
 		std::vector<int> a = {1,2,3};
@@ -267,9 +251,9 @@ inline void test_enumerator()
 		ensure (*++b == 2);
 		b++;
 		ensure (*b == 3);
-		b = a.begin();
+		b = e(a.begin());
 		auto c = e(a.end());
-		ensure (static_cast<size_t>(std::distance(b,c)) == a.size());
+		ensure (static_cast<size_t>(std::distance(b.iterator(),c.iterator())) == a.size());
 	}
 }
 

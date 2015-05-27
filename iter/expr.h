@@ -14,15 +14,15 @@ namespace iter {
 			typename std::iterator_traits<J>::iterator_category
 		>
 	>
-	class binop_ : public enumerator_<std::pair<I,J>,V> {
+	class binop_ : public enumerator_<std::pair<I,J>,V,C> {
 		O o;
 	public:
-		using enumerator_<std::pair<I,J>,V>::i;
+		using enumerator_<std::pair<I,J>,V,C>::i;
 
 		binop_()
 		{ }
 		binop_(O o, I i, J j)
-			: enumerator_<std::pair<I,J>,V>(std::make_pair(i, j)), o(o)
+			: enumerator_<std::pair<I,J>,V,C>(std::make_pair(i, j)), o(o)
 		{ }
 
 		explicit operator bool() const
@@ -52,11 +52,15 @@ namespace iter {
 	template<class O, class I, class J,
 		class T = typename std::iterator_traits<I>::value_type,
 		class U = typename std::iterator_traits<J>::value_type,
-		class V = typename std::common_type_t<T,U>
+		class V = typename std::common_type_t<T,U>,
+		class C = typename std::common_type_t<
+			typename std::iterator_traits<I>::iterator_category,
+			typename std::iterator_traits<J>::iterator_category
+		>
 	>
 	inline auto binop(O o, I i, J j)
 	{
-		return binop_<O,I,J,T,U,V>(o, i, j);
+		return binop_<O,I,J,T,U,V,C>(o, i, j);
 	}
 
 } // iter
@@ -64,47 +68,67 @@ namespace iter {
 template<class I, class J,
 	class T = typename std::iterator_traits<I>::value_type,
 	class U = typename std::iterator_traits<J>::value_type,
-	class V = typename std::common_type_t<T,U>
+	class V = typename std::common_type_t<T,U>,
+	class C = typename std::common_type_t<
+		typename std::iterator_traits<I>::iterator_category,
+		typename std::iterator_traits<J>::iterator_category
+	>
 >
 inline auto operator+(I i, J j)
 {
-	return iter::binop_<std::plus<V>,I,J,T,U,V>(std::plus<V>{}, i, j);
+	return iter::binop_<std::plus<V>,I,J,T,U,V,C>(std::plus<V>{}, i, j);
 }
 template<class I, class J,
 	class T = typename std::iterator_traits<I>::value_type,
 	class U = typename std::iterator_traits<J>::value_type,
-	class V = typename std::common_type_t<T,U>
+	class V = typename std::common_type_t<T,U>,
+	class C = typename std::common_type_t<
+		typename std::iterator_traits<I>::iterator_category,
+		typename std::iterator_traits<J>::iterator_category
+	>
 >
 inline auto operator-(I i, J j)
 {
-	return iter::binop_<std::minus<V>,I,J,T,U,V>(std::minus<V>{}, i, j);
+	return iter::binop_<std::minus<V>,I,J,T,U,V,C>(std::minus<V>{}, i, j);
 }
 template<class I, class J,
 	class T = typename std::iterator_traits<I>::value_type,
 	class U = typename std::iterator_traits<J>::value_type,
-	class V = typename std::common_type_t<T,U>
+	class V = typename std::common_type_t<T,U>,
+	class C = typename std::common_type_t<
+		typename std::iterator_traits<I>::iterator_category,
+		typename std::iterator_traits<J>::iterator_category
+	>
 >
 inline auto operator*(I i, J j)
 {
-	return iter::binop_<std::multiplies<V>,I,J,T,U,V>(std::multiplies<V>{}, i, j);
+	return iter::binop_<std::multiplies<V>,I,J,T,U,V,C>(std::multiplies<V>{}, i, j);
 }
 template<class I, class J,
 	class T = typename std::iterator_traits<I>::value_type,
 	class U = typename std::iterator_traits<J>::value_type,
-	class V = typename std::common_type_t<T,U>
+	class V = typename std::common_type_t<T,U>,
+	class C = typename std::common_type_t<
+		typename std::iterator_traits<I>::iterator_category,
+		typename std::iterator_traits<J>::iterator_category
+	>
 >
 inline auto operator/(I i, J j)
 {
-	return iter::binop_<std::divides<V>,I,J,T,U,V>(std::divides<V>{}, i, j);
+	return iter::binop_<std::divides<V>,I,J,T,U,V,C>(std::divides<V>{}, i, j);
 }
 template<class I, class J,
 	class T = typename std::iterator_traits<I>::value_type,
 	class U = typename std::iterator_traits<J>::value_type,
-	class V = typename std::common_type_t<T,U>
+	class V = typename std::common_type_t<T,U>,
+	class C = typename std::common_type_t<
+		typename std::iterator_traits<I>::iterator_category,
+		typename std::iterator_traits<J>::iterator_category
+	>
 >
 inline auto operator%(I i, J j)
 {
-	return iter::binop_<std::modulus<V>,I,J,T,U,V>(std::modulus<V>{}, i, j);
+	return iter::binop_<std::modulus<V>,I,J,T,U,V,C>(std::modulus<V>{}, i, j);
 }
 
 namespace iter {
@@ -112,81 +136,114 @@ namespace iter {
 	template<class I, class J,
 		class T = typename std::iterator_traits<I>::value_type,
 		class U = typename std::iterator_traits<J>::value_type,
-		class V = typename std::common_type_t<T,U>
+		class V = typename std::common_type_t<T,U>,
+		class C = typename std::common_type_t<
+			typename std::iterator_traits<I>::iterator_category,
+			typename std::iterator_traits<J>::iterator_category
+		>
 	>
 	inline auto equal_to(I i, J j)
 	{
-		return iter::binop_<std::equal_to<V>,I,J,T,U,bool>(std::equal_to<V>{}, i, j);
+		return iter::binop_<std::equal_to<V>,I,J,T,U,bool,C>(std::equal_to<V>{}, i, j);
 	}
 	template<class I, class J,
 		class T = typename std::iterator_traits<I>::value_type,
 		class U = typename std::iterator_traits<J>::value_type,
-		class V = typename std::common_type_t<T,U>
+		class V = typename std::common_type_t<T,U>,
+		class C = typename std::common_type_t<
+			typename std::iterator_traits<I>::iterator_category,
+			typename std::iterator_traits<J>::iterator_category
+		>
 	>
 	inline auto not_equal_to(I i, J j)
 	{
-		return iter::binop_<std::not_equal_to<V>,I,J,T,U,bool>(std::not_equal_to<V>{}, i, j);
+		return iter::binop_<std::not_equal_to<V>,I,J,T,U,bool,C>(std::not_equal_to<V>{}, i, j);
 	}
 	template<class I, class J,
 		class T = typename std::iterator_traits<I>::value_type,
 		class U = typename std::iterator_traits<J>::value_type,
-		class V = typename std::common_type_t<T,U>
+		class V = typename std::common_type_t<T,U>,
+		class C = typename std::common_type_t<
+			typename std::iterator_traits<I>::iterator_category,
+			typename std::iterator_traits<J>::iterator_category
+		>
 	>
 	inline auto less(I i, J j)
 	{
-		return iter::binop_<std::less<V>,I,J,T,U,bool>(std::less<V>{}, i, j);
+		return iter::binop_<std::less<V>,I,J,T,U,bool,C>(std::less<V>{}, i, j);
 	}
 	template<class I, class J,
 		class T = typename std::iterator_traits<I>::value_type,
 		class U = typename std::iterator_traits<J>::value_type,
-		class V = typename std::common_type_t<T,U>
+		class V = typename std::common_type_t<T,U>,
+		class C = typename std::common_type_t<
+			typename std::iterator_traits<I>::iterator_category,
+			typename std::iterator_traits<J>::iterator_category
+		>
 	>
 	inline auto less_equal(I i, J j)
 	{
-		return iter::binop_<std::less_equal<V>,I,J,T,U,bool>(std::less_equal<V>{}, i, j);
+		return iter::binop_<std::less_equal<V>,I,J,T,U,bool,C>(std::less_equal<V>{}, i, j);
 	}
 	template<class I, class J,
 		class T = typename std::iterator_traits<I>::value_type,
 		class U = typename std::iterator_traits<J>::value_type,
-		class V = typename std::common_type_t<T,U>
+		class V = typename std::common_type_t<T,U>,
+		class C = typename std::common_type_t<
+			typename std::iterator_traits<I>::iterator_category,
+			typename std::iterator_traits<J>::iterator_category
+		>
 	>
 	inline auto greater(I i, J j)
 	{
-		return iter::binop_<std::greater<V>,I,J,T,U,bool>(std::greater<V>{}, i, j);
+		return iter::binop_<std::greater<V>,I,J,T,U,bool,C>(std::greater<V>{}, i, j);
 	}
 	template<class I, class J,
 		class T = typename std::iterator_traits<I>::value_type,
 		class U = typename std::iterator_traits<J>::value_type,
-		class V = typename std::common_type_t<T,U>
+		class V = typename std::common_type_t<T,U>,
+		class C = typename std::common_type_t<
+			typename std::iterator_traits<I>::iterator_category,
+			typename std::iterator_traits<J>::iterator_category
+		>
 	>
 	inline auto greater_equal(I i, J j)
 	{
-		return iter::binop_<std::greater_equal<V>,I,J,T,U,bool>(std::greater_equal<V>{}, i, j);
+		return iter::binop_<std::greater_equal<V>,I,J,T,U,bool,C>(std::greater_equal<V>{}, i, j);
 	}
 
 	template<class I, class J,
 		class T = typename std::iterator_traits<I>::value_type,
 		class U = typename std::iterator_traits<J>::value_type,
-		class V = typename std::common_type_t<T,U>
+		class V = typename std::common_type_t<T,U>,
+		class C = typename std::common_type_t<
+			typename std::iterator_traits<I>::iterator_category,
+			typename std::iterator_traits<J>::iterator_category
+		>
 	>
 	inline auto logical_and(I i, J j)
 	{
-		return iter::binop_<std::logical_and<V>,I,J,T,U,bool>(std::logical_and<V>{}, i, j);
+		return iter::binop_<std::logical_and<V>,I,J,T,U,bool,C>(std::logical_and<V>{}, i, j);
 	}
 	template<class I, class J,
 		class T = typename std::iterator_traits<I>::value_type,
 		class U = typename std::iterator_traits<J>::value_type,
-		class V = typename std::common_type_t<T,U>
+		class V = typename std::common_type_t<T,U>,
+		class C = typename std::common_type_t<
+			typename std::iterator_traits<I>::iterator_category,
+			typename std::iterator_traits<J>::iterator_category
+		>
 	>
 	inline auto logical_or(I i, J j)
 	{
-		return iter::binop_<std::logical_or<V>,I,J,T,U,bool>(std::logical_or<V>{}, i, j);
+		return iter::binop_<std::logical_or<V>,I,J,T,U,bool,C>(std::logical_or<V>{}, i, j);
 	}
 
 } // iter
 
 #ifdef _DEBUG
 #include "include/ensure.h"
+#include "constant.h"
 
 using namespace iter;
 
@@ -231,6 +288,8 @@ inline void test_expr()
 	int a[] = {1,2,3};
 	{
 		auto aa = e(a) + e(a);
+		auto bb(aa);
+		aa = bb;
 		ensure (*aa == 1 + 1);
 		ensure (*++aa == 2 + 2);
 		aa++;
@@ -255,7 +314,7 @@ inline void test_expr()
 		ensure (*a5 == 5*a[i]);
 		ensure (*++a5 == 5*a[++i]);
 		a5++;
-/*		ensure (*a5 == 5*a[++i]);
+		ensure (*a5 == 5*a[++i]);
 		{
 			auto a6 = e(a) + c(1);// constant<int>(1);
 			ensure (*a6 == a[i=0] + 1);
@@ -270,7 +329,7 @@ inline void test_expr()
 			a6++; i++;
 			ensure (*a6 == a[i] + 1);
 		}
-*/
+
 	}
 	{
 		auto aa = e(a) * e(a);
