@@ -76,7 +76,7 @@ template<class I, class J,
 >
 inline auto operator+(I i, J j)
 {
-	return iter::binop_<std::plus<V>,I,J,T,U,V,C>(std::plus<V>{}, i, j);
+	return iter::binop(std::plus<V>{}, i, j);
 }
 template<class I, class J,
 	class T = typename std::iterator_traits<I>::value_type,
@@ -89,7 +89,7 @@ template<class I, class J,
 >
 inline auto operator-(I i, J j)
 {
-	return iter::binop_<std::minus<V>,I,J,T,U,V,C>(std::minus<V>{}, i, j);
+	return iter::binop(std::minus<V>{}, i, j);
 }
 template<class I, class J,
 	class T = typename std::iterator_traits<I>::value_type,
@@ -102,7 +102,7 @@ template<class I, class J,
 >
 inline auto operator*(I i, J j)
 {
-	return iter::binop_<std::multiplies<V>,I,J,T,U,V,C>(std::multiplies<V>{}, i, j);
+	return iter::binop(std::multiplies<V>{}, i, j);
 }
 template<class I, class J,
 	class T = typename std::iterator_traits<I>::value_type,
@@ -115,7 +115,7 @@ template<class I, class J,
 >
 inline auto operator/(I i, J j)
 {
-	return iter::binop_<std::divides<V>,I,J,T,U,V,C>(std::divides<V>{}, i, j);
+	return iter::binop(std::divides<V>{}, i, j);
 }
 template<class I, class J,
 	class T = typename std::iterator_traits<I>::value_type,
@@ -128,7 +128,7 @@ template<class I, class J,
 >
 inline auto operator%(I i, J j)
 {
-	return iter::binop_<std::modulus<V>,I,J,T,U,V,C>(std::modulus<V>{}, i, j);
+	return iter::binop(std::modulus<V>{}, i, j);
 }
 
 namespace iter {
@@ -144,7 +144,7 @@ namespace iter {
 	>
 	inline auto equal_to(I i, J j)
 	{
-		return iter::binop_<std::equal_to<V>,I,J,T,U,bool,C>(std::equal_to<V>{}, i, j);
+		return iter::binop(std::equal_to<V>{}, i, j);
 	}
 	template<class I, class J,
 		class T = typename std::iterator_traits<I>::value_type,
@@ -157,7 +157,7 @@ namespace iter {
 	>
 	inline auto not_equal_to(I i, J j)
 	{
-		return iter::binop_<std::not_equal_to<V>,I,J,T,U,bool,C>(std::not_equal_to<V>{}, i, j);
+		return iter::binop(std::not_equal_to<V>{}, i, j);
 	}
 	template<class I, class J,
 		class T = typename std::iterator_traits<I>::value_type,
@@ -170,7 +170,7 @@ namespace iter {
 	>
 	inline auto less(I i, J j)
 	{
-		return iter::binop_<std::less<V>,I,J,T,U,bool,C>(std::less<V>{}, i, j);
+		return iter::binop(std::less<V>{}, i, j);
 	}
 	template<class I, class J,
 		class T = typename std::iterator_traits<I>::value_type,
@@ -183,7 +183,7 @@ namespace iter {
 	>
 	inline auto less_equal(I i, J j)
 	{
-		return iter::binop_<std::less_equal<V>,I,J,T,U,bool,C>(std::less_equal<V>{}, i, j);
+		return iter::binop(std::less_equal<V>{}, i, j);
 	}
 	template<class I, class J,
 		class T = typename std::iterator_traits<I>::value_type,
@@ -196,7 +196,7 @@ namespace iter {
 	>
 	inline auto greater(I i, J j)
 	{
-		return iter::binop_<std::greater<V>,I,J,T,U,bool,C>(std::greater<V>{}, i, j);
+		return iter::binop(std::greater<V>{}, i, j);
 	}
 	template<class I, class J,
 		class T = typename std::iterator_traits<I>::value_type,
@@ -209,7 +209,7 @@ namespace iter {
 	>
 	inline auto greater_equal(I i, J j)
 	{
-		return iter::binop_<std::greater_equal<V>,I,J,T,U,bool,C>(std::greater_equal<V>{}, i, j);
+		return iter::binop(std::greater_equal<V>{}, i, j);
 	}
 
 	template<class I, class J,
@@ -223,7 +223,7 @@ namespace iter {
 	>
 	inline auto logical_and(I i, J j)
 	{
-		return iter::binop_<std::logical_and<V>,I,J,T,U,bool,C>(std::logical_and<V>{}, i, j);
+		return iter::binop(std::logical_and<V>{}, i, j);
 	}
 	template<class I, class J,
 		class T = typename std::iterator_traits<I>::value_type,
@@ -236,7 +236,7 @@ namespace iter {
 	>
 	inline auto logical_or(I i, J j)
 	{
-		return iter::binop_<std::logical_or<V>,I,J,T,U,bool,C>(std::logical_or<V>{}, i, j);
+		return iter::binop(std::logical_or<V>{}, i, j);
 	}
 
 } // iter

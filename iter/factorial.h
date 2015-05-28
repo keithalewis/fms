@@ -8,7 +8,7 @@ namespace iter {
 
 	// 0!, 1!, ...
 	template<class N = unsigned long long>
-	class factorial_ : public enumerator<void,N,std::input_iterator_tag> {
+	class factorial_ : public enumerator_<void,N,std::input_iterator_tag> {
 		N n, n_; // n, n!
 	public:
 		factorial_()
@@ -16,7 +16,7 @@ namespace iter {
 		{
 		}
 
-		operator bool() const
+		explicit operator bool() const
 		{
 			return true;
 		}

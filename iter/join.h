@@ -5,22 +5,21 @@
 namespace iter {
 
 	// {e0, e1, ...} => {e0[0], e0[1], ..., e1[0], e1[1], ...
-	template<class I, 
+	template<class I,
 		class T = typename std::iterator_traits<I>::value_type::value_type
 	>
-	class join_ : public enumerator<I,T,std::input_iterator_tag> {
+	class join_ : public enumerator_<I,T,std::input_iterator_tag> {
 		typename std::iterator_traits<I>::value_type _i;
-		// skip empty iterators (is this bad???)
 	public:
-		using enumerator<I,T,std::input_iterator_tag>::i;
+		using enumerator_<I,T,std::input_iterator_tag>::i;
 
 		join_()
 		{ }
 		join_(I i)
-			: enumerator<I,T,std::input_iterator_tag>(i), _i(*i)
+			: enumerator_<I,T,std::input_iterator_tag>(i), _i(*i)
 		{ }
 
-		operator bool() const
+		explicit operator bool() const
 		{
 			return i;
 		}
@@ -50,12 +49,12 @@ namespace iter {
 			return f;
 		}
 	};
-	template<class I, 
-		class T = typename std::iterator_traits<I>::value_type
+	template<class I,
+		class T = typename std::iterator_traits<I>::value_type::value_type
 	>
 	inline auto join(I i)
 	{
-		return join_<I,typename T::value_type>(i);
+		return join_<I,T>(i);
 	}
 	// bind
 	// return
@@ -72,7 +71,7 @@ inline void test_join()
 	{
 		int a[] = {0,1,2};
 	
-		auto dd = fmap([&](int i) { return ce(a+i, 3-i); }, a);
+		auto dd = fmap([&](int i) { return ce(a+i, 3-i); }, e(a));
 		auto c = join(dd);
 		ensure (*c == 0);
 		++c;
@@ -86,7 +85,7 @@ inline void test_join()
 		++c;
 		ensure (*c == 2);
 	}
-	{
+/*	{
 		int a[] = {1,0,2,0,0,3};
 		auto aa = fmap([&](int i) { return ce(c(i),i); }, a);
 		auto _a = join(aa);
@@ -108,6 +107,6 @@ inline void test_join()
 		++_a;
 		ensure (*_a == 3);
 	}
-}
+*/}
 
 #endif // _DEBUG

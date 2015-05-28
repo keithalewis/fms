@@ -17,7 +17,7 @@ namespace iter {
 			: I(i), b(i)
 		{ }
 
-		operator bool() const
+		explicit operator bool() const
 		{
 			return I::operator bool();
 		}

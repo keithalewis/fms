@@ -7,7 +7,7 @@ namespace iter {
 	
 	// (0,n), (1,n-1), ...(n, 0)
 	template<class T>
-	class level_ : public enumerator<void,std::pair<T,T>,std::input_iterator_tag> {
+	class level_ : public enumerator_<void,std::pair<T,T>,std::input_iterator_tag> {
 		T i, n;
 	public:
 		level_()

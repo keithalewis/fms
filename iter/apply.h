@@ -6,13 +6,13 @@
 
 namespace iter {
 
-	// f(*i[0]), f(*i[1]), ...
+	// f(*i0), f(*i1), ...
 	template<class F, class I>
 	class apply_ : public I {
 		typedef typename std::iterator_traits<I>::value_type T;
 		typedef typename std::result_of<F(T)>::type U;
 
-		std::function<U(T)> f;
+		F f;
 	public:
 		apply_()
 		{ }
@@ -65,7 +65,7 @@ using namespace iter;
 inline void test_apply()
 {
 	int a[] = {0,1,2};
-	auto b = apply([](int i) { return i*i; }, e(a));
+	auto b = apply(std::function<int(int)>([](int i) { return i*i; }), e(a));
 	decltype(b) c;
 	c = b;
 	ensure (*b == 0);
@@ -78,34 +78,37 @@ inline void test_apply()
 	c++;
 	ensure (*c == 4);
 
-	auto f = [](int n) { return 1 + n + n*n; };
-	auto d = apply(f);
-	ensure (*d == f(0));
-	ensure (*++d == f(1));
+//	auto f = [](int n) { return 1 + n + n*n; };
+	struct f {
+		int operator()(int n) const { return 1 + n + n*n; }
+	};
+	f F{};
+	auto d = apply(F);
+	ensure (*d == F(0));
+	ensure (*++d == F(1));
 	++d;
-	ensure (*d == f(2));
+	ensure (*d == F(2));
 	
 	{
-		double a[] = {0,1,2};
-		auto i = apply([](double x) { return exp(x); }, e(a));
-		//  this should work!!!
-		//auto i = apply(+exp, a);
+		struct sq {
+			int operator()(int i) { return i*i; }
+		};
+/*		double a[] = {0,1,2};
+		auto i = apply(???, e(a));
 		ensure (*i++ == exp(0));
 		ensure (*i++ == exp(1));
 		ensure (*i++ == exp(2));
 		ensure (i); // not counted
-	}
-	{
+*/	}
+/*	{
 		double a[] = {0,1,2};
-		auto i = apply([](double x) { return exp(x); }, ce(a,3));
-		//  this should work!!!
-		//auto i = apply(+exp, a);
+		auto i = apply(exp, a);
 		ensure (*i++ == exp(0));
 		ensure (*i++ == exp(1));
 		ensure (*i++ == exp(2));
 		ensure (!i); // counted
 	}
-
+*/
 }
 
 #endif // _DEBUG

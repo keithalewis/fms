@@ -69,7 +69,7 @@ namespace iter {
 	template<class I, class T = typename std::iterator_traits<I>::value_type>
 	inline auto ne(I i)
 	{
-		return null_enumerator_<I,T>(i);
+		return null_enumerator(i);
 	}
 
 } // iter

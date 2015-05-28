@@ -62,7 +62,7 @@ namespace iter {
 	template<class I, class T = typename std::iterator_traits<I>::value_type>
 	inline auto re(I i)
 	{
-		return reverse_enumerator_<I,T>(i);
+		return reverse_enumerator(i);
 	}
 
 } // iter

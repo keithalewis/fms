@@ -10,7 +10,7 @@ namespace iter {
 		typedef typename I::value_type T;
 		
 		int n;
-		std::valarray<T> t;
+		std::valarray<T> t; // dequeue???
 	public:
 		buffer_()
 			: n(0), t(0)

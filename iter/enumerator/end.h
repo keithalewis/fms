@@ -56,6 +56,7 @@ namespace iter {
 			return e;
 		}
 	};
+
 	template<class I, class J = I, 
 		class T = typename std::iterator_traits<I>::value_type
 	>
@@ -68,7 +69,7 @@ namespace iter {
 	>
 	inline auto ee(I i, J e)
 	{
-		return end_enumerator_<I,J,T>(i, e);
+		return end_enumerator(i, e);
 	}
 	template<class C,
 		class I = typename C::iterator,
@@ -76,7 +77,7 @@ namespace iter {
 	>
 	inline auto ee(C& c)
 	{
-		return end_enumerator_<I,I,T>(std::begin(c), std::end(c));
+		return ee(std::begin(c), std::end(c));
 	}
 
 } // iter

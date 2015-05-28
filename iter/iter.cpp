@@ -72,29 +72,32 @@ int main()
 		test_enumerator_end();
 		test_enumerator_null();
 		test_enumerator_reverse();
-//		test_accumulate();
-//		test_pair();
+		test_accumulate();
+		test_pair();
 		test_expr();
-/*		test_adjacent();
+		test_adjacent();
 		test_apply();
-		test_bind();
 		test_buffer();
 		test_choose();
 		test_concatenate();
 		test_constant();
 		test_cycle();
-		test_elide();
 		test_factorial();
 		test_fmap();
 		test_iota();
+
 		test_join();
-		test_last();
 		test_level();
+
+		test_where();
+/*
+		test_bind();
+		test_elide();
+		test_last();
 		test_pick();
 		test_pow();
 		test_skip();
 		test_take();
-		test_where();
 		test_unit();
 		test_until();
 		test_util();

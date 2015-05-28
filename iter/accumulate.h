@@ -151,7 +151,7 @@ inline void test_accumulate()
 		struct horner {
 			int x;
 			horner(int x) : x(x) { }
-			int operator()(const int& a, const int& b) { return x*a + b; }
+			int operator()(const int& a, const int& b) const { return x*a + b; }
 		};
 		auto h = horner(1);
 		auto g(h);

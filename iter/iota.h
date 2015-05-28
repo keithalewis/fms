@@ -6,14 +6,14 @@ namespace iter {
 
 	// t, t + 1, ...
 	template<class T>
-	class iota_ : public enumerator<void, T, std::input_iterator_tag> {
+	class iota_ : public enumerator_<void, T, std::input_iterator_tag> {
 		T t;
 	public:
 		iota_(T t = 0)
 			: t(t)
 		{ }
 
-		operator bool() const
+		explicit operator bool() const
 		{
 			return true;
 		}

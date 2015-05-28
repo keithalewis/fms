@@ -137,20 +137,20 @@ namespace iter {
 	template<class T, size_t N>
 	inline auto counted_enumerator(T(&i)[N])
 	{
-		return counted_enumerator(i, N);
+		return ce(i, N);
 	}
 	// shorthand
 	template<class T, size_t N>
 	inline auto ce(T(&i)[N])
 	{
-		return counted_enumerator(i, N);
+		return ce(i, N);
 	}
 
 	// containers
 	template<class C>
 	inline auto ce(const C& c)
 	{
-		return counted_enumerator(c.begin(), c.size());
+		return ce(c.begin(), c.size());
 	}
 } // iter
 

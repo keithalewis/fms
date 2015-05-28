@@ -39,7 +39,7 @@ namespace iter {
 	template<class T>
 	inline auto c(const T& t)
 	{
-		return constant_<T>(t);
+		return constant(t);
 	}
 } // iter
 
@@ -50,14 +50,13 @@ using namespace iter;
 
 inline void test_constant()
 {
-/*	int a[] = {1};
-	auto b = e(a);
-	// 32-bit!!!
-	ensure (4 == sizeof(a));
-	ensure (4 == sizeof(b));
+	int a[] = {1};
+	static_assert (sizeof(int) == sizeof(a), "time for a new compiler");
+//	auto b = e(a);
+//	static_assert (sizeof(int) == sizeof(b), "time for a new compiler"); // 8 on gcc
 	auto d = c(1);
-	ensure (4 == sizeof(d)); // <- zero overhead
-*/
+	static_assert (sizeof(int) == sizeof(d), "time for a new compiler"); // <- zero overhead
+
 	constant_<int> zero;
 	ensure (*zero == 0);
 	ensure (*++zero == 0);

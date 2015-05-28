@@ -11,24 +11,24 @@ namespace iter {
 		class U = typename std::result_of_t<F(T)>,
 		class C = typename std::iterator_traits<I>::iterator_category
 	>
-	class fmap_ : public enumerator<I,U,C> {
-		std::function<U(T)> f;
+	class fmap_ : public enumerator_<I,U,C> {
+		F f;
 	public:
-		using enumerator<I,U,C>::i;
+		using enumerator_<I,U,C>::i;
 
 		fmap_()
 		{ }
 		fmap_(F f, I i)
-			: enumerator<I,U,C>(i), f(f)
+			: enumerator_<I,U,C>(i), f(f)
 		{ }
 
-		operator bool() const
+		explicit operator bool() const
 		{
-			return i;
+			return i.operator bool();
 		}
 		U operator*() const
 		{
-			return f(*i);
+			return f(i.operator*());
 		}
 		fmap_& operator++()
 		{
@@ -52,58 +52,9 @@ namespace iter {
 	>
 	inline auto fmap(F f, I i)
 	{
-		return fmap_<F,I,T,U,C>(f, i);
+		return fmap_<F,I,T,U>(f, i);
 	}
 
-	// f(i0), f(i1), ...
-	template<class F, class I, 
-		class T = typename std::iterator_traits<I>::value_type,
-		class U = typename std::result_of_t<F(I)>,
-		class C = typename std::iterator_traits<I>::iterator_category
-	>
-	class map_ : public enumerator<I,U,C> {
-		F f;
-	public:
-		using enumerator<I,U,C>::i;
-
-		map_()
-		{ }
-		map_(F f, I i)
-			: enumerator<I,U,C>(i), f(f)
-		{ }
-
-		operator bool() const
-		{
-			return i;
-		}
-		U operator*() const
-		{
-			return f(i);
-		}
-		map_& operator++()
-		{
-			++i;
-
-			return *this;
-		}
-		map_ operator++(int)
-		{
-			map_ f_(*this);
-
-			operator++();
-
-			return f_;
-		}
-	};
-	template<class F, class I, 
-		class T = typename std::iterator_traits<I>::value_type,
-		class U = typename std::result_of_t<F(T)>,
-		class C = typename std::iterator_traits<I>::iterator_category
-	>
-	inline auto map(F f, I i)
-	{
-		return map_<F,I,T,U,C>(f, i);
-	}
 	// bind
 	// return
 
@@ -119,7 +70,7 @@ inline void test_fmap()
 		int a[] = {0,1,2};
 	
 		// {{0,1,2},{1,2},{2}}
-		auto aa = fmap([&](int i) { return ce(a+i, 3-i); }, a);
+		auto aa = fmap([&](int i) { return ce(a+i, 3-i); }, e(a));
 		auto b = *aa;
 		ensure (*b == 0);
 		ensure (*++b == 1);
