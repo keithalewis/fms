@@ -82,25 +82,23 @@ int main()
 		test_concatenate();
 		test_constant();
 		test_cycle();
+		test_elide();
 		test_factorial();
 		test_fmap();
 		test_iota();
-
 		test_join();
-		test_level();
-
-		test_where();
-/*
-		test_bind();
-		test_elide();
 		test_last();
+		test_level();
 		test_pick();
 		test_pow();
 		test_skip();
 		test_take();
 		test_unit();
-		test_until();
 		test_util();
+		test_where();
+/*
+		test_bind();
+		test_until();
 		test_zigg();
 */	}
 	catch (...) {

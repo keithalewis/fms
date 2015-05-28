@@ -6,7 +6,7 @@
 namespace iter {
 
 	template<class N, class I>
-	inline counted_enumerator<I> take(N n, I i)
+	inline counted_enumerator_<I> take(N n, I i)
 	{
 		if (n >= 0)
 			return ce(i, n);
@@ -18,12 +18,12 @@ namespace iter {
 	}
 	// specialize take for counted_enumerator
 	template<class N, class I, class T = typename std::iterator_traits<I>::value_type>
-	inline auto take(N n, counted_enumerator<I,T> e)
+	inline auto take(N n, const counted_enumerator_<I,T>& e)
 	{
 		if (n >= 0)
 			return ce(e.iterator(), n);
 
-		auto i = e.end();
+		auto i = e.end().iterator();
 		std::advance(i, n);
 
 		return ce(i, -n);

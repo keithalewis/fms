@@ -20,25 +20,24 @@
 #include "concatenate.h"
 #include "constant.h"
 #include "cycle.h"
+#include "elide.h"
 #include "factorial.h"
 #include "fmap.h"
 #include "iota.h"
 #include "level.h"
-
 #include "join.h"
-
-#include "where.h"
-/*
-#include "bind.h"
-#include "elide.h"
-#include "enumerator.h"
 #include "last.h"
+#include "pick.h"
 #include "pick.h"
 #include "pow.h"
 #include "skip.h"
 #include "take.h"
 #include "unit.h"
 #include "util.h"
+#include "where.h"
+/*
+#include "bind.h"
+#include "enumerator.h"
 #include "zigg.h"
 */
 

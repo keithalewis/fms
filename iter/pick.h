@@ -22,7 +22,7 @@ inline void test_pick()
 {
 	int a[] = {0,1,2,3,4,5};
 	int i[] = {2,3,5};
-	auto b = pick(i, a);
+	auto b = pick(e(i), e(a));
 	ensure (*b++ == 2);
 	ensure (*b == 3);
 	ensure (*++b == 5);

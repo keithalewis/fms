@@ -29,12 +29,7 @@ comes from Fortran and APL, but incorporates recent functional programming notio
 
 ## TODO
 
-Specialize enumerator for all iterator categories, not just input iterator.
-
-Need a concept of advance-able enumerator. Counted means a `size()` member function exists?
-
-Use `enable_if` to detect when non-capturing lambdas can be decayed to function pointers
-using the unary `operator+` trick? 
+Get unary operator+ working with MSVC. Ambiguous return types based on calling convention.
 
 operator, => concatenate
 

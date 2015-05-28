@@ -28,7 +28,7 @@ namespace iter {
 		}
 		U operator*() const
 		{
-			return f(i.operator*());
+			return f(*i);
 		}
 		fmap_& operator++()
 		{

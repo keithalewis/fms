@@ -71,7 +71,15 @@ inline void test_join()
 	{
 		int a[] = {0,1,2};
 	
-		auto dd = fmap([&](int i) { return ce(a+i, 3-i); }, e(a));
+		struct s {
+			const int* a;
+			s(const int* a) : a(a) { }
+			auto operator()(int i) const
+			{
+				return ce(a + i, 3 - i);
+			}
+		};
+		auto dd = fmap(s(a), e(a));
 		auto c = join(dd);
 		ensure (*c == 0);
 		++c;

@@ -14,13 +14,13 @@ namespace iter {
 
 		while (e) {
 			++n;
-			--e;
+			++e;
 		}
 
 		return n;
 	}
 	template<class I, class T = typename std::iterator_traits<I>::value_type>
-	inline auto size(const counted_enumerator<I,T>& e)
+	inline auto size(const counted_enumerator_<I,T>& e)
 	{
 		return e.size();
 	}
@@ -47,7 +47,7 @@ namespace iter {
 		return e;
 	}
 	template<class I, class T = typename std::iterator_traits<I>::value_type>
-	inline auto end(const counted_enumerator<I,T>& e)
+	inline auto end(const counted_enumerator_<I,T>& e)
 	{
 		return e.end();
 	}
@@ -56,14 +56,14 @@ namespace iter {
 	template<class R>
 	inline auto rend(const R& r)
 	{
-		return ce(re(r.end()),r.size());
+		return ce(re(r.end().iterator()),r.size());
 	}
 	template<class E>
 	inline typename std::iterator_traits<E>::value_type back(E e)
 	{
 		return *last(e);
 	}
-	// sum enumerators
+	// sum enumerator values
 	template<class E, class T = typename std::iterator_traits<E>::value_type>
 	inline T sum0(E e, T s = T(0))
 	{
@@ -74,7 +74,7 @@ namespace iter {
 
 		return s;
 	}
-	// multiply enumerators
+	// multiply enumerators values
 	template<class E, class T = typename std::iterator_traits<E>::value_type>
 	inline T prod1(E e, T s = T(1))
 	{
@@ -100,7 +100,7 @@ inline void test_last() {
 
 	ensure (*iter::last(b) == 2);
 	auto ea = iter::end(b);
-	ensure (ea[-1] == 2);
+	ensure (++last(b) == ea);
 
 	auto ra = iter::rend(b);
 	ensure (ra && *ra == 2);

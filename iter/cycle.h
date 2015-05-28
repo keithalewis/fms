@@ -4,12 +4,9 @@
 
 namespace iter {
 
-	template<class I, 
-		class T = typename std::iterator_traits<I>::value_type,
-		class C = typename std::iterator_traits<I>::iterator_category
-	>
+	template<class I, class T = typename std::iterator_traits<I>::value_type>
 	class cycle_ : public I {
-		I b;
+		I b; // begin
 	public:
 		cycle_()
 		{ }
@@ -42,13 +39,10 @@ namespace iter {
 			return c;
 		}
 	};
-	template<class I, 
-		class T = typename std::iterator_traits<I>::value_type,
-		class C = typename std::iterator_traits<I>::iterator_category
-	>
+	template<class I, class T = typename std::iterator_traits<I>::value_type>
 	inline auto cycle(I i)
 	{
-		return cycle_<I,T,C>(i);
+		return cycle_<I,T>(i);
 	}
 
 } // iter
@@ -60,8 +54,12 @@ inline void test_cycle()
 {
 	int a[] = {0,1};
 	auto b = cycle(ce(a));
+	auto c(b);
+	b = c;
+	ensure (b == c);
 	ensure (*b == 0);
 	ensure (*++b == 1);
+	ensure (b != c);
 	ensure (*++b == 0);
 	ensure (*++b == 1);
 	ensure (*++b == 0);
