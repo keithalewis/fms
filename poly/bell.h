@@ -6,14 +6,14 @@
 namespace poly {
 
 	template<class K, class X = typename std::iterator_traits<K>::value_type>
-	class bell_ : public enumerator<void,X,std::input_iterator_tag> {
+	class bell_ : public enumerator_<void,X,std::input_iterator_tag> {
 		concatenate_<K,constant_<X>> x;
 		X n;
 		std::vector<X> B;
 	public:
 		bell_()
 		{ }
-		// extent x with 0's
+		// extend x with 0's
 		bell_(K x)
 			: x(concatenate(x,c(X(0)))), n(X(0)), B({X(1)})
 		{ }

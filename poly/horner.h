@@ -9,7 +9,16 @@ namespace poly {
 	inline X horner(C c, const X& x)
 	{
 		// accumulate reverse iterator from the end
-		return back(accumulate([x](const X& a, const X& b) { return x*a + b; }, rend(c), X(0)));
+		struct s {
+			X x;
+			s(const X& x) : x(x) { }
+			X operator()(const X& a, const X& b)
+			{
+				return x*a + b;
+			}
+		};
+
+		return back(accumulate(s(x), rend(c), X(0)));
 	}
 
 } // poly

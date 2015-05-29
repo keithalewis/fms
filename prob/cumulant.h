@@ -8,15 +8,15 @@ namespace cumulant {
 	// cumulants for Esscher transformation
 	template<class K, 
 		class X = typename std::iterator_traits<K>::value_type>
-	class esscher_ : public enumerator<K,X,std::input_iterator_tag> {
+	class esscher_ : public enumerator_<K,X,std::input_iterator_tag> {
 		constant_<X> s;
 	public:
-		using enumerator<K,X,std::input_iterator_tag>::i;
+		using enumerator_<K,X,std::input_iterator_tag>::i;
 
 		esscher_()
 		{ }
 		esscher_(K k, const X& s)
-			: enumerator<K,X,std::input_iterator_tag>(k), s(c(s))
+			: enumerator_<K,X,std::input_iterator_tag>(k), s(c(s))
 		{ }
 
 		explicit operator bool() const
@@ -55,15 +55,15 @@ namespace cumulant {
 	// reduced cumulants for Esscher transformation
 	template<class K, 
 		class X = typename std::iterator_traits<K>::value_type>
-	class esscher_1_ : public enumerator<K,X,std::input_iterator_tag> {
+	class esscher_1_ : public enumerator_<K,X,std::input_iterator_tag> {
 		constant_<X> s;
 	public:
-		using enumerator<K,X,std::input_iterator_tag>::i;
+		using enumerator_<K,X,std::input_iterator_tag>::i;
 
 		esscher_1_()
 		{ }
 		esscher_1_(K k, const X& s)
-			: enumerator<K,X,std::input_iterator_tag>(k), s(c(s))
+			: enumerator_<K,X,std::input_iterator_tag>(k), s(c(s))
 		{ }
 
 		explicit operator bool() const
@@ -113,13 +113,14 @@ namespace cumulant {
 	template<class X = double>
 	inline auto exponential(const X& mu)
 	{
-		return factorial<X>()*skipn(1, pow<X>(mu));
+		return prod(concatenate(unit(1),iota(1))*c(mu));
 	}
 	// sum_{k>=0} (n+k-1)! s^k/k! = (n-1)!/(1 - s)^n
 	template<class X = double, class S = double>
 	inline auto exponential(const X& mu, const S& s)
 	{
 		return factorial<X>()*skipn(1, pow<X>(mu/(1 - s)));
+		return prod(concatenate(unit(1),iota(1))*c(mu/(1 - s)));
 	}
 
 	// (n-1)! mu^n/n!
@@ -167,7 +168,7 @@ inline void test_cumulant()
 
 		auto b = skipn(10, buffer(0, p_ - q));
 		// lousy convergence
-		auto fabs_ = [](const double& x) { return fabs(x); };
+		std::function<double(const double&)> fabs_ = [](const double& x) { return fabs(x); };
 		ensure (back(max(take(10,fmap(fabs_, p_ - q)))) < 0.01);
 	}
 }

@@ -6,7 +6,7 @@ namespace poly {
 
 	// Pochhammer (n > 0) and rising Pochhammer (n < 0) symbol
 	template<class X = double>
-	class pochhammer_ : public enumerator<void,X,std::input_iterator_tag> {
+	class pochhammer_ : public enumerator_<void,X,std::input_iterator_tag> {
 		int n;
 		X x; // x
 		X xi; // x(x - 1)...(x - i + 1);
@@ -16,8 +16,7 @@ namespace poly {
 		{ }
 		pochhammer_(const X& x, int n)
 			: n(n), x(x), xi(x)
-		{
-		}
+		{ }
 
 		size_t size() const
 		{
@@ -75,6 +74,7 @@ inline void test_pochhammer()
 	xn++;
 	ensure (*++xn == x*(x - 1)*(x - 2));
 	ensure (!++xn);
+	ensure (prod1(pochhammer(x,3)) == x*(x - 1)*(x - 2));
 
 	xn = pochhammer(x, -3);
 	ensure (*xn == x);
@@ -82,6 +82,7 @@ inline void test_pochhammer()
 	xn++;
 	ensure (*++xn == x*(x + 1)*(x + 2));
 	ensure (!++xn);
+	ensure (prod1(pochhammer(x, -3)) == x*(x + 1)*(x + 2));
 }
 
 #endif // _DEBUG

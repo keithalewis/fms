@@ -28,8 +28,8 @@ inline void test_exp()
 		b = skipn(100,b);
 		++b;
 	}
-	long long c;
-/*	auto 
+/*	long long c;
+	auto 
 	ms = timer::time([]() { exp(0.1); }, 10*1000*1000);
 	c = ms.count();
 	ms = timer::time([]() { math::exp(0.1); }, 10*1000);
