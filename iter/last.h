@@ -59,7 +59,7 @@ namespace iter {
 		return ce(re(r.end().iterator()),r.size());
 	}
 	template<class E>
-	inline typename std::iterator_traits<E>::value_type back(E e)
+	inline auto back(E e)
 	{
 		return *last(e);
 	}

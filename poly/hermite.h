@@ -9,7 +9,7 @@ namespace poly {
 
 	// H_0(x), H_1(x), ...
 	template<class X = double>
-	class hermite_ : public enumerator_<void,X,std::input_iterator_tag> {
+	class hermite_ : public iter::enumerator_<void,X,std::input_iterator_tag> {
 		X n;
 		X x;
 		X H, H_; // current and previous H
@@ -28,6 +28,7 @@ namespace poly {
 		{
 			return H;
 		}
+		// H(n + 1, x) = x H(n, x) - n H(n - 1, x)
 		hermite_& operator++()
 		{
 			X _H = x*H - n*H_;

@@ -22,6 +22,7 @@ namespace iter {
 		pair_(I i, J j)
 			: enumerator_<std::pair<I,J>,std::pair<T,U>,C>(std::make_pair(i,j))
 		{ }
+//		pair_(const pair_&) = default;
 
 		explicit operator bool() const
 		{
@@ -70,29 +71,28 @@ inline void test_pair()
 	int a[] = {0,1,2};
 	int b[] = {2,4,5};
 
-using namespace iter;
 
-
-	auto c = pair(std::begin(a),std::begin(b));
+	auto c = iter::pair(a,b);//std::begin(a),std::begin(b));
 	auto f(c);
 	c = f;
 	ensure (*c == std::make_pair(0,2));
-	c = pair(a,b);
+	c = iter::pair(a,b);
 	ensure (*c == std::make_pair(0,2));
-	c = pair(a,&b[0]);
+	c = iter::pair(a,&b[0]);
 	ensure (*c == std::make_pair(0,2));
 
 	ensure (*++c == std::make_pair(1,4));
 	c++;
 	ensure (*c == std::make_pair(2,5));
 
-	c = pair(a,b);
-	pair_<int*,int*> d(a,b);
+	c = iter::pair(a,b);
+	iter::pair_<int*,int*> d(a,b);
 	ensure (c == d);
 	++c;
 	ensure (c != d);
 	d = c;
 	ensure (c == d);
+
 }
 
 #endif // _DEBUG

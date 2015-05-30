@@ -29,11 +29,11 @@ namespace iter {
 			return i != j.i;
 		}
 
-		operator I() const
+/*		operator I() const
 		{
 			return i;
 		}
-		I iterator() const
+*/		I iterator() const
 		{
 			return i;
 		}

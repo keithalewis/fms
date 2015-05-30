@@ -94,11 +94,11 @@ int main()
 		test_skip();
 		test_take();
 		test_unit();
+		test_until();
 		test_util();
 		test_where();
 /*
 		test_bind();
-		test_until();
 		test_zigg();
 */	}
 	catch (...) {

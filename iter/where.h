@@ -5,16 +5,19 @@
 
 namespace iter {
 
-	template<class P, class I, class T = typename std::iterator_traits<I>::value_type>
-	class where_ : public enumerator_<I,T,std::input_iterator_tag> {
+	template<class P, class I, 
+		class T = typename std::iterator_traits<I>::value_type,
+		class C = typename std::iterator_traits<I>::iterator_category
+	>
+	class where_ : public enumerator_<I,T,C> {
 		P p;
 	public:
-		using enumerator_<I,T,std::input_iterator_tag>::i;
+		using enumerator_<I,T,C>::i;
 
 		where_()
 		{ }
 		where_(P p, I i)
-			: enumerator_<I,T,std::input_iterator_tag>(until(p,i)), p(p)
+			: enumerator_<I,T,C>(until(p,i)), p(p)
 		{ }
 
 		explicit operator bool() const
@@ -40,10 +43,13 @@ namespace iter {
 			return w;
 		}
 	};
-	template<class P, class I, class T = typename std::iterator_traits<I>::value_type>
+	template<class P, class I, 
+		class T = typename std::iterator_traits<I>::value_type,
+		class C = typename std::iterator_traits<I>::iterator_category
+	>
 	inline auto where(P p, I i)
 	{
-		return where_<P,I,T>(p, i);
+		return where_<P,I,T,C>(p, i);
 	}
 
 } // iter
@@ -63,6 +69,7 @@ inline void test_where()
 	ensure (*++b == 3);
 	b++;
 	ensure (*b == 5);
+
 }
 
 #endif // _DEBUG

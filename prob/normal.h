@@ -22,11 +22,13 @@
 
 #define pi  M_PI
 #define sqrt2pi  M_SQRT2PI
+#define sqrt2 M_SQRT2
 
 namespace prob {
 
 	class marsaglia {};
 	class bell_impl {};
+	class erfc_impl {};
 
 	template<class X, class I>
 	struct std_normal {
@@ -48,15 +50,20 @@ namespace prob {
 			return X(0.5) + x*sum0(ne(prod(c(x*x)/E_(2*n + 1))))*exp(-x*x/2)/sqrt2pi;
 		}
 	};
+	template<class X>
+	struct std_normal<X,erfc_impl> {
+		static X cdf(const X& x)
+		{
+			return erfc(-x/sqrt2)/2;
+		}
+	};
 
-	template<class X = double>
+	template<class X = double, class I = erfc_impl>
 	struct normal {
 
-		// 0.5 + exp(-x*x/2) sum x^{2n + 1}/(2n + 1)!!/sqrt2pi
-//		template<>
 		static X cdf/*<marsaglia>*/(const X& x)
 		{
-			return X(0.5) + x*sum0(ne(prod(c(x*x)/E_(2*n + 1))))*exp(-x*x/2)/sqrt2pi;
+			return std_normal::cdf<X,I>(x);
 		}
 		
 		static X pdf(const X& x)

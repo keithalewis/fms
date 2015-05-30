@@ -7,17 +7,20 @@
 namespace iter {
 
 	// counted enumerator
-	template<class I, class T = typename std::iterator_traits<I>::value_type>
-	class counted_enumerator_ : public enumerator_<I,T> {
+	template<class I, 
+		class T = typename std::iterator_traits<I>::value_type,
+		class C = typename std::iterator_traits<I>::iterator_category
+	>
+	class counted_enumerator_ : public enumerator_<I,T,C> {
 	protected:
 		size_t n;
 	public:
-		using enumerator_<I,T>::i;
+		using enumerator_<I,T,C>::i;
 
 		counted_enumerator_()
 		{ }
 		counted_enumerator_(I i, size_t n)
-			: enumerator_<I,T>(i), n(n)
+			: enumerator_<I,T,C>(i), n(n)
 		{ }
 
 		size_t size() const
@@ -67,16 +70,22 @@ namespace iter {
 			return e;
 		}
 	};
-	template<class I, class T = typename std::iterator_traits<I>::value_type>
+	template<class I, 
+		class T = typename std::iterator_traits<I>::value_type,
+		class C = typename std::iterator_traits<I>::iterator_category
+	>
 	inline auto counted_enumerator(I i, size_t n)
 	{
-		return counted_enumerator_<I,T>(i, n);
+		return counted_enumerator_<I,T,C>(i, n);
 	}
 	// shorthand
-	template<class I, class T = typename std::iterator_traits<I>::value_type>
+	template<class I, 
+		class T = typename std::iterator_traits<I>::value_type,
+		class C = typename std::iterator_traits<I>::iterator_category
+	>
 	inline auto ce(I i, size_t n)
 	{
-		return counted_enumerator_<I,T>(i, n);
+		return counted_enumerator_<I,T,C>(i, n);
 	}
 
 	// specialization

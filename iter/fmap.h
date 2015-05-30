@@ -24,7 +24,7 @@ namespace iter {
 
 		explicit operator bool() const
 		{
-			return i.operator bool();
+			return true;//i.operator bool();
 		}
 		U operator*() const
 		{
@@ -62,6 +62,7 @@ namespace iter {
 
 #ifdef _DEBUG
 #include "include/ensure.h"
+#include "enumerator/counted.h"
 #include "constant.h"
 
 inline void test_fmap()

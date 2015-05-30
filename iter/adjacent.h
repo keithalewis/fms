@@ -74,10 +74,10 @@ namespace iter {
 //#include "expr.h"
 //#include "iota.h"
 
-using namespace iter;
-
 inline void test_adjacent()
 {
+	using namespace iter;
+
 	{
 		int a[] = {1,4,9};
 		auto b = delta(e(a));

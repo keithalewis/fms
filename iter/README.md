@@ -34,3 +34,5 @@ Get unary operator+ working with MSVC. Ambiguous return types based on calling c
 operator, => concatenate
 
 operator^ => monotonic cycle
+
+Fix where.

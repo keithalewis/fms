@@ -3,7 +3,7 @@
 #include "prob/normal.h"
 #include "xll/xll.h"
 
-using namespace prob;
+//using namespace prob;
 using namespace xll;
 
 static AddInX xai_normal_cdf(
@@ -15,10 +15,12 @@ static AddInX xai_normal_cdf(
 );
 double WINAPI xll_normal_cdf(double x)
 {
+#pragma XLLEXPORT
 	double y{std::numeric_limits<double>::quiet_NaN()};
 
 	try {
-		y =  normal<>::cdf(x);
+		y = x;// normal<>::cdf(x);
+		ensure (y==x);
 	}
 	catch (const std::exception& ex) {
 		XLL_ERROR(ex.what());

@@ -93,7 +93,7 @@ inline void test_join()
 		++c;
 		ensure (*c == 2);
 	}
-/*	{
+	{
 		int a[] = {1,0,2,0,0,3};
 		auto aa = fmap([&](int i) { return ce(c(i),i); }, a);
 		auto _a = join(aa);
@@ -115,6 +115,6 @@ inline void test_join()
 		++_a;
 		ensure (*_a == 3);
 	}
-*/}
+}
 
 #endif // _DEBUG

@@ -1,49 +1,75 @@
 // root.h - policy based root finding
-/*
-bisect<> b(1,2);
-relative r;
-double sqrt2 = root1d::find<N,D>([](double x) { return x*x - 2; }, b, r);
-root1d::find(f,n,d);
-*/
 #pragma once
 #include <functional>
-//#include "iter/iter.h"
-
-/*
-
-template<class F, class N, class D>
-inline X find(F f, N n, D d)
-{
-	return back(accumulate(F, ?));
-}
-*/
+#include "iter/iter.h"
 
 namespace root1d {
 
-/*
-	template<class I, class X = double, class Y = X>
-	struct next_ {
-		next_& step()
-		{
-			next_<I>::step();
-		}
-	};
 	template<class X = double, class Y = X>
-	class bisect : public next_<bisect, X, Y>
-	{
-
-	template<class I, class X>
-	struct next_ : std::iterator<std::input_iterator_tag, X> {
-		X operator*() const
-		{
-			return I::operator*();
-		}
-		next_& operator++()
-		{
-			return I::operator++();
-		}
+	struct point {
+		X x;
+		Y y;
+		point(const X& x = X(0), const Y& y = Y(0))
+			: x(x), y(y)
+		{ }
 	};
 
+	// bracketed roots
+	template<class F, class X = double, class Y = X>
+	class bisect_ : public enumerator_<void,point<X,Y>,std::input_iterator_tag> {
+		F f;
+		point<X,Y> p0, p1;
+	public:
+		bisect_()
+		{ }
+		bisect_(F f, const X& x0, const X& x1)
+			: f(f), p0(x0,f(x0)), p1(x1,f(x1))
+		{
+			ensure (p0.y * p1.y < 0);
+		}
+
+		explicit operator bool() const
+		{
+			return true;
+		}
+		point<X,Y> operator*() const
+		{
+			return fabs(p0.y) < fabs(p1.y) ? p0 : p1;
+		}
+		bisect_& operator++()
+		{
+			X x = (p0.x + p1.x)/2;
+			Y y = f(x);
+
+			if (p0.y * y < 0) {
+				p1.x = x;
+				p1.y = y;
+			}
+			else {
+				p0.x = x;
+				p0.y = y;
+			}
+
+			ensure (p0.y*p1.y <= 0);
+
+			return *this;
+		}
+		bisect_ operator++(int)
+		{
+			bisect_ b(*this);
+
+			operator++();
+
+			return b;
+		}
+	};
+	template<class F, class X = double, class Y = X>
+	inline auto bisect(F f, const X& x0, const X& x1)
+	{
+		return bisect_<F,X,Y>(f, x0, x1);
+	}
+
+/*
 	namespace next {
 		
 		template<class X = double>
@@ -86,3 +112,35 @@ namespace root1d {
 	}
 */	
 } // root
+
+#ifdef _DEBUG
+inline void test_next()
+{
+	using namespace root1d;
+	
+	struct sqr {
+		double a;
+		sqr(double a) : a(a) { }
+		double operator()(double x) { return x*x - a; }
+	};
+
+	auto b = bisect(sqr(2),1.,2.);
+	point<> p;
+	p = *b;
+	p = *++b;
+	p = *++b;
+	p = *++b;
+	p = *++b;
+	p = *++b;
+	p = *++b;
+	p = *++b;
+	p = *++b;
+	p = *++b;
+	p = *++b;
+	p = *++b;
+	p = *++b;
+	p = *++b;
+	p = *++b;
+}
+
+#endif // _DEBUG

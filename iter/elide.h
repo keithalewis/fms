@@ -27,7 +27,7 @@ inline void test_elide()
 {
 	// (i,...,i) i times
 	struct F {
-		counted_enumerator_<constant_<int>,int> operator()(int i) const
+		auto operator()(int i) const
 		{ 
 			return ce(c(i),i); 
 		}
@@ -35,9 +35,9 @@ inline void test_elide()
 
 	{
 		int a[] = {1,0,2,0,0,3};
-//		auto b = fmap(+[](int i) { return ce(c(i),i); }, a);
+//		auto b = fmap(+[](int i) { return ce(c(i),i); }, e(a));
+		auto b = fmap(F{}, e(a));
 		// {{1},{},{2,2},{},{},{3,3,3}}
-		auto b = fmap(F{}, a);
 		auto c = elide(b);
 		// {{1},{2,2},{3,3,3}}
 		auto d(c);
@@ -55,17 +55,20 @@ inline void test_elide()
 		ensure (*++e == 3);
 		ensure (!++e);
 	}
+
 	{
 		int a[] = {1,0,2,0,0,3};
-//		auto f = join(elide(fmap(+[](int i) { return ce(c(i),i); }, a)));
-		auto f = join(elide(fmap(F{}, a)));
+//		auto d = join(elide(fmap(+[](int i) { return ce(c(i),i); }, a)));
+		auto d = elide(fmap(F{}, e(a)));
+		auto f = join(d);
+//		auto f = join(fmap(F{},e(a)));
 		ensure (*f == 1);
 		ensure (*++f == 2);
-		ensure (*++f == 2);
+/*		ensure (*++f == 2);
 		ensure (*++f == 3);
 		ensure (*++f == 3);
 		ensure (*++f == 3);
-	}
-}
+*/	}
 
+}
 #endif // _DEBUG
