@@ -23,8 +23,14 @@
     <ClInclude Include="ftap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="binomial.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />
+    <None Include="ftap.html" />
+    <None Include="ftap.css" />
+    <None Include="ftap.js" />
   </ItemGroup>
 </Project>

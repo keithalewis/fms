@@ -1,0 +1,18 @@
+body {
+    background-color: #F8F8F8;
+    margin: 10px; padding: 0; font-size: 120%; line-height: 1.25;
+	font-family: Calibri, san-serif;
+}
+h1, h2, h3, h4 {margin: 1em 0 .5em; line-height: 1.25;}
+h1 {font-size: 2em; color:#0F0F4F;}
+h2 {font-size: 1.5em; color:#4F4F4F;}
+h3 {font-size: 1.2em;}
+p { margin-top: 0; }
+#kalx {
+    z-index: 1;
+    background: rgba(248,248,248,.8);
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        padding: 10px;
+}

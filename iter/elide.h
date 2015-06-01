@@ -7,13 +7,13 @@ namespace iter {
 	template<class I>
 	inline auto elide(I i)
 	{
-//		return where(+[](const I& i) { return *i; }, i);
-		struct p {
+		return where(+[](const I& i) { return *i; }, i);
+/*		struct p {
 			auto operator()(const I& i) const -> decltype(*i) { return *i; }
 		};
 
 		return where(p{}, i);
-	}
+*/	}
 
 } // iter
 
@@ -23,9 +23,10 @@ namespace iter {
 #include "fmap.h"
 #include "skip.h"
 
+
 inline void test_elide()
 {
-	// (i,...,i) i times
+/*	// (i,...,i) i times
 	struct F {
 		auto operator()(int i) const
 		{ 
@@ -54,9 +55,7 @@ inline void test_elide()
 		ensure (*++e == 3);
 		ensure (*++e == 3);
 		ensure (!++e);
-	}
-
-	{
+	
 		int a[] = {1,0,2,0,0,3};
 //		auto d = join(elide(fmap(+[](int i) { return ce(c(i),i); }, a)));
 		auto d = elide(fmap(F{}, e(a)));
@@ -64,11 +63,11 @@ inline void test_elide()
 //		auto f = join(fmap(F{},e(a)));
 		ensure (*f == 1);
 		ensure (*++f == 2);
-/*		ensure (*++f == 2);
+		ensure (*++f == 2);
 		ensure (*++f == 3);
 		ensure (*++f == 3);
 		ensure (*++f == 3);
-*/	}
-
+	}
+*/
 }
 #endif // _DEBUG

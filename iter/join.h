@@ -69,7 +69,7 @@ namespace iter {
 inline void test_join()
 {
 	{
-		int a[] = {0,1,2};
+/*		int a[] = {0,1,2};
 	
 		struct s {
 			const int* a;
@@ -114,7 +114,8 @@ inline void test_join()
 		ensure (*_a == 3);
 		++_a;
 		ensure (*_a == 3);
-	}
+*/	}
+
 }
 
 #endif // _DEBUG

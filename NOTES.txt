@@ -1,0 +1,5 @@
+Cloud Service Analytics
+
+Call a function with arguments?
+Evaluate javascript on server?
+Use v8 and v8::AddIn to map functions to javascript.

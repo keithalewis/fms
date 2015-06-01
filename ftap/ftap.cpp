@@ -1,10 +1,11 @@
 // ftap.cpp - test ftap functions
 #include <iostream>
-#include "ftap.h"
+#include "binomial.h"
 
 int main(void)
 {
 	try {
+		test_binomial();
 	}
 	catch (const std::exception& ex) {
 		std::cerr << ex.what() << std::endl;
