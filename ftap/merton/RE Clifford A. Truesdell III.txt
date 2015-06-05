@@ -1,0 +1,145 @@
+From:	Robert C Merton <rmerton@MIT.EDU>
+Sent:	Saturday, May 11, 2013 6:53 PM
+To:	Keith A. Lewis
+Subject:	RE: Clifford A. Truesdell III
+Attachments:	Theory of Finance from the Perspective of Continuous Time 1975.pdf; 
+Mathematics of Specultative Price.pdf; Capital Ideas Chapter 11. RCM  
+2005.pdf; Dynamic General Equilibrium Model 12 70.pdf; Contingent Claims 
+Pricing and MM 1977.pdf
+
+Dear Professor Lewis,
+
+I have responded below to your questions as well attached a few articles that you may find of some 
+use.  One of them is an appendix that I wrote to Paul Samuelson’s 12th Annual Von Neumann Lecture 
+given in 1971 and published the following year, in which I derive the Black-Scholes equation from 
+replication and contrast it with the Samuelson theory.  This is the earliest mention of the name Black-
+Scholes option model in print. I was also the one who named it the Black-Scholes model.  You will see a 
+1970 working paper which was never published but was widely circulated [published as chapter 11 in my 
+book Continuous-Time Finance(CTF)] that develops the CCA pricing of liabilities in a discrete time model 
+along the lines of my 1969 joint warrant pricing paper with Paul Samuelson, and also develops what 
+later was published as the Intertemporal Capital Asset Pricing Model (ICAPM), and derives the Black-
+Scholes model and a general equation for derivative security pricing with stochastic interest rates, in 
+two ways: 1. I derive it from dynamic replication [aka a hedge portfolio strategy ] in continuous time 
+that eliminates ALL the volatility between the option price and the dynamic mix of the stock and 
+bond.  To do this, one has continuous trading and the mathematical tool I used was Ito’s Lemma [the Ito 
+Calculus].  I had introduced Ito’s lemma into economics in my work on continuous time optimal 
+consumption and portfolio selection which was published in REStat in 1969 and in Journal of Economic 
+Theory in 1971 [both appear as chapters in my PhD thesis 1970 and reproduced in CTF].  Ito’s lemma 
+provided the means for modeling individual sample paths [and not just their expectations] for portfolio 
+returns.  It made it possible for me to show that in fact by following the Black-Scholes dynamic portfolio 
+rules, one could eliminate all the risk from hedging the option and Not just the “systematic” or “beta” 
+risk of the hedge portfolio...in order to eliminate the all the volatility from the hedge portfolio, it must 
+be that the dynamic strategy in the stock and riskfree asset must replicate the payoff to the option along 
+every sample path....hence the demonstration of replication; in the working paper, I also derived the 
+Black Scholes model from an equilibrium pricing model, namely what became known as the ICAPM.  The 
+original Black and Scholes derivation was based on an equilibrium analysis using the Capital Asset Pricing 
+Model (CAPM) which was derived as a very short interval but discrete time trading model...their hedge 
+position in the stock made the hedge portfolio has a beta = 0 and hence its equilibrium expected return 
+had to be the riskfree rate. Since the No-arbitrage requirement ( imposed by replication) is a necessary 
+condition for every equilibrium model, the B-S price derived from an equilibrium model had to be the 
+same as the one derived from No Replication.  This observation also gives an immediate proof [from 
+economics not mathematics] of what has come to known as Risk-Neutral Pricing.  Derivative pricing 
+based on replication portfolio [including Black Scholes option prices] will be prices as if the required 
+expected return on the derivative and on the underlying are the same and equal to the risk-free 
+rate.  The economic argument to prove this goes as follows:  A valid [if empirically false] equilibrium 
+model is one in which all agents who trade have linear utility functions in wealth and thus choose their 
+portfolios so as to maximize its expected return [without regard for the risk of the portfolio].  The only 
+pricing possible for equilibrium is that ALL assets are priced to have the same expected return = riskfree 
+interest rate.  Hence the pricing of all derivatives is to discount the expected future value of the 
+derivative at the riskfree rate.  But the replication pricing approach gives  the no-arbitrage pricing and 
+no arbitrage is a necessary condition to be satisfied by all equilibrium pricing models, and in particular to 
+the equilibrium with risk-neutral agents. QED [no need for the Girsanov theorem or any other 
+mathematical argument].
+
+
+In summary Black and Scholes fundamental contribution was to introduce the idea of a dynamic trading 
+strategy to hedge the [systematic] risk of the option and my fundamental contribution was to show that 
+with continuous trading, the dynamic strategy eliminates all the risk and thus becomes a no arbitrage 
+condition [ I also introduced some generalizations such as stochastic bond price and dividends and an 
+American exercise feature].  Neither Black nor Scholes had ever heard of Ito’s Lemma or the Ito calculus 
+before I showed them my result.  In their published paper version, they provided both versions of the 
+derivation...the one from the CAPM [their original way] and the one from dynamic trading in continuous 
+time [which came from me]. They put a footnote in their paper acknowledging as much. To the end of 
+his life, Black always preferred the CAPM derivation because he didn’t believe in continuous trading [of 
+course today with high frequency trading the latency is down to 1 millisecond...pretty close to 
+continuous] but most people believe that the replication no arbitrage derivation is more robust. The 
+Black Scholes formula is a special case of the methodology we developed.  The Nobel Prize was awarded 
+for a new methodology for pricing derivatives [essentially dynamic trading to hedge and replicate 
+the  derivative payoffs] and not for  the special case formula with the assumption of lognormality, 
+constant volatility and constant interest rate.
+
+http://www.afajof.org/details/videoListing/2866801/Masters-of-Finance-Videos.html
+
+I hope that you find these of some help in your writing.
+
+Best wishes,
+RC Merton
+From: Keith A. Lewis [mailto:kal@kalx.net]  
+Sent: Saturday, May 11, 2013 4:50 PM 
+To: rmerton@hbs.edu 
+Subject: Clifford A. Truesdell III
+
+Dear Professor Merton,
+
+I am writing a paper on the fundamental theorem of asset pricing and was hoping you would be willing 
+to answer a historical question.
+
+When you wrote your paper “Theory of Rational Option Pricing” were you aware of the work of Clifford 
+Truesdell?  NO....the title to my paper was motivated by the title of Paul Samuelson’s 1965 “Rational 
+Theory of Warrant Pricing” and not “Rational Thermodynamics”
+
+If you feel indulgent, here are a few other questions I am curious about.
+
+The paper seems to have been written in 1971, but published in 1973. Were you delaying publication 
+until after Black and Scholes? That is correct.  I arranged with the Editor of Bell Journal to hold up 
+publication of my paper until the publication of the Black and Scholes paper. When the JPE finally agreed 
+to publish it, I released mine. Thus it was not a coincidence that the two papers appeared in print at the 
+same time.  I did this for the obvious reason that it would not be appropriate for my paper to appear 
+substantially before their’s.
+
+
+
+ 
+This paper assumes the bond has a stochastic component, and this is essential in your proof. That is not 
+at all essential to the proof at all. Stochastic bond prices includes as a special case a non stochastic bond 
+price [which Black and Scholes assumed]...it was thus a generalization, not a necessity
+
+
+
+Was your 1974 paper “On the Pricing of Corporate Debt…”  the first published version that did not 
+require this?  As noted this was not important
+
+
+ 
+Are you aware of who was the first to publish a proof that the necessary conditions that the hedging 
+portfolio is self-financing are also sufficient? An essential feature of any of these models is that at no 
+point can their value be negative [since a negative value for a security or portfolio is not well-defined 
+...allowing negative values in a strategy is very much allowing division by zero...one can prove almost 
+anything ...including that there is a strategy which can create $2 from $1 with probability one which is 
+nonsense.  In my 1969 and 1971 portfolio and consumption papers, I introduced the notion of a price 
+per share for each asset which tracked the total return on the portfolio and the number of shares whose 
+changes kept track of new money invested into the portfolio or money taken out of the portfolio.  I did 
+not coin the term of self-financing portfolio but the condition for pricing must track and take account of 
+the payouts and any inflows into the portfolio.  And my derivation took account of that for the 
+derivation of the contingent claims [again see the 1970 working paper for instance].  On the other hand 
+some mathematicians who tried to show that the derivation was wrong thought that they had done so 
+by showing that the strategy would produce arbitrage profits...however their so called counter examples 
+allowed negative wealth which is of course makes no economic sense [because the value of the 
+instrument depends on who owns it since the owner may not have the resources to pay off the negative 
+wealth in which case the boundary condition is incorrect].
+
+There were several similar questions/challenges to the Black Scholes after it was published and so in 
+1977 I published a paper [attached] which tried to make clearer that we did not even need the 
+derivative to exist to employ the dynamic strategy and one does not need an arbitrage portfolio, one 
+can simply treat the replicating strategy as a dynamic production function for manufacturing the 
+derivative even if it didn’t previously exist.
+
+
+A preprint of my paper is available at http://kalx.net/ftapd.pdf. When I started teaching Derivative 
+Securities at NYU I was shocked to find no proof of the FTAP accessible at the masters level was 
+available. This is my attempt to remedy that.
+
+Thank you,
+Keith A. Lewis
+
+

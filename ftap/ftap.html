@@ -31,7 +31,7 @@
 	<p>
 		The statement of the theorem is "There should be no sequence of final
 		payoffs of admissible integrands, \(f_n = (H^n\cdot S)_\infty\), such
-		that the negative parts \(f_n^-\) tend to zero uniformly and such that
+		that the negative parts \(f^-_n\) tend to zero uniformly and such that
 		\(f_n\) tends almost surely to a \([0,\infty]\)-valued function \(f_0\)
 		satisfying \(P[f_0 > 0] > 0\)."  And if you can make heads or tails out
 		of that, my hat is off to you.
@@ -190,7 +190,7 @@
 	<p>
 		Unfortunately, in the classical theory certain mathematical
 		artifacts of Brownian motion have blurred the true picture.
-		Black-Scholes/Merton continuous time hedging allows mathematicians
+		Black-Scholes/Merton continuous time hedging encourages mathematicians
 		to ignore the fact that no market is complete.
 	</p><p>
 		There is a so-called Second Fundamental Theorem of Asset Pricing:
@@ -217,8 +217,8 @@
 		</p>
 		-->
 	<p>
-		A disparaging characterization of the current state of 
-		affairs might be that
+		An uncharitable characterization of the current state of 
+		affairs would be that
 		quants cook up models, but keep fiddling with (also known as
 		recalibrating) them every day, or even every minute.  Traders press
 		a button to get the value \(V_0 = \sum A_j\Pi_j|_0\) where the \(A_j\) 
@@ -226,7 +226,11 @@
 		function of how irritating the gamma profile is to them.
 		Risk managers then proceed to empirically
 		verify Taylor's theorem every day to "explain" the profit and loss.
-
+	</p>
+	<p>
+		My hope is to move the focus back to the big <em><b style="font-size:140%">If</b></em> that is never true.
+		That is where interesting work remains to be done.
+	</p>
 		<!--
 		<p>
 		The ideal would be to find a model that gets calibrated once, then
@@ -252,7 +256,7 @@
 		I should warn fellow mathematicians that I am going to take away your pacifiers
 		and dump you out of your crib. No \(L^\infty\) spaces with weak\(^*\)
 		topologies or local martingales are needed here. Leave your
-		precious toys in their boxes. High school math is all that is required.
+		precious toys in their boxes and pretend you are just learning to walk.
 	</p>
 	<h3>Partitions</h3>
 	<p>
@@ -344,17 +348,17 @@
 		the dual of \(\RR^m\) with itself as follows.
 	</p>
 	<p>
-		Given a linear functional \(\pi\colon\RR^m\to\RR\)
-		let \(p_i = \pi(e_i)\) where
+		Given a linear functional \(v^*\colon\RR^m\to\RR\)
+		let \(v^*_i = v^*(e_i)\) where
 		\(e_i\) has \(1\) in the \(i\)-th position as its only
 		non-zero entry. We can write any vector
 		\(v = (v_1,\dots,v_m) = \sum_i v_i e_i\) so
 		\[
-		\pi(v) = \pi(\sum_i v_i e_i) = \sum_i v_i \pi(e_i) = \sum_i v_i p_i.
+		v^*(v) = v^*(\sum_i v_i e_i) = \sum_i v_i v^*(e_i) = \sum_i v_i v^*_i.
 		\]
 		This shows we can identify the dual of \(\RR^m\) with itself
-		via \(\pi\mapsto (p_1,\dots,p_m)\) and that the <em>dual pairing</em>
-		\(\pi(v) = \langle v, \pi\rangle = v\cdot p\) is the
+		via \(v^*\mapsto (v^*_1,\dots,v^*_m)\) and that the <em>dual pairing</em>
+		\(v^*(v) = \langle v, v^*\rangle = \sum_i v_i v^*_i\) is the
 		<em>dot product</em>
 	</p>
 
@@ -364,10 +368,10 @@
 	</p>
 	<p>
 		If in addition \(V\) is an algebra, i.e. has a product that satisfies the
-		distributive law with vector addition, then we can define a product
+		distributive law with vector addition, then we can define a new product
 		as follows. Given
-		\(v\in V\) and \(\pi\in V^*\) define \(v\pi\) by \(v\pi(u) =\langle
-		u,v\pi\rangle = \langle uv,\pi\rangle = \pi(uv)\) for any \(u\in V\). This is a
+		\(v\in V\) and \(v^*\in V^*\) define \(vv^*\) by \(vv^*(u) =\langle
+		u,vv^*\rangle = \langle uv,v^*\rangle = v^*(uv)\) for any \(u\in V\). This is a
 		perfectly fine linear functional on \(V\), hence belongs to \(V^*\).
 	</p>
 
@@ -403,9 +407,9 @@
 
 	<h3>Black-Scholes/Merton Model</h3>
 	<p>
-		Let \(P\) be Wiener measure on \(\Omega = C[0,\infty)\),
-		\(B_t\colon\Omega\to\RR\). \(B_t(\omega) =\omega(t)\)
-		is Brownian motion, and \(\FF_t\) is the smallest
+		Let \(P\) be Wiener measure on \(\Omega = C[0,\infty)\) and define
+		Brownian motion \(B_t\colon\Omega\to\RR\) by \(B_t(\omega) =\omega(t)\).
+		Let \(\FF_t\) be the smallest
 		algebra making all \(B_s\) measurable for \(s\le t\).
 
 		Recall \(M_t = e^{-\sigma^2t/2 + \sigma B_t}\) is a martingale,
@@ -487,7 +491,7 @@
 
 	</p>
 	<p>
-		If we only consider prices and cash flows that are a function of
+		If we consider prices and cash flows that are a function of
 		\(W_j\) the number of constraints and calculations become
 		manageable. For the binomial model we get two equations and
 		two unknowns so we have unique solutions. For trinomial
@@ -537,7 +541,7 @@
 	<p>
 		If you are nervous about the the notation \(dV_j/dX_j\), it is just
 		shorthand for the <a href="http://en.wikipedia.org/wiki/Fr%C3%A9chet_derivative">
-		Fr&eacute;chet derivative</a>.
+		Fr&eacute;chet derivative</a> in the Banach space of bounded functions.
 	</p>
 	<!--
 	<p>
@@ -573,17 +577,17 @@
 	implemented in software. This section shows how to use modern
 	C++ to implement the model described above.
 	</p>
-	<!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
 	<script>
-		(function (b, o, i, l, e, r) {
-			b.GoogleAnalyticsObject = l; b[l] || (b[l] =
-			function () { (b[l].q = b[l].q || []).push(arguments) }); b[l].l = +new Date;
-			e = o.createElement(i); r = o.getElementsByTagName(i)[0];
-			e.src = 'https://www.google-analytics.com/analytics.js';
-			r.parentNode.insertBefore(e, r)
-		}(window, document, 'script', 'ga'));
-		ga('create', 'UA-XXXXX-X', 'auto'); ga('send', 'pageview');
-	</script>
+	(function (i, s, o, g, r, a, m) {
+		i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+			(i[r].q = i[r].q || []).push(arguments)
+		}, i[r].l = 1 * new Date(); a = s.createElement(o),
+		m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+	})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
 
+	ga('create', 'UA-63744220-1', 'auto');
+	ga('send', 'pageview');
+
+	</script>
 </body>
 </html>

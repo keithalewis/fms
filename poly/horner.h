@@ -19,6 +19,7 @@ namespace poly {
 		};
 
 		return back(accumulate(s(x), rend(c), X(0)));
+//		return back(accumulate([x](const X& a, const X& b) { return x*a + b; }, rend(c), X(0)));
 	}
 
 } // poly

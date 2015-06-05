@@ -38,7 +38,7 @@ struct sequence : public std::iterator<std::input_iterator_tag, int> {
 	}
 	bool operator!=(const sequence& s) const
 	{
-		return !operator==(s);
+		return n != 0;
 	}
 	sequence begin() const
 	{
@@ -113,11 +113,11 @@ Note: Pi is fixed
 */
 
 template<class F, class A>
-inline auto v(F f, A a)
+inline double v(F f, A a)
 {
 	double s{0};
 
-	for (auto b : a) {
+	for (auto b : atoms(a)) {
 		s += v(f,b);
 	}
 
@@ -137,6 +137,8 @@ inline typename std::enable_if<std::is_same<A,L<2>>::value,double>::type v(F f, 
 
 inline void test_binomial()
 {
+	double w;
+	w = v([](double x) { return x > 0 ? x : 0; }, L<0>{});
 	{
 		sequence s;
 //		ensure (s == 0);
@@ -173,10 +175,10 @@ inline void test_binomial()
 		ensure (sum0(L<3>{},0) == 0);
 	}
 	{
-		L<1> l4;
+		L<4> l4;
 		int i = -4;
 		for (auto l : l4) {
-//			ensure (l == i);
+			ensure (l == i);
 			i += 2;
 		}
 	}
