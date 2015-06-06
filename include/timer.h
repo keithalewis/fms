@@ -24,8 +24,8 @@ namespace timer {
 #include "ensure.h"
 
 #ifdef _WIN32
-//extern "C" void __stdcall Sleep(unsigned long);
-//#define sleep Sleep
+#include <windows.h>
+#define sleep Sleep
 #endif
 
 inline void test_timer()
@@ -33,15 +33,15 @@ inline void test_timer()
 	using namespace std::chrono;
 
 	auto 
-	d = timer::time([]() { Sleep(10); });
+	d = timer::time([]() { sleep(10); });
 	ensure (d.count() >= 10);
 	ensure (d.count() - 10 < 10);
 
-	d = timer::time([]() { Sleep(100); });
+	d = timer::time([]() { sleep(100); });
 	ensure (d.count() >= 100);
 	ensure (d.count() - 100 < 10);
 
-	d = timer::time([]() { Sleep(10); }, 10);
+	d = timer::time([]() { sleep(10); }, 10);
 	ensure (d.count() >= 100);
 	ensure (d.count() - 100 < 60);
 }

@@ -83,7 +83,7 @@
 	<p>
 		If you can find trades \(\Gamma_j\) that eventually close out your
 		position with \(A_0 > 0\) and \(A_j\ge0\) for \(j>0\), that is
-		arbitrage. You make money up front and never lose until you unwind
+		arbitrage. You make money up front and never lose even after unwinding
 		your position.
 	</p>
 	<h3>Models</h3>
@@ -229,7 +229,10 @@
 	</p>
 	<p>
 		My hope is to move the focus back to the big <em><b style="font-size:140%">If</b></em> that is never true.
-		That is where interesting work remains to be done.
+		A serious shortcoming of the classical theory is that it does not account for
+        the fact that prices depend on the size of trade and who the counterparties
+        are. First steps at attacking that problem can be found
+        <a href="http://kalx.net/ftap/xva.html">here</a>.
 	</p>
 		<!--
 		<p>
@@ -251,12 +254,6 @@
 		In this section we map the financial intuition above to concrete
 		mathematics. What, exactly, is a price? And how does the
 		funny \(|_j\) thing represent 'given information available at time \(t_j\)'?
-	</p>
-	<p>
-		I should warn fellow mathematicians that I am going to take away your pacifiers
-		and dump you out of your crib. No \(L^\infty\) spaces with weak\(^*\)
-		topologies or local martingales are needed here. Leave your
-		precious toys in their boxes and pretend you are just learning to walk.
 	</p>
 	<h3>Partitions</h3>
 	<p>
@@ -310,7 +307,8 @@
 		about interchanging limits.
 	</p>
 	<p>
-		A function on \(\Omega\) is <em>measurable</em> if it is
+		A function on \(\Omega\) is <em>measurable</em> with respect to
+        a partition if it is
 		constant on each atom &ndash; it only depends on the
 		information encoded by the partition.
 	</p>

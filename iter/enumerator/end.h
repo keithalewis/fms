@@ -49,11 +49,11 @@ namespace iter {
 		}
 		end_enumerator_ operator++(int)
 		{
-			end_enumerator_ e(*this);
+			end_enumerator_ e_(*this);
 
 			operator++();
 
-			return e;
+			return e_;
 		}
 	};
 
@@ -91,9 +91,9 @@ using namespace iter;
 
 inline void test_enumerator_end()
 {
-	int a[] = {1,2,3};
 
 	{
+		int a[] = { 1,2,3 };
 		auto f = ee(std::begin(a), std::end(a));
 		ensure (f);
 		ensure (*++f == 2);

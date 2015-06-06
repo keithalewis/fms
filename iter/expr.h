@@ -285,8 +285,8 @@ inline void test_expr()
 	test_expr_binop<double,int,std::divides>();
 	test_expr_binop<double,double,std::divides>();
 
-	int a[] = {1,2,3};
 	{
+		int a[] = { 1,2,3 };
 		auto aa = e(a) + e(a);
 		auto bb(aa);
 		aa = bb;
@@ -332,6 +332,7 @@ inline void test_expr()
 
 	}
 	{
+		int a[] = { 1,2,3 };
 		auto aa = e(a) * e(a);
 		ensure (*aa == 1 * 1);
 		ensure (*++aa == 2 * 2);

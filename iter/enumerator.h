@@ -216,9 +216,9 @@ using namespace iter;
 inline void test_enumerator()
 {
 
-	int a[] = {1,2,3};
 
 	{
+		int a[] = { 1,2,3 };
 		enumerator_<int*> b(a), c;
 		c = b;
 		ensure (b == c);
@@ -229,6 +229,7 @@ inline void test_enumerator()
 		ensure (b != c);
 	}
 	{
+		int a[] = { 1,2,3 };
 		auto b = enumerator(a);
 		auto c(b);
 		b = c;

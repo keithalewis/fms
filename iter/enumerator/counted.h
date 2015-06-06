@@ -171,9 +171,9 @@ using namespace iter;
 
 inline void test_enumerator_counted()
 {
-	int a[] = {1,2,3};
 
 	{
+		int a[] = { 1,2,3 };
 		auto e = counted_enumerator(a, 2);
 		auto f(e);
 		e = f;
@@ -188,6 +188,7 @@ inline void test_enumerator_counted()
 		ensure (e.size() == 0);
 	}
 	{
+		int a[] = { 1,2,3 };
 		char foo[] = "foo";
 		auto n = ce(foo, 3);
 		ensure (*n++ == 'f' && *n++ == 'o' && *n++ == 'o' && !n);
@@ -198,6 +199,7 @@ inline void test_enumerator_counted()
 		ensure (o.size() == 4);
 	}
 	{
+		int a[] = { 1,2,3 };
 		auto b = ce(a);
 		ensure (b.size() == 3);
 //		ensure (b.end()[-1] == 3);
