@@ -4,20 +4,20 @@
 
 namespace iter {
 
-	// e0[0], e0[1],...,e1[0] when *e0 > e1[0], ...
+	// e0, e1 = after(*e0, e1), e2 = after(*e1,e2), ...
 	template<class I, 
 		class T = typename std::iterator_traits<I>::value_type::value_type
 	>
-	class zigg_ : public enumerator<I,T,std::input_iterator_tag> {
-		typename std::iterator_traits<I>::value_type i_, _i; // current and next iter
+	class zigg_ : public enumerator_<I,T,std::input_iterator_tag> {
+		typename std::iterator_traits<I>::value_type _i;
 		size_t n;
 	public:
-		using enumerator<I,T,std::input_iterator_tag>::i;
+		using enumerator_<I,T,std::input_iterator_tag>::i;
 
 		zigg_()
 		{ }
 		zigg_(I i)
-			: enumerator<I,T,std::input_iterator_tag>(i), i_(*i), _i(*++i), n(0)
+			: enumerator_<I,T,std::input_iterator_tag>(i), _i(*i), n(0)
 		{ }
 
 		// current enumerator index
@@ -28,28 +28,19 @@ namespace iter {
 
 		operator bool() const
 		{
-			return i_;
+			return i && _i;
 		}
 		T operator*()
 		{
-			return *i_;
+			return *_i;
 		}
 		zigg_& operator++()
 		{
-			++i_;
-
-			if (!i_) {
-				i_ = *i; // i has already been incremented
-				++i;
-				if (i)
-					_i = *i;
-			}
-			else if (*i_ > *_i) {
-				i_ = _i;
-				++i;
-				if (i)
-					_i = *i;
-			}
+			++n;
+			T t = *_i;
+			_i = *++i;
+			while (_i && *_i < t)
+				++_i;
 
 			return *this;
 		}
@@ -81,28 +72,19 @@ using namespace iter;
 
 inline void test_zigg()
 {
-/*	int a[2][3] = {
-		{1,3,5},
-		{0,4,8}
-	};
-	// => 1,4,8
-	auto aa = concatenate(unit(e(a[0])),unit(e(a[1])));
-	auto b = *aa;
-	ensure (*b == 1);
-	ensure (*++b == 3);
-	ensure (*++b == 5);
-	aa++;
-	b = *aa;
-	ensure (*b == 0);
-	ensure (*++b == 4);
-	ensure (*++b == 8);
-
-	aa = concatenate(unit(e(a[0])),unit(e(a[1])));
-	auto z = zigg(aa);
-	ensure (*z == 1);
-	ensure (*++z == 4);
-	ensure (*++z == 8);
-	*/
+	// {5,10,15...},{4,8,12...},{3,6,9...},{2,4,6...},{1,2,3...}
+	auto f = [](int i) { return c(5-i)*iota(1); };
+	auto a = fmap(f, iota(0));
+	auto b = zigg(a);
+	ensure(*b == 5);
+	++b;
+	ensure(*b == 8);
+	++b;
+	ensure(*b == 9);
+	++b;
+	ensure(*b == 10);
+	++b;
+	ensure(*b == 10);
 }
 
 #endif // _DEBUG

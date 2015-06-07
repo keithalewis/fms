@@ -97,9 +97,9 @@ int main()
 		test_until();
 		test_util();
 		test_where();
-/*
-		test_bind();
 		test_zigg();
+		/*
+		test_bind();
 */	}
 	catch (...) {
 		return -1;
