@@ -89,12 +89,14 @@ int main()
 		test_join();
 		test_last();
 		test_level();
+		test_past();
 		test_pick();
 		test_pow();
 		test_skip();
 		test_take();
 		test_unit();
 		test_until();
+		test_upto();
 		test_util();
 		test_where();
 		test_zigg();

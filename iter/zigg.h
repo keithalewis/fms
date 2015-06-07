@@ -16,7 +16,7 @@ namespace iter {
 		zigg_()
 		{ }
 		zigg_(I i)
-			: enumerator_<I,T,std::input_iterator_tag>(i), _i(*i), n(0)
+			: enumerator_<I,T,std::input_iterator_tag>(i), _i(*i)
 		{ }
 
 		operator bool() const

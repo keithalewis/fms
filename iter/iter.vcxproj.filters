@@ -100,6 +100,12 @@
     <ClInclude Include="cycle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="past.h">
+      <Filter>Header Files\algorithm</Filter>
+    </ClInclude>
+    <ClInclude Include="upto.h">
+      <Filter>Header Files\algorithm</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />

@@ -92,7 +92,9 @@
     <ClInclude Include="cycle.h" />
     <ClInclude Include="elide.h" />
     <ClInclude Include="join.h" />
+    <ClInclude Include="past.h" />
     <ClInclude Include="unit.h" />
+    <ClInclude Include="upto.h" />
     <ClInclude Include="zigg.h" />
     <ClInclude Include="enumerator.h" />
     <ClInclude Include="enumerator\counted.h" />
