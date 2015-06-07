@@ -102,7 +102,9 @@ int main()
 		test_zigg();
 		/*
 		test_bind();
-*/	}
+		*/
+		test_iterator();
+	}
 	catch (...) {
 		return -1;
 	}

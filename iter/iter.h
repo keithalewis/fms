@@ -49,16 +49,16 @@
 using namespace iter;
 
 inline void test_iterator()
-{/*
+{
 	int i = 1;
 	auto ci = c(i);
-	ensure (sizeof(i) == sizeof(ci));
+	static_assert (sizeof(i) == sizeof(ci), "time for a new compiler");
 
 	int a[] = {1,2,3};
 	ensure (1*3 + 2*2 + 3*1 == 
 		back( // last element
 		 sum( // running sum
-		  e(a,3) // counted iterator with 3 elements
+		  ce(a) // counted iterator with 3 elements
 		  *      // + - * / any enumerators
 		  re(a + 3) // reverse enumerator
 		 )
@@ -68,22 +68,22 @@ inline void test_iterator()
 	// sum  1/n!
 	double e1 = exp(1);
 	// 1 + 1/1 + 1/2! ...
-	double e2 = back(sum(e(c(1)/factorial<double>())));
+	double e2 = back(sum(ne(c(1)/factorial<double>())));
 	//                   ^ - terminate when 1/n! becomes 0.
 	double de = e1 - e2;
 	ensure (fabs(de) <= 2*std::numeric_limits<double>::epsilon());
 
 	// 1 + 1/1 + (1/1)*(1/2) ...
-	e2 = 1 + back(sum(e(prod(c(1)/iota(1.0)))));
+	e2 = 1 + sum0(ne(prod(c(1)/iota(1.0))));
 	ensure (de == e1 - e2);
 
 	auto id = [](size_t n) { return n; };
-	auto eq = equal(iota(0), apply(id));
-	ensure (all(e(eq,10)));
+	auto eq = equal_to(iota(0), apply(id));
+	ensure (all(ce(eq,10)));
 
 	ensure (all(take(10, iota(1))));
 	ensure (any(take(10, iota(0))));
-	*/
+
 }
 
 #endif // _DEBUG
