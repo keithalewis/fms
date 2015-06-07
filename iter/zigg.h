@@ -10,7 +10,6 @@ namespace iter {
 	>
 	class zigg_ : public enumerator_<I,T,std::input_iterator_tag> {
 		typename std::iterator_traits<I>::value_type _i;
-		size_t n;
 	public:
 		using enumerator_<I,T,std::input_iterator_tag>::i;
 
@@ -19,12 +18,6 @@ namespace iter {
 		zigg_(I i)
 			: enumerator_<I,T,std::input_iterator_tag>(i), _i(*i), n(0)
 		{ }
-
-		// current enumerator index
-		size_t at() const
-		{
-			return n;
-		}
 
 		operator bool() const
 		{
@@ -36,7 +29,6 @@ namespace iter {
 		}
 		zigg_& operator++()
 		{
-			++n;
 			T t = *_i;
 			_i = *++i;
 			while (_i && *_i < t)
