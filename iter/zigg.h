@@ -64,19 +64,27 @@ using namespace iter;
 
 inline void test_zigg()
 {
-	// {5,10,15...},{4,8,12...},{3,6,9...},{2,4,6...},{1,2,3...}
-	auto f = [](int i) { return c(5-i)*iota(1); };
-	auto a = fmap(f, iota(0));
-	auto b = zigg(a);
-	ensure(*b == 5);
-	++b;
-	ensure(*b == 8);
-	++b;
-	ensure(*b == 9);
-	++b;
-	ensure(*b == 10);
-	++b;
-	ensure(*b == 10);
+	{
+		// {5,10,15...},{4,8,12...},{3,6,9...},{2,4,6...},{1,2,3...}
+		struct f {
+			auto operator()(int i) const
+			{ 
+				return c(5-i)*iter::iota(1); 
+			}
+		};
+//		auto f = [](int i) { return c(5-i)*iter::iota(1); };
+		auto a = fmap(f{}, iota(0));
+		auto b = zigg(a);
+		ensure(*b == 5);
+		++b;
+		ensure(*b == 8);
+		++b;
+		ensure(*b == 9);
+		++b;
+		ensure(*b == 10);
+		++b;
+		ensure(*b == 10);
+	}
 }
 
 #endif // _DEBUG

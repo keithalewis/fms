@@ -188,7 +188,6 @@ inline void test_enumerator_counted()
 		ensure (e.size() == 0);
 	}
 	{
-		int a[] = { 1,2,3 };
 		char foo[] = "foo";
 		auto n = ce(foo, 3);
 		ensure (*n++ == 'f' && *n++ == 'o' && *n++ == 'o' && !n);

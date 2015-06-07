@@ -5,6 +5,8 @@
 namespace iter {
 
 	// t, t + 1, ...
+	// c(a) + c(b)*iota(d) => {a, a + b, a + 2b, ...
+	// use take() for finite sequence
 	template<class T>
 	class iota_ : public enumerator_<void, T, std::input_iterator_tag> {
 		T t;
@@ -37,7 +39,7 @@ namespace iter {
 		}
 	};
 	template<class T>
-	inline auto iota(T t = T(0))
+	inline auto iota(T t)
 	{
 		return iota_<T>(t);
 	}
