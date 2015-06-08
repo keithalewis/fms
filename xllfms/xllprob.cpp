@@ -16,11 +16,10 @@ static AddInX xai_normal_cdf(
 double WINAPI xll_normal_cdf(double x)
 {
 #pragma XLLEXPORT
-	double y{std::numeric_limits<double>::quiet_NaN()};
+	doublex y;
 
 	try {
 		y = normal<>::cdf(x);
-		ensure (y==x);
 	}
 	catch (const std::exception& ex) {
 		XLL_ERROR(ex.what());
