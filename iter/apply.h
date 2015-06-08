@@ -52,7 +52,7 @@ namespace iter {
 	template<class F>
 	inline auto apply(F f)
 	{
-		return apply(f, iota<size_t>(0));
+		return apply(f, iota<int>(0));
 	}
 
 } // iter

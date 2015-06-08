@@ -1,10 +1,7 @@
 // normal.h - normal distribution
 #pragma once
 #include <cmath>
-#include "iter/enumerator/null.h"
-#include "iter/accumulate.h"
-#include "iter/expr.h"
-#include "iter/util.h"
+#include "iter/iter.h"
 //#include "math/exp.h"
 #include "poly/hermite.h"
 

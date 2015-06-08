@@ -77,7 +77,7 @@ inline void test_iterator()
 	e2 = 1 + sum0(ne(prod(c(1)/iota(1.0))));
 	ensure (de == e1 - e2);
 
-	auto id = [](size_t n) { return n; };
+	auto id = [](int n) { return n; };
 	auto eq = equal_to(iota(0), apply(id));
 	ensure (all(ce(eq,10)));
 

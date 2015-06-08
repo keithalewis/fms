@@ -25,9 +25,9 @@ namespace iter {
 			return static_cast<int>(t.size());
 		}
 
-		const T& operator[](int i)
+		const T& operator[](int j)
 		{
-			return t[i + (i < 0 ? size() : 0)];
+			return t[j + (j < 0 ? size() : 0)];
 		}
 		explicit operator bool() const
 		{

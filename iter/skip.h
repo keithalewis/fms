@@ -19,7 +19,7 @@ namespace iter {
 	template<class N, class I, class T = typename std::iterator_traits<I>::value_type>
 	inline auto skipn(N n, const counted_enumerator_<I,T>& e)
 	{
-		n = std::min<size_t>(n, e.size());
+		n = static_cast<N>(std::min<size_t>(n, e.size()));
 		I i = e.iterator();
 
 		std::advance(i, n);
