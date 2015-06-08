@@ -16,7 +16,7 @@ static AddInX xai_normal_cdf(
 double WINAPI xll_normal_cdf(double x)
 {
 #pragma XLLEXPORT
-	doublex y;
+	double/*x*/ y{0};
 
 	try {
 		y = normal<>::cdf(x);

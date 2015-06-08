@@ -19,10 +19,22 @@ namespace iter {
 
 		pair_()
 		{ }
-		pair_(I i, J j)
-			: enumerator_<std::pair<I,J>,std::pair<T,U>,C>(std::pair<I,J>(i,j))
+		pair_(I i_, J j)
+//			: enumerator_<std::pair<I,J>,std::pair<T,U>,C>(std::pair<I,J>(i_,j))
+		{
+			i.first = i_;
+			i.second = j;
+		}
+		// why not compiler generated???
+		pair_(const pair_& p)// = default;
+//			: enumerator_<std::pair<I,J>,std::pair<T,U>,C>(p.i)
+		{
+			i.first = p.i.first;
+			i.second = p.i.second;
+		}
+		pair_& operator=(const pair_& p) = default;
+		~pair_()
 		{ }
-//		pair_(const pair_&) = default;
 
 		explicit operator bool() const
 		{

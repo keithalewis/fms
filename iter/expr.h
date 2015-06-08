@@ -21,9 +21,21 @@ namespace iter {
 
 		binop_()
 		{ }
-		binop_(O o, I i, J j)
-			: enumerator_<std::pair<I,J>,V,C>(std::make_pair(i, j)), o(o)
-		{ }
+		binop_(O o, I i_, J j)
+			: o(o)
+//			: enumerator_<std::pair<I,J>,V,C>(std::make_pair(i, j)), o(o)
+		{
+			i.first= i_;
+			i.second = j;
+		}
+		// why not compiler generated???
+		binop_(const binop_& b)
+			: o(b.o)
+//			: enumerator_<std::pair<I,J>,V,C>(b.i), o(b.o)
+		{ 
+			i.first = b.i.first;
+			i.second = b.i.second;
+		}
 
 		explicit operator bool() const
 		{

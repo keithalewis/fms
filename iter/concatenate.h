@@ -17,9 +17,19 @@ namespace iter {
 
 		concatenate_()
 		{ }
-		concatenate_(I i, J j)
-			: enumerator_<std::pair<I,J>,V,std::input_iterator_tag>(std::make_pair(i,j))
-		{ }
+		concatenate_(I i_, J j)
+//			: enumerator_<std::pair<I,J>,V,std::input_iterator_tag>(std::make_pair(i,j))
+		{
+			i.first = i_;
+			i.second = j;
+		}
+		// why not compiler generated???
+		concatenate_(const concatenate_& c)
+//			: enumerator_<std::pair<I,J>,V,std::input_iterator_tag>(c.i)
+		{
+			i.first = c.i.first;
+			i.second = c.i.second;
+		}
 
 		explicit operator bool() const
 		{
