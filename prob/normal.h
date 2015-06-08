@@ -61,9 +61,9 @@ namespace prob {
 	template<class X = double, class I = erfc_impl>
 	struct normal {
 
-		static X cdf/*<marsaglia>*/(const X& x)
+		static X cdf(const X& x)
 		{
-			return std_normal::cdf<X,I>(x);
+			return std_normal<X,I>::cdf(x);
 		}
 		
 		static X pdf(const X& x)
@@ -95,7 +95,7 @@ namespace prob {
 using namespace prob;
 
 inline void test_normal()
-{/*
+{
 	auto x = normal<>::cdf(0);
 	assert (x == 0.5);
 	x = normal<>::cdf(1);
@@ -106,6 +106,6 @@ inline void test_normal()
 	ensure (1/sqrt2pi == normal<>::ddf(3,0));
 	ensure (-0 == normal<>::ddf(4,0));
 	x = normal<>::ddf(5,0);
-*/}
+}
 
 #endif // _DEBUG

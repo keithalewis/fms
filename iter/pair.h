@@ -20,7 +20,7 @@ namespace iter {
 		pair_()
 		{ }
 		pair_(I i, J j)
-			: enumerator_<std::pair<I,J>,std::pair<T,U>,C>(std::make_pair(i,j))
+			: enumerator_<std::pair<I,J>,std::pair<T,U>,C>(std::pair<I,J>(i,j))
 		{ }
 //		pair_(const pair_&) = default;
 
