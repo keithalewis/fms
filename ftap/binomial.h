@@ -111,7 +111,7 @@ f(W_n)(an)
 f(W_n(an))
 Note: Pi is fixed
 */
-
+/*
 template<class F, class A>
 inline double v(F f, A a)
 {
@@ -128,7 +128,7 @@ inline typename std::enable_if<std::is_same<A,L<2>>::value,double>::type v(F f, 
 {
 	return f(a);
 }
-
+*/
 #ifdef _DEBUG
 #include <array>
 #include <cmath>
@@ -137,6 +137,7 @@ inline typename std::enable_if<std::is_same<A,L<2>>::value,double>::type v(F f, 
 
 inline void test_binomial()
 {
+	/*
 	double w;
 	w = v([](double x) { return x > 0 ? x : 0; }, L<0>{});
 	{
@@ -182,6 +183,7 @@ inline void test_binomial()
 			i += 2;
 		}
 	}
+	*/
 }
 
 #endif // _DEBUG

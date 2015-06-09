@@ -69,7 +69,7 @@ inline void test_iterator()
 	double e1 = exp(1);
 	// 1 + 1/1 + 1/2! ...
 	double e2 = back(sum(ne(c(1)/factorial<double>())));
-	//                   ^ - terminate when 1/n! becomes 0.
+	//                   ^ - terminate when 1/n! less than machine epsilon.
 	double de = e1 - e2;
 	ensure (fabs(de) <= 2*std::numeric_limits<double>::epsilon());
 
@@ -78,7 +78,7 @@ inline void test_iterator()
 	ensure (de == e1 - e2);
 
 	auto id = [](int n) { return n; };
-	auto eq = equal_to(iota(0), apply(id));
+	auto eq = equal_to(iota(0), apply(std::function<int(int)>(id)));
 	ensure (all(ce(eq,10)));
 
 	ensure (all(take(10, iota(1))));
