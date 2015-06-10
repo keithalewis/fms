@@ -29,11 +29,8 @@ namespace iter {
 			return i != j.i;
 		}
 
-/*		operator I() const
-		{
-			return i;
-		}
-*/		I iterator() const
+		// underlying iterator
+		I iterator() const
 		{
 			return i;
 		}
@@ -80,7 +77,7 @@ namespace iter {
 	>
 	inline auto e(I i)
 	{
-		return enumerator<I,T,C>(i);
+		return enumerator_<I,T,C>(i);
 	}
 
 	// specialize for empty iterators
@@ -109,11 +106,7 @@ namespace iter {
 			return i != j.i;
 		}
 
-/*		operator T*() const
-		{
-			return i;
-		}
-*/		T* iterator() const
+		T* iterator() const
 		{
 			return i;
 		}
@@ -203,6 +196,11 @@ namespace iter {
 			return e;
 		}
 	};
+	template<class T>
+	inline auto e(const T* t)
+	{
+		return enumerator_<const T*,T,std::random_access_iterator_tag>(t);
+	}
 
 } // iter
 
@@ -215,8 +213,6 @@ using namespace iter;
 
 inline void test_enumerator()
 {
-
-
 	{
 		int a[] = { 1,2,3 };
 		enumerator_<int*> b(a), c;

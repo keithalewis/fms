@@ -207,10 +207,6 @@ inline void test_enumerator_counted()
 			ensure (c == a[i++]);
 		}
 		i = 0;
-//		for (auto& c : b) {
-//			ensure (c == a[i++]);
-//		}
-		i = 0;
 		for (const auto& c : b) {
 			ensure (c == a[i++]);
 		}
@@ -236,9 +232,6 @@ inline void test_enumerator_counted()
 		for (auto c : b) {
 			ensure (c == a[i++]);
 		}
-//		for (auto& c : b) {
-//			ensure (c == a[i++]);
-//		}
 		i = 0;
 		for (const auto& c : b) {
 			ensure (c == a[i++]);

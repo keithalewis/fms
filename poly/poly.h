@@ -6,6 +6,7 @@
 
 #include "nomial.h"
 #include "bell.h"
+#include "bspline.h"
 #include "hermite.h"
 #include "horner.h"
 #include "pochhammer.h"

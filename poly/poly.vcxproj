@@ -86,6 +86,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bell.h" />
+    <ClInclude Include="bspline.h" />
     <ClInclude Include="hermite.h" />
     <ClInclude Include="horner.h" />
     <ClInclude Include="nomial.h" />

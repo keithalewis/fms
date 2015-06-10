@@ -13,10 +13,10 @@
 
 namespace ftap {
 
-	template<class Trade, class Time, class N = double>
-	inline N position(Trade Gamma, Time t)
+	template<class Trade>
+	inline auto position(Trade gamma)
 	{
-		return sum0(until(t, Gamma));
+		return sum(Gamma);
 	}
 
 	template<class Position, class Price, class N = double>

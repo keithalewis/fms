@@ -5,6 +5,7 @@ int main()
 {
 	try {
 		test_bell();
+		test_bspline();
 		test_hermite();
 		test_horner();
 		test_nomial();

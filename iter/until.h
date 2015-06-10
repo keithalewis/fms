@@ -4,7 +4,7 @@
 namespace iter {
 
 	template<class P, class I>
-	inline I until(P p, I i)
+	inline I until(const P& p, I i)
 	{
 		while (i && !p(i))
 			++i;

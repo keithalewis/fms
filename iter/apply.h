@@ -16,7 +16,7 @@ namespace iter {
 	public:
 		apply_()
 		{ }
-		apply_(F f, I i)
+		apply_(const F& f, I i)
 			: I(i), f(f)
 		{ }
 

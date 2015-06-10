@@ -9,6 +9,26 @@
 // Omega -> atoms of P_1
 #include <iterator>
 
+/*
+Pi takes any subset of Omega.
+Functions are defined on atoms.
+
+v(i,A,C,Pi,w)
+{
+	return sum0(apply([](x) { return (C(x) + A(x))*Pi(x); }, atoms(i+1, w)));
+}
+	
+
+v(A a, Pi pi, S s = 0)
+{
+	for (b : atoms(a)) {
+		s += v(b,pi);
+	}
+
+	return s;
+}
+*/
+
 // enumerator: iterator with operator bool() returning false when done
 // sum an enumerator, from 0 by default
 template<class E, class S>

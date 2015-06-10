@@ -3,7 +3,7 @@
 namespace iter {
 
 	template<class T, class I>
-	inline I upto(T t, I i)
+	inline I upto(const T& t, I i)
 	{
 		while (i && *i < t)
 			++i;

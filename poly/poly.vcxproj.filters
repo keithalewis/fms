@@ -38,5 +38,8 @@
     <ClInclude Include="pochhammer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="bspline.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -20,7 +20,7 @@ namespace iter {
 		return n;
 	}
 	template<class I, class T = typename std::iterator_traits<I>::value_type>
-	inline auto size(const counted_enumerator_<I,T>& e)
+	inline size_t size(const counted_enumerator_<I,T>& e)
 	{
 		return e.size();
 	}

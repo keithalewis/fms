@@ -70,9 +70,6 @@
     <ClInclude Include="pick.h">
       <Filter>Header Files\algorithm</Filter>
     </ClInclude>
-    <ClInclude Include="skip.h">
-      <Filter>Header Files\algorithm</Filter>
-    </ClInclude>
     <ClInclude Include="take.h">
       <Filter>Header Files\algorithm</Filter>
     </ClInclude>
@@ -105,6 +102,12 @@
     </ClInclude>
     <ClInclude Include="upto.h">
       <Filter>Header Files\algorithm</Filter>
+    </ClInclude>
+    <ClInclude Include="skip.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="pwflat.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
