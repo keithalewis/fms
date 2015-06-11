@@ -5,20 +5,14 @@
 
 namespace iter {
 
-	template<class N, class I>
-	inline counted_enumerator_<I> take(N n, I i)
+	template<class I>
+	inline counted_enumerator_<I> take(int n, I i)
 	{
-		if (n >= 0)
-			return ce(i, n);
-
-		while (skipn(-n, i))
-			++i;
-
-		return ce(i, -n);
+		return n >= 0 ? ce(i, n) : ce(skipn(n,end(i)), -n);
 	}
 	// specialize take for counted_enumerator
-	template<class N, class I, class T = typename std::iterator_traits<I>::value_type>
-	inline auto take(N n, const counted_enumerator_<I,T>& e)
+	template<class I, class T = typename std::iterator_traits<I>::value_type>
+	inline auto take(int n, const counted_enumerator_<I,T>& e)
 	{
 		if (n >= 0)
 			return ce(e.iterator(), n);
