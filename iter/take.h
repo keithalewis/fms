@@ -8,7 +8,7 @@ namespace iter {
 	template<class I>
 	inline counted_enumerator_<I> take(int n, I i)
 	{
-		return n >= 0 ? ce(i, n) : ce(skipn(n,end(i)), -n);
+		return n >= 0 ? ce(i, n) : ce(skipn(n,iter::end(i)), -n);
 	}
 	// specialize take for counted_enumerator
 	template<class I, class T = typename std::iterator_traits<I>::value_type>
