@@ -29,6 +29,14 @@ namespace iter {
 		{
 			return n;
 		}
+		T operator[](size_t j) const
+		{
+			I e(i);
+
+			std::advance(e, j);
+			
+			return *e;
+		}
 
 		I iterator() const
 		{

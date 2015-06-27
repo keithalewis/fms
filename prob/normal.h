@@ -4,6 +4,7 @@
 #include "iter/iter.h"
 //#include "math/exp.h"
 #include "poly/hermite.h"
+#include "root/root.h"
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
@@ -35,10 +36,16 @@ namespace prob {
 	};
 	template<class X>
 	struct std_normal<X,bell_impl> {
-		// 0.5(1 + sgn(x) sqrt(1 - exp(-2 x^2/pi)
 		static X cdf(const X& x)
 		{
 			return X(0.5)*(1 + (x > 0 ? 1 : -1)*sqrt(1 - exp(-2*x*x/pi)));
+		}
+		static X inv(const X& p)
+		{
+			ensure (0 <= p && p <= 1);
+			X p2_1 = 2*p - 1;
+
+			return (p>=.5?1:-1)*sqrt(-log(1 - p2_1*p2_1)*pi/2);
 		}
 	};
 	template<class X>
@@ -46,7 +53,7 @@ namespace prob {
 		// 0.5 + exp(-x*x/2) sum x^{2n + 1}/(2n + 1)!!/sqrt2pi
 		static X cdf(const X& x)
 		{
-			return X(0.5) + x*sum0(ne(prod(c(x*x)/E_(2*n + 1))))*exp(-x*x/2)/sqrt2pi;
+			return X(0.5) + exp(-x*x/2)*x*sum0(ne(prod(c(x*x)/E_(2*n + 1))))/sqrt2pi;
 		}
 	};
 	template<class X>
@@ -69,9 +76,12 @@ namespace prob {
 		{
 			return exp(-x*x/2)/sqrt2pi;
 		}
-		static X inv(const X& x)
+		static X inv(const X& p)
 		{
-			return 0;
+			X x = std_normal<X,bell_impl>::inv(p);
+			X m = pdf(x);
+
+			return root1d::solve(std_normal<X,I>::cdf, x, m);
 		}
 		// n-th derivative
 		static X ddf(size_t n, const X& x)
@@ -98,6 +108,7 @@ inline void test_normal()
 	auto x = normal<>::cdf(0);
 	assert (x == 0.5);
 	x = normal<>::cdf(1);
+	auto y = normal<>::inv(x);
 
 	ensure (normal<>::cdf(0) == normal<>::ddf(0,0));
 	ensure (normal<>::pdf(0) == normal<>::ddf(1,0));
