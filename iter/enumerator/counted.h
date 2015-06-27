@@ -22,6 +22,8 @@ namespace iter {
 		counted_enumerator_(I i, size_t n)
 			: enumerator_<I,T,C>(i), n(n)
 		{ }
+		// from initializer list???
+		// from a parameter pack???
 
 		size_t size() const
 		{

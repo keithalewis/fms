@@ -27,6 +27,16 @@ The purpose is to make C++ more expressive for implementing numerical algorithms
 bias is to assume all iterators are input iterators over unaliased data. The inspiration
 comes from Fortran and APL, but incorporates recent functional programming notions.
 
+For example, here is the implementation of Horner's method:
+```cpp
+	// c[0] + x(c[1] + ... + x(c[n-2] + x*c[n-1])...)
+	template<class C, class X = typename std::iterator_traits<C>::value_type>
+	inline X horner(C c, const X& x)
+	{
+		return back(accumulate([x](const X& a, const X& b) { return x*a + b; }, rend(c), X(0)));
+	}
+```
+
 ## TODO
 
 Get unary operator+ working with MSVC. Ambiguous return types based on calling convention.

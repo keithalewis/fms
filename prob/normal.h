@@ -27,6 +27,8 @@ namespace prob {
 	class bell_impl {};
 	class erfc_impl {};
 
+	// use ADL???
+	// using cdf = marsaglia::cdf;...
 	template<class X, class I>
 	struct std_normal {
 		static X cdf(const X&);
