@@ -12,7 +12,7 @@
 #include "enumerator/reverse.h"
 #include "pair.h"
 #include "expr.h"
-#include "accumulate.h"
+#include "scan.h"
 #include "adjacent.h"
 #include "apply.h"
 #include "buffer.h"

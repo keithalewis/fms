@@ -116,7 +116,7 @@
     <ClInclude Include="pair.h" />
     <ClInclude Include="pow.h" />
     <ClInclude Include="skip.h" />
-    <ClInclude Include="accumulate.h" />
+    <ClInclude Include="scan.h" />
     <ClInclude Include="take.h" />
   </ItemGroup>
   <ItemGroup>

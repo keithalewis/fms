@@ -34,9 +34,6 @@
     <ClInclude Include="pow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="accumulate.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="where.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -107,6 +104,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="pwflat.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="scan.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

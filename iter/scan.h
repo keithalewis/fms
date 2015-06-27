@@ -1,5 +1,5 @@
-// accumulate.h - std::accumulate for enumerations
-// accumulate, sum = accumulate<plus>, prod = accumulate<multiplies>
+// scan.h - std::accumulate for enumerations
+// scan, sum = scan<plus>, prod = scan<multiplies>
 #pragma once
 #include <limits>
 #include "enumerator.h"
@@ -10,13 +10,13 @@ namespace iter {
 	template<class O, class I, 
 		class T = typename std::iterator_traits<I>::value_type
 	>
-	class accumulate_ : public I {
+	class scan_ : public I {
 		O o;
 		T t;
 	public:
-		accumulate_()
+		scan_()
 		{ }
-		accumulate_(O o, I i, T t)
+		scan_(O o, I i, T t)
 			: I(i), o(o), t(i ? o(t,*i) : t)
 		{ }
 
@@ -32,16 +32,16 @@ namespace iter {
 		{
 			return t;
 		}
-		accumulate_& operator++()
+		scan_& operator++()
 		{
 			if (I::operator bool())
 				t = o(t, *I::operator++());
 
 			return *this;
 		}
-		accumulate_ operator++(int)
+		scan_ operator++(int)
 		{
-			accumulate_ a(*this);
+			scan_ a(*this);
 
 			operator++();
 
@@ -51,23 +51,23 @@ namespace iter {
 	template<class O, class I, 
 		class T = typename std::iterator_traits<I>::value_type
 	>
-	inline auto accumulate(O o, I i, T t)
+	inline auto scan(O o, I i, T t)
 	{
-		return accumulate_<O,I,T>(o, i, t);
+		return scan_<O,I,T>(o, i, t);
 	}
 
 	// running sum of enumerator values
 	template<class I, class T = typename std::iterator_traits<I>::value_type>
 	inline auto sum(I i, T t = T(0))
 	{
-		return accumulate(std::plus<T>{}, i, t);
+		return scan(std::plus<T>{}, i, t);
 	}
 
 	// running product of enumerator values
 	template<class I, class T = typename std::iterator_traits<I>::value_type>
 	inline auto prod(I i, T t = T(1))
 	{
-		return accumulate_<std::multiplies<T>,I,T>(std::multiplies<T>{}, i, t);
+		return scan_<std::multiplies<T>,I,T>(std::multiplies<T>{}, i, t);
 	}
 
 	// can't use std::min directly???
@@ -82,7 +82,7 @@ namespace iter {
 	template<class I, class T = typename std::iterator_traits<I>::value_type>
 	inline auto min(I i, T t = std::numeric_limits<T>::max())
 	{
-		return accumulate_<min_<T>,I,T>(min_<T>{}, i, t);
+		return scan_<min_<T>,I,T>(min_<T>{}, i, t);
 	}
 
 	template<class T>
@@ -96,7 +96,7 @@ namespace iter {
 	template<class I, class T = typename std::iterator_traits<I>::value_type>
 	inline auto max(I i, T t = -std::numeric_limits<T>::max())
 	{
-		return accumulate_<max_<T>,I,T>(max_<T>{}, i, t);
+		return scan_<max_<T>,I,T>(max_<T>{}, i, t);
 	}
 
 } // iter
@@ -105,11 +105,11 @@ namespace iter {
 #include <functional>
 #include "include/ensure.h"
 
-inline void test_accumulate()
+inline void test_scan()
 {
 	int a[] = {1,2,3};
 	{	
-		auto b = accumulate(std::plus<int>{}, e(a), 0);
+		auto b = scan(std::plus<int>{}, e(a), 0);
 		auto c(b);
 		b = c;
 		ensure (*b++ == 1);
@@ -141,11 +141,11 @@ inline void test_accumulate()
 		
 		int x = 4;
 		// capturing lambdas have deleted copy assignment
-//		auto d = accumulate([](const int& a, const int& b) { return x*a + b; }, b, 0);
+//		auto d = scan([](const int& a, const int& b) { return x*a + b; }, b, 0);
 
 		std::function<int(int,int)> horner1 = [x](const int& a, const int& b) { return x*a + b; };
 		static_assert (24 <= sizeof(horner1), "MSVC: 24, gcc: 32");
-//		auto d = accumulate(horner1, b, 0);
+//		auto d = scan(horner1, b, 0);
 
 		// use local types
 		struct horner {
@@ -157,7 +157,7 @@ inline void test_accumulate()
 		auto g(h);
 		h = g;
 		static_assert (sizeof(int) == sizeof(horner), "time for a new compiler");
-		auto d = accumulate(horner(x), b, 0);
+		auto d = scan(horner(x), b, 0);
 		ensure (*d == a[2]);
 		d++;
 		ensure (*d == a[1] + x*a[2]);

@@ -1,7 +1,7 @@
 // factorial.h - factorial enumerator
 #pragma once
 #include <stdexcept>
-#include "accumulate.h"
+#include "scan.h"
 #include "iota.h"
 
 namespace iter {

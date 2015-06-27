@@ -33,7 +33,7 @@ For example, here is the implementation of Horner's method:
 	template<class C, class X = typename std::iterator_traits<C>::value_type>
 	inline X horner(C c, const X& x)
 	{
-		return back(accumulate([x](const X& a, const X& b) { return x*a + b; }, rend(c), X(0)));
+		return back(scan([x](const X& a, const X& b) { return x*a + b; }, rend(c), X(0)));
 	}
 ```
 

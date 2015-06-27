@@ -52,7 +52,7 @@ inline void test_constant()
 {
 	int a[] = {1};
 	static_assert (sizeof(int) == sizeof(a), "time for a new compiler");
-//	auto b = e(a);
+	auto b = e(a);
 //	static_assert (sizeof(int) == sizeof(b), "time for a new compiler"); // 8 on gcc
 	auto d = c(1);
 	static_assert (sizeof(int) == sizeof(d), "time for a new compiler"); // <- zero overhead
