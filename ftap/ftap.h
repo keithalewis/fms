@@ -7,6 +7,23 @@
 // position - Delta_j = sum_{i <= j} Gamma_i
 // value - V_j = Delta_j . X_j
 // V_j Pi_j = (A_{j+1} + V_{j+1})Pi_{j+1}|A_j
+/*
+value: (T, A, Pi) -> (O -> R)
+value(j, a, pi) {
+	if (a) {
+		return [j,pi](O o) {
+			R s = 0;
+			for (a_ : atoms(j+1,a)) {
+				s += (a_ + value(j+1,a_,pi)*pi(a_);
+			}
+			return s;
+		};
+	}
+	else {
+		return [](O) { return 0; };
+	}
+}
+*/
 #pragma once
 #include <algorithm>
 #include <functional>
@@ -21,6 +38,7 @@ namespace ftap {
 		C c;
 	};
 
+	// Time, Omega, Result
 	template<class T, class O, class R>
 	struct european {
 		std::function<R(O)> f;
@@ -33,13 +51,15 @@ namespace ftap {
 		{
 			return !expired;
 		}
-		R operator()(O o)
+		cash_flow<T,R> operator()(O o)
 		{
-			return expired ? 0 : f(o);
+			return expired ? cash_flow{T(0),R(0)} : cash_flow{t,f(o)};
 		}
 		european& operator++()
 		{
 			expired = true;
+
+			return *this;
 		}
 	};
 

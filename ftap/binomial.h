@@ -9,12 +9,6 @@
 // Omega -> atoms of P_1
 #include <iterator>
 
-template<class T>
-inline double value(C c, X x, Pi pi)
-{
-
-}
-
 /*
 Pi takes any subset of Omega.
 Functions are defined on atoms.
