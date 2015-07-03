@@ -40,7 +40,7 @@ For example, here is the implementation of Horner's method:
 This computes `exp(x)` to machine precision:
 ```cpp
 	// exp(x) = sum_0 x^n/n!
-	template
+	template<class X>
 	inline X exp(const X& x)
 	{
 		return X(1 + sum0(ne(prod(c(x)/iota(X(1))))));
