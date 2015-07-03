@@ -94,6 +94,7 @@
     <ClInclude Include="join.h" />
     <ClInclude Include="past.h" />
     <ClInclude Include="pwflat.h" />
+    <ClInclude Include="union.h" />
     <ClInclude Include="unit.h" />
     <ClInclude Include="upto.h" />
     <ClInclude Include="zigg.h" />

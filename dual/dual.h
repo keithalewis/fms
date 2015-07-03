@@ -36,7 +36,7 @@ namespace dual {
 		// i-th derivative
 		X operator()(size_t i) const
 		{
-			return x[i]/detail::factorial<X>(i);
+			return operator[](i)/detail::factorial<X>(i);
 		}
 
 		// scalar operators

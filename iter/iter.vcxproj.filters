@@ -109,6 +109,9 @@
     <ClInclude Include="scan.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="union.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />

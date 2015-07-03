@@ -29,13 +29,27 @@ comes from Fortran and APL, but incorporates recent functional programming notio
 
 For example, here is the implementation of Horner's method:
 ```cpp
-	// c[0] + x(c[1] + ... + x(c[n-2] + x*c[n-1])...)
+	// c[0] + x*(c[1] + ... + x(c[n-2] + x*c[n-1])...)
 	template<class C, class X = typename std::iterator_traits<C>::value_type>
 	inline X horner(C c, const X& x)
 	{
 		return back(scan([x](const X& a, const X& b) { return x*a + b; }, rend(c), X(0)));
 	}
 ```
+
+This computes `exp(x)` to machine precision:
+```cpp
+	// exp(x) = sum_0 x^n/n!
+	template
+	inline X exp(const X& x)
+	{
+		return X(1 + sum0(ne(prod(c(x)/iota(X(1))))));
+	}
+```
+`c(x)` is the constant enumerator that always returns `x`. `iota(1)` returns 1, 2, 3, ...
+`prod` yields `x/1`, `x^2/1*2`, `x^3/1*2*3`... `ne` returns a null enumerator that terminates
+when `x^n/n!` is zero to machine epsilon. `sum0` adds up the finite number
+of terms produced by the null enumerator. The first term in the sum is a special case.
 
 ## TODO
 

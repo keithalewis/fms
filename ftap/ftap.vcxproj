@@ -87,6 +87,7 @@
   <ItemGroup>
     <ClInclude Include="binomial.h" />
     <ClInclude Include="ftap.h" />
+    <ClInclude Include="instrument.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ftap.css" />
