@@ -87,6 +87,7 @@
     <ClInclude Include="bind.h" />
     <ClInclude Include="buffer.h" />
     <ClInclude Include="choose.h" />
+    <ClInclude Include="coil.h" />
     <ClInclude Include="concatenate.h" />
     <ClInclude Include="constant.h" />
     <ClInclude Include="cycle.h" />
