@@ -1,0 +1,592 @@
+<!doctype html>
+<html>
+<head>
+
+	<meta charset="utf-8">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+
+	<title>
+		Fundamental Theorem of Asset Pricing
+	</title>
+
+	<script type="text/javascript"
+			src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+	</script>
+	<script type="text/javascript" src="ftap.js"></script>
+	<link rel="stylesheet" type="text/css" href="ftap.css">
+
+</head>
+<body>
+
+	<div id="kalx"><a href="mailto:kal@kalx.net?subject=FTAP">kal@kalx.net</a></div>
+	<h1>The Fundamental Theorem<br/> of Asset Pricing</h1>
+	<h3 style="text-align: right;">Keith A. Lewis</h3>
+	<p>
+		This theorem is the foundation for pricing, hedging, and managing the risk
+		of derivative securities.  Unfortunately, it has become so math-encrusted
+		as to be completely unintelligible to traders, risk managers, and even
+		to most quants.
+
+	</p>
+	<p>
+		The state-of-the-art version of the theorem is "There should be no sequence of final
+		payoffs of admissible integrands, \(f_n = (H^n\cdot S)_\infty\), such
+		that the negative parts \(f^-_n\) tend to zero uniformly and such that
+		\(f_n\) tends almost surely to a \([0,\infty]\)-valued function \(f_0\)
+		satisfying \(P[f_0 > 0] > 0\)."  And if you can make heads or tails out
+		of that, my hat is off to you.
+		<!--
+		I have a PhD in math and that the unit ball in \(L^\infty\) not having
+		any non-trivial weak\(^*\)-closed subsets and requires the mathematical
+		gyrations required to get the Hahn-Banach theorem working in this
+		unfortunate situation.
+		-->
+	</p>
+	<p>
+		If you don't care for this sort of mathematical obfuscation,
+		allow me to introduce you to a version of the theorem that is very easy
+		to understand and can be applied to solving real world problems.
+
+	</p>
+	<h2>Finance</h2>
+	<p>
+		The simple mathematics required for a complete theory are provided below.
+		For now we will play with mathematical symbols in a way that hopefully
+		reflects your intuition about how financial markets work.  Later we will
+		make this mathematically rigorous and consider the problem of implementing
+		the mathematics on a computer.
+
+	</p>
+	<p>
+		<h3>Trading</h3>
+		Trades can happen at <em>times</em> \(t_0 < t_1 < t_2 < \dots\).
+		The <em>price</em> of all market instruments available for trading
+		at time \(t_j\) is the
+		vector \(X_j\). Market instruments pay <em>cash flows</em> \(C_j\) at
+		time \(t_j\) associated with owning them: bonds pay coupons, stocks
+		pay dividends, spot FX trades pay the difference in interest rates
+		in the currency pair.
+	</p>
+	<p>
+		You can <em>trade</em> the vector \(\Gamma_j\)
+		in market instruments at time \(t_j\) and build a
+		<em>position</em> \(\Delta_j = \sum_{i\le j}\Gamma_i\).  If you actually
+		do this, your broker will send you <em>account</em> statements. At time
+		\(t_j\) you will see \(A_j = \Delta_{j-1}\cdot C_j - \Gamma_j\cdot X_j\)
+		show up on it: you get all the cash flows associated with your
+		existing position and have to pay for the trades you execute.
+		The <em>value</em> of your position at \(t_j\) is
+		\(V_j = \Delta_j\cdot X_j\), assuming you could liquidate it
+		at prevailing market prices.
+	</p>
+	<h3>Arbitrage</h3>
+	<p>
+		If you can find trades \(\Gamma_j\) that eventually close out your
+		position with \(A_0 > 0\) and \(A_j\ge0\) for \(j>0\), that is
+		arbitrage. You make money up front and never lose even after unwinding
+		your position.
+	</p>
+	<h3>Models</h3>
+	<p>
+		The job of a quant is to come up with models of prices and cash flows
+		that are arbitrage free and allow for possible price movements.
+		They have been falling down on the job of giving a good measure of
+		how bad their models are. Every trader knows no hedge is perfect,
+		the real question is how imperfect is it.
+	</p>
+	<p>
+		The <em>Fundamental Theorem of Asset Pricing</em> is that a model is arbitrage
+		free if, and only if, there exist positive <em>pricing measures</em> \(\Pi_j\) such
+		that
+		\[
+		X_j\Pi_j = (C_{j+1} + X_{j+1})\Pi_{j+1}|_j\tag{1}
+		\]
+		For now, think of \(\Pi_j\) as the discount to time \(t_j\)
+		and read the funny \(|_j\) thing at
+		the end as 'given information available at time \(t_j\)'.
+	</p>
+	<p>
+		The following trivial calculation is the key to understanding
+		derivative securities.
+
+	</p>
+	<p>
+		\begin{align*}
+		V_j\Pi_j &= \Delta_j\cdot X_j\Pi_j\\
+		&= \Delta_j\cdot(C_{j+1} + X_{j+1})\Pi_{j+1}|_j\\
+		&= (A_{j+1} + \Gamma_{j+1}\cdot X_{j+1}
+		+ \Delta_j\cdot X_{j+1})\Pi_{j+1}|_j\\
+		&= (A_{j+1} + \Delta_{j+1}\cdot X_{j+1})\Pi_{j+1}|_j\\
+		&= (A_{j+1} + V_{j+1})\Pi_{j+1}|_j\\
+		\end{align*}
+		Let's put that on a line by itself and a number it.
+		\[
+		V_j\Pi_j = (A_{j+1} + V_{j+1})\Pi_{j+1}|_j \tag{2}
+		\]
+		In equation (2) the value \(V_j\) acts like a price and the account
+		\(A_j\) acts like a cash flow in equation (1). You can create synthetic
+		instruments by dynamically trading \(\Gamma_j\).
+		This is the skeleton key to derivatives.
+
+	</p>
+	<p>
+		By induction,
+		\[
+		V_j\Pi_j = (\sum_{j\lt i\le k}A_i\Pi_i + V_k\Pi_k)|_j.
+		\]
+	</p>
+	<p>
+		We can multiply the \(\Pi_j\) by any positive number so we
+		can and do assume \(\Pi_0 = 1\).
+		If \((\Gamma_j)\) eventually close
+		out then \(V_0 = \sum_{i>0} A_i\Pi_i|_0\).
+		If \(A_i\ge 0\) for \(i > 0\) then \(V_0\ge 0\). Since
+		\(V_0 = \Delta_0\cdot X_0 = \Gamma_0\cdot X_0 = -A_0\)
+		we have \(A_0\le 0\). This proves the easy direction of the
+		FTAP.
+	</p>
+	<h3>Derivatives</h3>
+	<p>
+		A <em>derivative security</em> is an agreement between two
+		counterparties on a sequence of payments. A <em>buyer</em>
+		pays the <em>seller</em> to provide payments
+		\((A_j)_{j=1}^n\) at corresponding times \((t_j)_{j=1}^n\).
+		<em><b>If</b></em> it is possible to find
+		trades \(\Gamma_j\) that close out (\(\Delta_n = 0\))
+		with \(A_j = \Delta_{j-1}\cdot C_j - \Gamma_j\cdot X_j\)
+		then the cost of the initial hedge is
+		\[
+		V_0 = \sum_{i=1}^n A_i\Pi_i|_0.\tag{3}
+		\]
+		Equation (3) is the formal way to express that the value
+		of a derivative is the sum of the discounted cash flows.
+		Note there are no probability measures, much less expected
+		values, involved.
+	</p>
+	<p>
+		But how do we find such \(\Gamma_j\)?
+		Since \(V_0 = \Delta_0\cdot X_0\) we have
+		\(\Gamma_0 = \Delta_0 = dV_0/dX_0\) so we know the initial
+		hedge. At any time \(t_j\) the same prescription
+		holds: \(\Delta_j = dV_j/dX_j\). The trade at time \(t_j\)
+		to hedge the position is \(\Gamma_j = \Delta_j - \Delta_{j-1}\).
+	</p>
+	<p>
+		Now you understand the choice of notation for trades and position.
+	</p>
+	<p>
+		So far, so easy. What's the catch? The catch is there is
+		no guarantee that \(A_j = \Delta_{j-1}\cdot C_j - \Gamma_j\cdot X_j\).
+		It is only true <em><b style="font-size:110%">if</b></em> we can find a trading
+		strategy to replicate the payoffs.
+		The left hand side is specified by the contract. The right hand
+		side follows from the delta hedging prescription above.
+		The difference is your \(t_j\)-ly profit and loss.
+		This is where quants have been falling down on the job.
+		It is absolutely crucial for risk managers to understand
+		how big that <em><b style="font-size:120%">if</b></em> is.
+
+	</p>
+	<p>
+		Unfortunately, in the classical theory certain mathematical
+		artifacts of Brownian motion have blurred the true picture.
+		Black-Scholes/Merton continuous time hedging encourages mathematicians
+		to ignore the fact that no market is complete.
+	</p><p>
+		There is a so-called Second Fundamental Theorem of Asset Pricing:
+		<em><b style="font-size:130%">If</b></em>
+		markets are
+		complete then the pricing measures are unique. I have a very
+		short mathematical proof of this: \(A\) implies \(B\) is
+		true if \(A\) is false. Q.E.D.
+	</p>
+	<p>
+		The difficult direction of the FTAP is that no arbitrage implies
+		pricing measures exist. But who cares? As we will soon see,
+		it is very simple to
+		write down pricing measures in practice.
+		There is no need for fancy mathematics to prove they exist.
+		<!--
+		Steve Ross used the the Hahn-Banach
+		theorem in 1976 for that and started a small cottage industry
+		in figuring out a mathematically rigorous way of doing that.
+		But who cares? I don't know of any quant who has ever used the
+		Hahn-Banach theorem to come up with pricing measures.
+		In fact, it is very easy to produce pricing measures
+		so why bother proving they exist.
+		</p>
+		-->
+	<p>
+		An uncharitable characterization of the current state of 
+		affairs would be that
+		quants cook up models, but keep fiddling with (also known as
+		recalibrating) them every day, or even every minute.  Traders press
+		a button to get the value \(V_0 = \sum A_j\Pi_j|_0\) where the \(A_j\) 
+		are specified by the term sheet, then add some monotonically increasing 
+		function of how irritating the gamma profile is to them.
+		Risk managers then proceed to empirically
+		verify Taylor's theorem every day to "explain" the profit and loss.
+	</p>
+	<p>
+		My hope is to move the focus back to the big <em><b style="font-size:140%">If</b></em> that is never true.
+		A serious shortcoming of the classical theory is that it does not account for
+        the fact that prices depend on the size of trade and who the counterparties
+        are. First steps at attacking that problem can be found
+        <a href="http://kalx.net/ftap/xva.html">here</a>.
+	</p>
+		<!--
+		<p>
+		The ideal would be to find a model that gets calibrated once, then
+		works forever. If stock prices were indeed geometric Brownian motion
+		with constant volatility, every observed price would simply improve
+		the precision of the volatility parameter until we got bored of adding
+		decimal places. Instead we are left to constantly fiddle with it because
+		the model is misspecified.
+		</p>
+		<p>
+		Traders are the best (short term) risk managers. They understand the
+		real risk must take into account the trading strategy be used
+		in the hedge.
+		</p>
+		-->
+		<h2>Mathematics</h2>
+	<p>
+		In this section we map the financial intuition above to concrete
+		mathematics. What, exactly, is a price? And how does the
+		funny \(|_j\) thing represent 'given information available at time \(t_j\)'?
+	</p>
+	<h3>Partitions</h3>
+	<p>
+		A <em>partition</em> is the mathematical way of
+		describing partial information. A partition of a set
+		is a collection of disjoint subsets who's union
+		equals the entire set. Each set in the partition is an 
+		<em>atom</em> of the partition.
+	</p>
+	<p>
+		Let \(\Omega\) be the set of all possible <em>outcomes</em> in a model.
+		To model rolling
+		a die, the set \(\Omega = \{1,2,3,4,5,6\}\) will do. To
+		represent the partial information that we only know if
+		the roll was even or odd we can use the partition
+		\(\{\{1,3,5\},\{2,4,6\}\}\). We don't know what the
+		roll is, but we know which of these two sets it belongs to.
+		Perfect knowledge is represented by the partition of
+		singleton sets: \(\{\{1\},\dots,\{6\}\}\).
+		Complete lack of knowledge is the partition having
+		only one subset: \(\{\Omega\}\).
+	</p>
+	<p>
+		In mathematical finance the set of outcomes can be quite
+		large. In the Black-Scholes/Merton model \(\Omega = C[0,\infty)\)
+		- the space of continuous functions on the non-negative real
+		numbers. These represent the possible trajectories of the
+		log of the stock price.
+	</p>
+	<p>
+		Algorithmic trading strategies have \(\Omega\) that contain historical
+		prices or the text of financial publications, or even social media data.
+		It could also specify the possible trajectories of every market traded
+		instrument.  Mathematics allows you to think very big
+		even though it might be expensive and impractical to implement.
+		Big data and multicore processing are making what was once impossible
+		into a commodity.
+
+	</p>
+	<h3>Measures</h3>
+	<p>
+		A <em>measure</em> is a function from a partition to the
+		real numbers, \(\RR\). If you know the usual mathematical
+		definition of a measure, just extend this to the
+		algebra of sets generated by the partition. It obviously
+		satisfies the condition that the measure of the
+		union of two disjoint sets is the sum of their individual
+		measures. If you are hoping to hear about \(\sigma\)-algebras
+		I'm afraid you will be disappointed. We have no need for
+		dainty measure theoretic notions required to prove theorems
+		about interchanging limits.
+	</p>
+	<p>
+		A function on \(\Omega\) is <em>measurable</em> with respect to
+        a partition if it is
+		constant on each atom &ndash; it only depends on the
+		information encoded by the partition.
+	</p>
+	<h3>Filtrations</h3>
+	<p>
+		Given times \(t_0 < t_1 < \cdots\), a <em>filtration</em> is an
+		increasing sequence of partitions \(\PP_0\subseteq\PP_1\subseteq\cdots\).
+		The partition \(\PP_j\) represents the information available at time
+		\(t_j\). A sequence of functions, \((X_j)\), on \(\Omega\) is <em>adapted</em>
+		to the filtration if each \(X_j\) is \(\PP_j\)-measurable.
+
+	</p>
+	<h3>Bounded Functions</h3>
+	<p>
+		We represent prices, cash flows, and trades using
+		bounded functions,
+		\[
+		B(\Omega) = \{f\colon\Omega\to\RR\mathop{:}
+		||f|| = \max_{\omega\in\Omega} |f(\omega)| < \infty \}.
+		\]
+	</p>
+	<p>
+		There is no fixed bound on the size of the function, it just
+		can't keep growing without limit. Just like in the real world.
+		Denote the space of bounded \(\PP\) measurable functions by
+		\(B(\Omega,\PP)\). The functions can also be vector-valued
+		\(B(\Omega,\PP,\RR^m)\). (Note: mathematicians use \(\sup\), short
+		for supremum, instead of \(\max\) in the above definition since
+		there may be no \(\omega\) for which equality holds.)
+	</p>
+	<h4>Duality</h4>
+	<p>
+		The <em>dual</em> of a vector space, \(V\), is the set of all
+		linear functionals, \(V^*\), on \(V\). For example, we can identify
+		the dual of \(\RR^m\) with itself as follows.
+	</p>
+	<p>
+		Given a linear functional \(v^*\colon\RR^m\to\RR\)
+		let \(v^*_i = v^*(e_i)\) where
+		\(e_i\) has \(1\) in the \(i\)-th position as its only
+		non-zero entry. We can write any vector
+		\(v = (v_1,\dots,v_m) = \sum_i v_i e_i\) so
+		\[
+		v^*(v) = v^*(\sum_i v_i e_i) = \sum_i v_i v^*(e_i) = \sum_i v_i v^*_i.
+		\]
+		This shows we can identify the dual of \(\RR^m\) with itself
+		via \(v^*\mapsto (v^*_1,\dots,v^*_m)\) and that the <em>dual pairing</em>
+		\(v^*(v) = \langle v, v^*\rangle = \sum_i v_i v^*_i\) is the
+		<em>dot product</em>
+	</p>
+
+	<p>
+		Note: if you know something about vector spaces you will realize
+		we could use any basis, not just the special basis \(\{e_i\}\).
+	</p>
+	<p>
+		If in addition \(V\) is an algebra, i.e. has a product that satisfies the
+		distributive law with vector addition, then we can define a new product
+		as follows. Given
+		\(v\in V\) and \(v^*\in V^*\) define \(vv^*\) by \(vv^*(u) =\langle
+		u,vv^*\rangle = \langle uv,v^*\rangle = v^*(uv)\) for any \(u\in V\). This is a
+		perfectly fine linear functional on \(V\), hence belongs to \(V^*\).
+	</p>
+
+	<h3>Finitely Additive Measures</h3>
+	<p>
+		The vector space <em>dual</em> of \(B(\Omega)\)
+		is \(B(\Omega)^* = ba(\Omega)\), the space of all finitely
+		additive measures on \(\Omega\). The dual pairing
+		is given by integrating a function against a measure:
+		\(\Pi(X) = \langle X,\Pi\rangle = \int_\Omega X\,d\Pi\).
+	</p>
+	<p>
+	We are now in a position to give rigorous definitions:
+	the functions \(X_j\), \(C_j\), and \(\Gamma_j\)
+	belong to \(B(\Omega,\PP_j,\RR^m)\). The measures \(\Pi_j\)
+	belong to \(ba(\Omega,\PP_j)\). Hence the equation
+	\[
+	X_j\Pi_j = (C_{j+1} + X_{j+1})\Pi_{j+1}|_{\PP_j}
+	\]
+	involves multiplying vector-valued bounded functions by finitely additive
+	measures so each side is a vector-valued finitely additive measure. The
+	funny \(|_j\) thing is simply restricting the \(\PP_{j+1}\) measure on
+	the right-hand side to the subset \(\PP_j\subseteq\PP_{j+1}\).
+	(Recall that if we have a function \(f\colon X\to Y\) and \(U\subseteq X\), then
+	\(f|_U\colon U\to Y\) is the <em>restriction</em> of the function
+	\(f\) to the subset \(U\).)
+
+	</p>
+	<p>
+		That is the complete theory required for the Fundamental Theory
+		of Asset Pricing. Now let's start using it.
+	</p>
+
+	<h3>Black-Scholes/Merton Model</h3>
+	<p>
+		Let \(P\) be Wiener measure on \(\Omega = C[0,\infty)\) and define
+		Brownian motion \(B_t\colon\Omega\to\RR\) by \(B_t(\omega) =\omega(t)\).
+		Let \(\FF_t\) be the smallest
+		algebra making all \(B_s\) measurable for \(s\le t\).
+
+		Recall \(M_t = e^{-\sigma^2t/2 + \sigma B_t}\) is a martingale,
+		i.e., \(M_s = E[M_t|\FF_s]\) for \(s\le t\).
+	</p>
+	<p>
+		The B-S/M model has two instruments, a bond and a stock. Their
+		prices are \(X_t = (R_t, S_t) = (e^{rt},se^{(r - \sigma^2/2)t + \sigma B_t})\),
+		there are no cash flows, so \(C_t = (0,0)\) for all \(t\).
+		Using the martingale property above and the fact
+		\(M_sP|_{\FF_s} = (M_tP)|_{\FF_s}\) for \(s\le t\) shows 
+		\(\Pi_t = e^{-rt}P|_{\FF_t}\)
+		are pricing measures. We can then use equation (3) above to
+		price, say, an European option paying \(\phi(S_t)\) at time \(t\):
+		\(V_0 = \phi(S_t)e^{-rt}P(\Omega) = e^{-rt}E[\phi(S_t)]\).
+	</p>
+	<p>
+		Notice there is no need for Ito's lemma, self-financing conditions,
+		partial differential equations, or the Hahn-Banach theorem.
+		This approach has the
+		pedagogical advantage of bypassing the fairly advanced mathematical
+		scaffolding required in the classical theory. It also pays homage
+		to the idea that won Scholes and Merton their well-deserved
+		Nobel Prize. Why introduce a drift term you don't need and
+		a "real world" measure that gets immediately discarded?
+	</p>
+	<p>
+		This immediately generalizes to any martingale \((M_t)\).
+		Let \(X_t = (R_t,S_t) = (e^{rt},e^{rt}M_t)\) and
+		\(\Pi_t = e^{-rt}P|_{\FF_t}\). Indeed, \(M_t\) can be vector-valued,
+		and since constants are martingales there is no need to single
+		out the bond. Stochastic discounts independent of \(M_t\) are
+		similarly easy to incorporate.
+		See, I told you there were lots of pricing measures.
+	</p>
+
+	<h3>Finite Models</h3>
+	<p>
+		Just as modeling prices by bounded functions is no restriction
+		when it comes to real-world models, assuming a finite number
+		of possible outcomes is no restriction when it comes to models
+		that can be implemented on a computer. After all, there are
+		only \(10^{80}\) elementary particles in the observable universe.
+	</p>
+	<p>
+		Given an atom \(A_j\in\PP_j\), let \(\{A_j\}\) be a slightly abusive
+		use of notation for the set of atoms
+		in \(\PP_{j+1}\) that are contained in \(A_j\). The no arbitrage
+		condition becomes
+		\[
+		X_j\Pi_j(A_j) = \sum_{A_{j+1}\in\{A_j\}} (X_{j+1} + C_{j+1})\Pi_{j+1}(A_{j+1})
+		\]
+		Assume as in the previous example that the pricing measures are given.
+		This provides constraints on prices and cash flows. Ignoring cash flows
+		for the moment, this formula has \(m\times \#\PP_j\) equations
+		and \(m\times \#\PP_{j+1}\) unknowns, so it
+		is, in general, highly under-determined.
+	</p>
+	<p>
+		Even given prices and cash flows, it is exponential in the number of
+		computations, but there is a general technique to turn this into
+		a quadratic law.
+	</p>
+
+	<h4>Multinomial Model</h4>
+	<p>
+		Fix a finite set \(\Lambda\subset\RR\) and probability measure \(P_0\)
+		on this set. Let \(\Omega = \Lambda^n\) with product measure and define
+		\(W_j(\omega) = \omega_1 + \cdots + \omega_j\).
+
+	<p>
+		For \(\Lambda = \{-1,1\}\) and \(P_0(\{\pm 1\}) = 1/2\),
+		this is just random walk for a <em>binomial model</em>.
+		For \(\Lambda = \{-\sqrt{3},0,\sqrt{3}\}\) with probabilities
+		\(P_0(\{0\}) = 2/3\) and \(P_0(\{\pm 1\}) = 1/6\)
+		we have the <em>trinomial model</em>. (Note
+		\(E\Lambda^2 = EB_1^2\), and \(E\Lambda^4 = EB_1^4\) where
+		\(B_1\) is Brownian motion at time \(1\).)
+
+	</p>
+	<p>
+		If we consider prices and cash flows that are a function of
+		\(W_j\) the number of constraints and calculations become
+		manageable. For the binomial model we get two equations and
+		two unknowns so we have unique solutions. For trinomial
+		models we have two equations and three unknowns.
+		Assuming we have efficient means of computing
+		\(\Pi_j(\{W_j = k\})\), which we do for binomial and trinomial models,
+		this reduces the number of calculations to \(O(n^2)\). 
+	</p>
+
+	<h2>Remarks</h2>
+	<p>
+		But what about American options? These too can be handled in
+		this framework. The option buyer can specify a <em>stopping time</em>,
+		i.e., a function \(T\colon\Omega\to\{t_j\}\) with the property
+		\(\{T = t_j\}\) is \(\PP_j\) measurable for each \(j\). You
+		can exercise at \(t_j\) based only on the information available
+		at that time. The pricing formula becomes
+		\[
+			V_0 = \phi(X_{\min\{T,t_n\}})\Pi_{\min\{T,t_n\}}|_{\PP_0},
+		\]
+		where \(\phi(x)\) is the payoff of the option that expires at \(t_n\).
+	</p>
+	<p>
+		To model bonds that are both putable and callable, the buyer and
+		seller each have their own stopping times and the value is again
+		calculated by using pricing measures weighted by the payoffs these
+		stopping times result in.
+	</p>
+	<p>
+		I have sidestepped the question of determining the optimal stopping
+		time. This model provides all the knobs required to faithfully
+		describe what can occur. For mortgage backed securities
+		it is well-known that participants do not refinance optimally. 
+		We want to be able to model that too. Optimizing stopping
+		times is a separate consideration.
+	</p>
+	<p>
+		This short write-up does not systematically address the question
+		of the risk involved when contractually specified \(A_j\) are
+		hedged using \(\Delta_j = dV_j/dX_j\). One can still look at
+		the gamma profile \(\Gamma_j = \Delta_j - \Delta_{j-1}\), or
+		consider mean squared error such as
+		\[
+		\langle [A_j - (\Delta_{j-1}\cdot C_j - \Gamma_j\cdot X_j)]^2,\Pi_j\rangle.
+		\]
+	</p>
+	<p>
+		If you are nervous about the the notation \(dV_j/dX_j\), it is just
+		shorthand for the <a href="http://en.wikipedia.org/wiki/Fr%C3%A9chet_derivative">
+		Fr&eacute;chet derivative</a> in the Banach space of bounded functions.
+	</p>
+	<!--
+	<p>
+	The sample space of the \(n\)-step binomial model is
+	\(\Omega = \{-1,1\}^n\) and we let \(P\) be uniform
+	measure on \(\Omega\), so \(P(\{\omega\}) = 1/2^n\)
+	for each \(\omega\in\Omega\).
+	Define the <em>random walk</em>
+	\(W_k(\omega) = \omega_1 + \cdots + \omega_k\).
+	</p><p>
+	Define the sets
+	\(\{\omega\}_k = \{\omega'\in\Omega\mathop{:}
+	\omega'_j = \omega_j, j\le k\}\).
+	The partitions \(\PP_k = \{\{\omega\}_k\mathop{:}\omega\in\Omega\}\)
+	represent knowing the first \(k\) elements of \(\omega\).
+	</p><p>
+	It is well known that random walk is a martingale, but we can
+	avoid probabilistic machinery altogether. Let \(P_j = P|_{\PP_j}\)
+	then \(W_{j+1}P_{j+1}(\{\omega\}_j)
+	= W_{j+1}P_{j+1}(\{\omega_{-1}\}_{j+1}\cup \{\omega_{1}\}_{j+1})\)
+	where \(\omega_{w}\) is \(omega\) with \(w\) occurring in
+	the \((j+1)\)-st element, \(w = -1, 1\).
+	Therefore, \(W_{j+1}P_{j+1}(\{\omega_{-1}\}_{j+1}\cup \{\omega_{1}\}_{j+1})
+	= (W_j(\omega) - 1)P(\{\omega_{-1}\}_{j+1} +
+	  (W_j(\omega) + 1)P(\{\omega_{1}\}_{j+1}
+	  = W_jP(\{\omega\}_j)\)
+
+	<h2>Software</h2>
+	<p>
+	Mathematical models make it possible to rigorously reason about
+	financial issues, but they are much more useful if they can be
+	implemented in software. This section shows how to use modern
+	C++ to implement the model described above.
+	</p>
+	-->
+	<script>
+	(function (i, s, o, g, r, a, m) {
+		i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+			(i[r].q = i[r].q || []).push(arguments)
+		}, i[r].l = 1 * new Date(); a = s.createElement(o),
+		m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+	})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+	ga('create', 'UA-63744220-1', 'auto');
+	ga('send', 'pageview');
+
+	</script>
+</body>
+</html>
+
