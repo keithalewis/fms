@@ -1,5 +1,18 @@
-FILES = ftap.html ftap.css ftap.js
-CXXFLAGS += -I.. -Wall --std=c++14 -D_DEBUG -g
+MKDN = $(wildcard *.md)
+HTML = $(MKDN:.md=.html)
+FLAGS = -s # smart quotes
+FLAGS += --mathjax
+FLAGS += --css ftap.css
+FLAGS += -H header.html
+FLAGS += -f markdown+tex_math_single_backslash
 
-rsync:
-	rsync $(FILES) kal@web69.webfaction.com:webapps/kalx/
+all: ftapm.html
+
+$(HTML): %.html: %.md
+	pandoc $(FLAGS) $< -o $@
+
+rsync: $(HTML)
+	rsync ftap.css ftap.html $(HTML) kal@web69.webfaction.com:webapps/kalx/
+
+clean:
+	rm -f $(HTML)
