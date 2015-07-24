@@ -161,28 +161,73 @@ and \(\Pi_{\tau_0}\) is positive, we have \(A_{\tau_0}\le0\).
 
 This proves one direction of the FTAP. We have no
 need for the other (much more difficult) direction to show deflators
-exist.
+exist. There are plenty of examples.
 
+## Models
+
+Any martingale can be used to create arbitrage free models.
 If \((M_t)_{t\in T}\) is any (vector-valued) martingale
 on \(\langle \Omega,P,(\AA_t)_{t\in T}\rangle\)
 and there exists a zero coupon bond with
-deterministic price \(P_t > 0\) at time \(t\in T\) then \(X_t = (P_t,M_tP_t)\)
-, \(C_t = 0\) is a arbitrage free model with deflator
+deterministic price \(P_t > 0\) at time \(t\in T\) then
+\(X_t = (P_t,M_tP_t)\) , \(C_t = 0\) is a arbitrage free model with deflator
 \(\Pi_t = P_t^{-1}P|_{\AA_t}\).
-This follows from the simple fact that the definition of a martingale,
-\(M_t = E[M_u|\AA_t]\), is equivalent to
+This follows from the definition of a martingale,
+\(M_t = E[M_u|\AA_t]\), being equivalent to
 \(M_tP|_{\AA_t} = M_uP|_{\AA_t}\) for \(t < u\).
 
-This also holds if \((P_t)_{t\in T}\) is adapted and independent of
-the martingale.
+This also holds if \((P_t)_{t\in T}\) is an adapted stochastic process
+that is independent of the martingale.
 
-# General Model
 If we want a model having cash flows then
 \(X_t = (P_t, (M_t - \sum_{s\le t} C_sP_s^{-1})P_t)\)
-fits the bill. I don't know of any models that are
+fits the bill. I don't know of any models used for any security that are
 an exception to this.
 
-# Canonical Model
+\begin{align*}
+&\sum_{t<s\le u}C_s\Pi_s + (M_u - \sum_{s\le u}C_sP_s^{-1})P_u\Pi_u|_{\AA_t}\\
+&=\sum_{t<s\le u}C_sP_s^{-1}P|_{\AA_t} + (M_u - \sum_{s\le u}C_sP_s^{-1})P|_{\AA_t}\\
+&= (M_u - \sum_{s\le t}C_sP_s^{-1})P|_{\AA_t}\\
+&= (M_t - \sum_{s\le t}C_sP_s^{-1})P_t\Pi_t\\
+\end{align*}
+
+## Hedging
+Given a derivative paying \(A_j\) at time \(\tau_j\) how do
+we find a hedging strategy \(\Gamma_j\)? If it is the case
+that \(A_j = \Delta_{\tau_j}\cdot C_{\tau_j} - \Gamma_j\cdot X_{\tau_j}\)
+then \(V_{\tau_0} = -A_0 = \Gamma_0\cdot X_{\tau_0}\) so
+\(\partial V_{\tau_0}/\partial X_{\tau_0} = \Gamma_0\) and we
+have our initial hedge.
+
+At time \(\tau_j\) we have \(V_{\tau_j}
+= (\Gamma_j + \Delta_{\tau_j})\cdot X_{\tau_j}\).
+Define a function from the Banach space
+\(B(\Omega,\AA_{\tau_j},\RR^m)\) to \(B(\Omega,\AA_{\tau_j})\)
+by \(X_{\tau_j}\mapsto V_{\tau_j}\). The Fr\'echet derivative
+is clearly
+\(\partial V_{\tau_j}/\partial X_{\tau_j}\) = \Gamma_j + \Delta_{\tau j}\).
+This gives the hedge at time \(\tau_j\) since we know \(\Delta_{\tau j}\).
+
+Note the computaion of  \(V_{\tau_j}\) from
+\(V_{\tau_j}\Pi_{\tau_j} = \sum_{k > j} A_k\Pi_{\tau_k}|_{\AA_{\tau_j}}\)
+only involves the \(A_j\) and \(Pi_t\).
+
+The catch is that in general
+\(A_j \not= \Delta_{\tau_j}\cdot C_{\tau_j} - \Gamma_j\cdot X_{\tau_j}\).
+The difference is the profit-and-loss on the trade.
+The classical theory tends to ignore this by assuming markets are
+complete. They never are.
+
+## Canonical Deflator
+Fix a probablity space and filtration
+\(\langle\Omega,P,(\AA_t)_{t\in [0,\infty)}\rangle\).
 If at each time \(t\) there is an instrument having price
-\(X_t = 1\) and a single cash flow \(R_t dt\) at time \(t + dt\)
-then \(P_t = \exp (\int_0^t \log R_t\,dt)\)
+\(X_t = 1\) and a single cash flow \(R_t\) at time \(t + dt\)
+define \(P_t = \prod_{0\le s < t}R_s\) and
+\(\Pi_t = P_t^{-1}P|_{\AA_t}\) to be the *canonical deflator*.
+These instruments are called the *short realized return*. They
+are related to the instantaneous short rate, \(r_t\) by
+\(R_t = e^{r_t\,dt}\), but why drag \(e\) into this?
+
+Clearly \(\Pi_t = R_t\Pi_{t+dt}|_{\AA_t}\) so the model is arbitrage free.
+In fact \(R_t\Pi_{t+dt}\) is already \(\AA_t\) measurable.
