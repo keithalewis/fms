@@ -17,7 +17,7 @@ to implement on a computer.
 It can also include every newspaper article ever written and
 every tweet from twitter, and an encoding of everything that might have
 been scrawled on a bathroom wall since ancient Roman times.  Mathematics
-allows you to think big even though it migh be difficult to implement
+allows you to think big even though it might be difficult to implement
 on a computer.
 -->
 
@@ -27,7 +27,7 @@ a collection of events that is closed under complement and union that
 also contains the empty set. The algebra also contains \(\Omega\) and
 is closed under intersection by De Morgan's laws. This is a perfectly
 natural model for events that did not happen, either one of two events
-happend, or both events happened. It is a mathematical model faithful
+happened, or both events happened. It is a mathematical model faithful
 to the everyday meaning of the words 'not', 'and', and 'or'.
 
 A set \(A\in\AA\) is an *atom* if \(B\subseteq A\) and \(B\in\AA\)
@@ -80,7 +80,7 @@ Trades accumulate into a *position* \(\Delta_t = \sum_{\tau_j<t} \Gamma_j\).
 Note that any trade at time \(t\) is not counted toward your position.
 This reflects the fact that execution is not instantaneous. 
 
-To simplfy what follws we define \(\Gamma_t = \Gamma_j\delta_{\tau_j}\) for
+To simplify what follows we define \(\Gamma_t = \Gamma_j\delta_{\tau_j}\) for
 \(t\in T\) where
 \(\delta_u(t) = 1\) if \(t = u\) and is zero otherwise.
 
@@ -97,7 +97,7 @@ The (marked-to-market) *value* at time \(t\) is
 much your current trade and position are worth *if* they could
 be unwound at the prevailing market price. 
 Note that \(\Gamma_t + \Delta_t = \Delta_{t+\epsilon}\) for
-small positve \(\epsilon\). If \(\tau_j\le t < \tau_{j+1}\)
+small positive \(\epsilon\). If \(\tau_j\le t < \tau_{j+1}\)
 then this holds for \(0 < \epsilon < \tau_{j+1} - t\).
 It will be your new position when your trade clears.
 
@@ -111,7 +111,7 @@ first trade, and never loses thereafter.
 ## Fundamentals
 The *fundamental theorem of asset pricing* states that a model is
 arbitrage free if and only if there exist
-positve, finitely-additive measures
+positive, finitely-additive measures
 \(\Pi_t\in ba(\Omega,\AA_t)\) such that
 \[
 	X_t\Pi_t = (\sum_{t<s\le u} C_s\Pi_s + X_u\Pi_u)|_{\AA_t}
@@ -119,8 +119,8 @@ positve, finitely-additive measures
 for \(t,u\in T\) with \(t < u\). A finitely additive measure
 multiplied by a bounded function defines a new finitely additive
 measure, so both sides of the equation above are measures. The
-sum is a measure in \(ba(\Omega,\AA_u)\) which is then resricted
-to the subalgebra \(\AA_t\). Measures satisfying the above
+sum is a measure in \(ba(\Omega,\AA_u)\) which is then restricted
+to the sub-algebra \(\AA_t\). Measures satisfying the above
 conditions are called *deflators*.
 
 The *fundamental result of asset pricing* is that in this case
@@ -133,7 +133,7 @@ Trading strategies allow you to synthesize new instruments.
 A derivative security is a contract between two counterparties for
 an exchange of cash flows. The contract specifies amounts
 \(A_j\) at times \(\tau_j\). We will consider the problem of
-finding tradinging strategies given a contract below.
+finding trading strategies given a contract below.
 
 If \(u\) is the first time after \(t\) for which either \(C_u\) or
 \(A_u\) are non-zero, then
@@ -216,7 +216,7 @@ is clearly
 This gives the hedge at time \(\tau_j\) since we know \(\Delta_{\tau_j}\)
 then.
 
-Note the computaion of  \(V_{\tau_j}\) from
+Note the computation of  \(V_{\tau_j}\) from
 \(V_{\tau_j}\Pi_{\tau_j} = \sum_{k > j} A_k\Pi_{\tau_k}|_{\AA_{\tau_j}}\)
 only involves the payments specified by the term sheet and the deflators.
 
@@ -225,12 +225,12 @@ The catch is that in general
 The difference is the profit-and-loss on the trade.
 The classical theory tends to ignore this by assuming markets are
 complete. Every trader knows they never are.
-This model provides the knobs for measuing how poorly the hedge
+This model provides the knobs for measuring how poorly the hedge
 might perform. It is closely related to the *gamma profile* of
 the trade.
 
 ## Canonical Deflator
-Fix a probablity space and filtration
+Fix a probability space and filtration
 \(\langle\Omega,P,(\AA_t)_{t\in [0,\infty)}\rangle\).
 If at each time \(t\) there is an instrument having price
 \(X_t = 1\) and a single cash flow \(R_t\) at time \(t + dt\)
