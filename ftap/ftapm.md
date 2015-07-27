@@ -94,7 +94,7 @@ it might be zero.
 ## Value
 The (marked-to-market) *value* at time \(t\) is
  \(V_t = (\Gamma_t + \Delta_t)\cdot X_t\). This represents how
-much your current trade and position are worth if they could
+much your current trade and position are worth *if* they could
 be unwound at the prevailing market price. 
 Note that \(\Gamma_t + \Delta_t = \Delta_{t+\epsilon}\) for
 small positve \(\epsilon\). If \(\tau_j\le t < \tau_{j+1}\)
@@ -116,7 +116,7 @@ positve, finitely-additive measures
 \[
 	X_t\Pi_t = (\sum_{t<s\le u} C_s\Pi_s + X_u\Pi_u)|_{\AA_t}
 \]
-for \(t,u\in T\) with \(t < u\).A finitely additive measure
+for \(t,u\in T\) with \(t < u\). A finitely additive measure
 multiplied by a bounded function defines a new finitely additive
 measure, so both sides of the equation above are measures. The
 sum is a measure in \(ba(\Omega,\AA_u)\) which is then resricted
@@ -136,7 +136,7 @@ an exchange of cash flows. The contract specifies amounts
 finding tradinging strategies given a contract below.
 
 If \(u\) is the first time after \(t\) for which either \(C_u\) or
-\(A_u\) is non-zero, then
+\(A_u\) are non-zero, then
 \(X_t\Pi_t = (C_u + X_u)\Pi_u|_{\AA_t}\). We now show
 \(V_t\Pi_t = (A_u + V_u)\Pi_u|_{\AA_t}\).
 
@@ -149,7 +149,8 @@ V_t\Pi_t &= (\Gamma_t + \Delta_t)\cdot X_t\Pi_t\\
 	&= (A_u + V_u)\Pi_u|_{\AA_t}\\
 \end{align*}
 
-The fundamental result follows by induction.
+The fundamental result follows by induction on the next times
+either either \(C_u\) or \(A_u\) are non-zero.
 
 If a trading strategy closes out (\(\sum_j \Gamma_j = 0\)) then
 \[
@@ -168,32 +169,38 @@ exist. There are plenty of examples.
 Any martingale can be used to create arbitrage free models.
 If \((M_t)_{t\in T}\) is any (vector-valued) martingale
 on \(\langle \Omega,P,(\AA_t)_{t\in T}\rangle\)
-and there exists a zero coupon bond with
-deterministic price \(P_t > 0\) at time \(t\in T\) then
-\(X_t = (P_t,M_tP_t)\) , \(C_t = 0\) is a arbitrage free model with deflator
+and \((P_t)_{t\in T}\)is any adapted positive scalar process then
+\(X_t = M_tP_t\), \(C_t = 0\)
+is an arbitrage free model with deflator
 \(\Pi_t = P_t^{-1}P|_{\AA_t}\).
 This follows from the definition of a martingale,
 \(M_t = E[M_u|\AA_t]\), being equivalent to
 \(M_tP|_{\AA_t} = M_uP|_{\AA_t}\) for \(t < u\).
 
-This also holds if \((P_t)_{t\in T}\) is an adapted stochastic process
-that is independent of the martingale.
-
 If we want a model having cash flows then
-\(X_t = (P_t, (M_t - \sum_{s\le t} C_sP_s^{-1})P_t)\)
-fits the bill. I don't know of any models used for any security that are
-an exception to this.
+\(X_t = (M_t - \sum_{s\le t} C_sP_s^{-1})P_t\)
+fits the bill.
 
 \begin{align*}
-&\sum_{t<s\le u}C_s\Pi_s + (M_u - \sum_{s\le u}C_sP_s^{-1})P_u\Pi_u|_{\AA_t}\\
-&=\sum_{t<s\le u}C_sP_s^{-1}P|_{\AA_t} + (M_u - \sum_{s\le u}C_sP_s^{-1})P|_{\AA_t}\\
-&= (M_u - \sum_{s\le t}C_sP_s^{-1})P|_{\AA_t}\\
+&\left(\sum_{t<s\le u}C_s\Pi_s
+ + (M_u - \sum_{s\le u}C_sP_s^{-1})P_u\Pi_u\right)|_{\AA_t}\\
+&=\sum_{t<s\le u}(C_s\underline{P_s^{-1}P|_{\AA_s}})|_{\AA_t}
+ + ((M_u - \sum_{s\le u}C_sP_s^{-1})\underline{P|_{\AA_u}})|_{\AA_t}\\
+&= (M_u\underline{P|_{\AA_u})}|_{\AA_t}
+ - \sum_{s\le t}(C_sP_s^{-1}P|_{\AA_u})|_{\AA_t}
+ + \sum_{t<s\le u} (C_s P_s^{-1}P|_{\AA_s} - C_s P_s^{-1}P|_{\AA_u})|_{\AA_t}\\
+&= M_t P|_{\AA_t}
+ - \sum_{s\le t}C_sP_s^{-1}P|_{\AA_t}
+ + \sum_{t<s\le u} C_s P_s^{-1}P|_{\AA_s}|_{\AA_t}
+                 - C_s P_s^{-1}P|_{\AA_s}|_{\AA_t}\\
 &= (M_t - \sum_{s\le t}C_sP_s^{-1})P_t\Pi_t\\
 \end{align*}
+I don't know of any models used for any security that are
+an exception to this.
 
 ## Hedging
 Given a derivative paying \(A_j\) at time \(\tau_j\) how do
-we find a hedging strategy \(\Gamma_j\)? If it is the case
+we find a hedging strategy \(\Gamma_j\)? *If* it is the case
 that \(A_j = \Delta_{\tau_j}\cdot C_{\tau_j} - \Gamma_j\cdot X_{\tau_j}\)
 then \(V_{\tau_0} = -A_0 = \Gamma_0\cdot X_{\tau_0}\) so
 \(\partial V_{\tau_0}/\partial X_{\tau_0} = \Gamma_0\) and we
@@ -205,18 +212,22 @@ Define a function from the Banach space
 \(B(\Omega,\AA_{\tau_j},\RR^m)\) to \(B(\Omega,\AA_{\tau_j})\)
 by \(X_{\tau_j}\mapsto V_{\tau_j}\). The Fr\'echet derivative
 is clearly
-\(\partial V_{\tau_j}/\partial X_{\tau_j}\) = \Gamma_j + \Delta_{\tau j}\).
-This gives the hedge at time \(\tau_j\) since we know \(\Delta_{\tau j}\).
+\(\partial V_{\tau_j}/\partial X_{\tau_j} = \Gamma_j + \Delta_{\tau_j}\).
+This gives the hedge at time \(\tau_j\) since we know \(\Delta_{\tau_j}\)
+then.
 
 Note the computaion of  \(V_{\tau_j}\) from
 \(V_{\tau_j}\Pi_{\tau_j} = \sum_{k > j} A_k\Pi_{\tau_k}|_{\AA_{\tau_j}}\)
-only involves the \(A_j\) and \(Pi_t\).
+only involves the payments specified by the term sheet and the deflators.
 
 The catch is that in general
 \(A_j \not= \Delta_{\tau_j}\cdot C_{\tau_j} - \Gamma_j\cdot X_{\tau_j}\).
 The difference is the profit-and-loss on the trade.
 The classical theory tends to ignore this by assuming markets are
-complete. They never are.
+complete. Every trader knows they never are.
+This model provides the knobs for measuing how poorly the hedge
+might perform. It is closely related to the *gamma profile* of
+the trade.
 
 ## Canonical Deflator
 Fix a probablity space and filtration
